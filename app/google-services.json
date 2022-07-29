@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "883823813679",
+    "project_id": "trip-tracker-2844c",
+    "storage_bucket": "trip-tracker-2844c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883823813679:android:70e4b26a5b446bf240d2da",
+        "android_client_info": {
+          "package_name": "com.example.triptracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883823813679-c5q63n275f2tjp60a2fjfg95hcd9ldpo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiJvzcRydDOM-J0W7L2dHH_LijBTqLxno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883823813679-c5q63n275f2tjp60a2fjfg95hcd9ldpo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
