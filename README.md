@@ -11,7 +11,7 @@ The app is still a work in progress.
 ### Upcoming functionalities/features
 - [x] Create the App's basic structure
 - [x] Create an Authentication form for users
-- [ ] Implement the Authentication process using [Firebase](https://firebase.google.com)
+- [x] Implement the Authentication process using [Firebase](https://firebase.google.com)
 - [ ] Create a User profile tab
 - [ ] Update UI based on logged user
 - [ ] Create Settings tab
