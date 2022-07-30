@@ -12,8 +12,8 @@ The app is still a work in progress.
 - [x] Create the App's basic structure
 - [x] Create an Authentication form for users
 - [x] Implement the Authentication process using [Firebase](https://firebase.google.com)
-- [ ] Create a User profile tab
-- [ ] Update UI based on logged user
+- [x] Create a User profile tab
+- [x] Update UI based on logged user
 - [ ] Create Settings tab
 - [ ] Create Record Tab
 - [ ] Create and update the Feed Tab based on previous tracked trips

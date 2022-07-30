@@ -6,6 +6,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.splashscreen.SplashScreen;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -18,8 +19,8 @@ public class AuthenticationActivity extends AppCompatActivity implements Navigat
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+        SplashScreen.installSplashScreen(this);
         setContentView(R.layout.activity_authentication);
 
         bottomNavigationView = findViewById(R.id.auth_navigation);
