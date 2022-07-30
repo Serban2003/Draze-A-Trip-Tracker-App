@@ -28,7 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/username"
-            android:textColor="#4E342E"
+            android:textColor="@color/white"
+            android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,14 +48,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars"
+        android:src="@drawable/banana_avatar"
         android:contentDescription="@string/avatar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/userInformationLayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
@@ -69,6 +70,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.444"
@@ -78,19 +80,40 @@
 
             <ImageView
                 android:id="@+id/fullNameIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:contentDescription="@string/name_icon"
                 android:src="@drawable/ic_name_icon" />
 
-            <TextView
-                android:id="@+id/fullNameTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:text="@string/full_name" />
+
+            <LinearLayout
+                android:layout_width="239dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fullNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/full_name"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/fullNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/my_name"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -100,6 +123,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="8dp"
+            android:elevation="4dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.444"
@@ -108,19 +132,39 @@
 
             <ImageView
                 android:id="@+id/phoneIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:contentDescription="@string/phone_icon"
                 android:src="@drawable/ic_phone_icon" />
 
-            <TextView
-                android:id="@+id/phoneTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:text="@string/phone_number" />
+            <LinearLayout
+                android:layout_width="239dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/phoneTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/phone_number"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/phoneTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/my_phone_number"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -138,19 +182,38 @@
 
             <ImageView
                 android:id="@+id/genderIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:contentDescription="@string/gender_icon"
                 android:src="@drawable/ic_gender_icon" />
 
-            <TextView
-                android:id="@+id/genderTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:text="@string/gender" />
+            <LinearLayout
+                android:layout_width="239dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/genderTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/gender"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/genderTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/my_gender"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -162,6 +225,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:elevation="4dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -171,19 +235,38 @@
 
             <ImageView
                 android:id="@+id/locationIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:contentDescription="@string/location_icon"
                 android:src="@drawable/ic_location_icon" />
 
-            <TextView
-                android:id="@+id/locationTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:text="@string/location" />
+            <LinearLayout
+                android:layout_width="239dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/locationTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/location"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/locationTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:text="@string/my_location"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -196,5 +279,6 @@
         android:text="@string/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/avatarIcon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,4 +41,12 @@
     <string name="location_icon">Location Icon</string>
     <string name="location">Location</string>
     <string name="avatar">Avatar</string>
+    <string name="my_phone_number">My Phone Number</string>
+    <string name="my_name">My Name</string>
+    <string name="my_gender">My Gender</string>
+    <string name="my_location">My Location</string>
+    <string name="profileFragmentTitle">Profile</string>
+    <string name="feedFragmentTitle">Feed</string>
+    <string name="settingsFragmentTitle">Settings</string>
+    <string name="recordFragmentTitle">Record</string>
 </resources>
