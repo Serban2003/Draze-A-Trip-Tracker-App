@@ -2,18 +2,15 @@ package com.example.triptracker;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,13 +28,8 @@ public class ProfileFragment extends Fragment {
     private TextView fullNameTextView, genderTextView, phoneTextView, locationTextView;
     private ImageView avatar;
     private FirebaseUser user;
-    private FirebaseDatabase database;
-    private DatabaseReference userRef;
     private String email;
-
-    private final String TAG = this.getClass().getName();
     private static final String USER = "users";
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
