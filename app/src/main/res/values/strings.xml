@@ -32,4 +32,13 @@
     <string name="password">Password</string>
     <string name="register">Register</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="full_name">Full Name</string>
+    <string name="name_icon">Name icon</string>
+    <string name="gender_icon">Gender Icon</string>
+    <string name="gender">Gender</string>
+    <string name="phone_icon">Phone Icon</string>
+    <string name="phone_number">Phone number</string>
+    <string name="location_icon">Location Icon</string>
+    <string name="location">Location</string>
+    <string name="avatar">Avatar</string>
 </resources>
