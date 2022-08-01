@@ -1,6 +1,9 @@
 package com.example.triptracker;
 
+import android.net.Uri;
+
 public class User {
+    private String keyId;
     private String username;
     private String email;
     private String password;
@@ -8,11 +11,31 @@ public class User {
     private String gender;
     private String phoneNumber;
     private String location;
+    private Uri avatarUri;
 
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String keyId, String username, String email, String password, String fullName, String gender, String phoneNumber, String location, Uri avatarUri){
+        this.keyId = keyId;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.phoneNumber = phoneNumber;
+        this.location = location;
+        this.avatarUri = avatarUri;
+    }
+    public String getKeyId() {
+        return keyId;
+    }
+
+    public void setKeyId(String keyId) {
+        this.keyId = keyId;
     }
 
     public String getUsername() {
@@ -69,5 +92,13 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Uri getAvatarUri() {
+        return avatarUri;
+    }
+
+    public void setAvatarUri(Uri avatarUri) {
+        this.avatarUri = avatarUri;
     }
 }
