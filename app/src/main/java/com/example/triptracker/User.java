@@ -6,7 +6,7 @@ public class User {
     private String password;
     private String fullName;
     private String gender;
-    private String phone;
+    private String phoneNumber;
     private String location;
 
     public User(String username, String email, String password) {
@@ -55,12 +55,12 @@ public class User {
         this.gender = gender;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNumber(String phone) {
+        this.phoneNumber = phone;
     }
 
     public String getLocation() {

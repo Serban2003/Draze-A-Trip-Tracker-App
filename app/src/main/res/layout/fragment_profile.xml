@@ -8,91 +8,349 @@
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="0dp"
+        android:background="@drawable/gradient_background"
         android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:background="@drawable/gradient_background">
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/usernameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
             android:text="@string/username"
             android:textColor="@color/white"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageView
-        android:id="@+id/avatarIcon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="150dp"
-        android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:src="@drawable/banana_avatar"
-        android:contentDescription="@string/avatar" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/userInformationLayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView"
-        app:layout_constraintVertical_bias="0.0">
-
-        <LinearLayout
-            android:id="@+id/fullNameLayout"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="UseCompoundDrawables">
+            app:layout_constraintVertical_bias="0.0" />
 
-            <ImageView
-                android:id="@+id/fullNameIcon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:contentDescription="@string/name_icon"
-                android:src="@drawable/ic_name_icon" />
+        <TextView
+            android:id="@+id/emailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/email"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/usernameTextView" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ViewSwitcher
+        android:id="@+id/profileSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="35dp"
+        android:inAnimation="@anim/slide_in"
+        android:outAnimation="@anim/slide_out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/avatarIcon"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/userInformationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
-                android:layout_width="239dp"
+                android:id="@+id/editButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.444"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/editButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/main_color"
+                    android:text="@string/edit_profile"
+                    tools:layout_editor_absoluteX="153dp"
+                    tools:layout_editor_absoluteY="362dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fullNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.444"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editButtonLayout"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/fullNameIcon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/name_icon"
+                    android:src="@drawable/ic_name_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/fullNameTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/full_name"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/fullNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/my_name"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/phoneLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.444"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fullNameLayout">
+
+                <ImageView
+                    android:id="@+id/phoneIcon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/phone_icon"
+                    android:src="@drawable/ic_phone_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/phoneTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/phone_number"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/phoneTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/my_phone_number"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/genderLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.444"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneLayout">
+
+                <ImageView
+                    android:id="@+id/genderIcon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/gender_icon"
+                    android:src="@drawable/ic_gender_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/genderTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/gender"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/genderTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/my_gender"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/locationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.444"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genderLayout">
+
+                <ImageView
+                    android:id="@+id/locationIcon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/location_icon"
+                    android:src="@drawable/ic_location_icon" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/locationTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/location"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/locationTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/my_location"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/userEditLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:id="@+id/editButtonsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.444"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <android.widget.Button
+                        android:id="@+id/cancelButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="37dp"
+                        android:textColor="@color/gray"
+                        android:background="@drawable/button_border"
+                        android:text="@string/cancel"
+                        android:layout_marginEnd="5dp"
+                        tools:layout_editor_absoluteX="153dp"
+                        tools:layout_editor_absoluteY="362dp" />
+
+                    <Button
+                        android:id="@+id/saveButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:backgroundTint="@color/main_color"
+                        android:text="@string/save"
+                        tools:layout_editor_absoluteX="153dp"
+                        tools:layout_editor_absoluteY="362dp" />
+                </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fullNameEditLayout"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editButtonsLayout">
 
                 <TextView
-                    android:id="@+id/fullNameTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -102,98 +360,35 @@
                     android:text="@string/full_name"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/fullNameTextView"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/fullNameEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:layout_marginTop="-8dp"
                     android:layout_weight="1"
+                    android:autofillHints=""
+                    android:inputType="textPersonName"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@string/my_name"
                     android:textSize="16sp" />
 
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/phoneLayout"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="8dp"
-            android:elevation="4dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.444"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fullNameLayout">
-
-            <ImageView
-                android:id="@+id/phoneIcon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:contentDescription="@string/phone_icon"
-                android:src="@drawable/ic_phone_icon" />
 
             <LinearLayout
-                android:layout_width="239dp"
+                android:id="@+id/genderEditLayout"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fullNameEditLayout">
 
                 <TextView
-                    android:id="@+id/phoneTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@string/phone_number"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/phoneTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@string/my_phone_number"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/genderLayout"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="8dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.444"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/phoneLayout">
-
-            <ImageView
-                android:id="@+id/genderIcon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:contentDescription="@string/gender_icon"
-                android:src="@drawable/ic_gender_icon" />
-
-            <LinearLayout
-                android:layout_width="239dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/genderTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -203,11 +398,12 @@
                     android:text="@string/gender"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/genderTextView"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/genderEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:layout_marginTop="-8dp"
                     android:layout_weight="1"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
@@ -215,70 +411,109 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-        </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/phoneEditLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/genderEditLayout">
 
-        <LinearLayout
-            android:id="@+id/locationLayout"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:elevation="4dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.444"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/genderLayout">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/phone_number"
+                        android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/locationIcon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:contentDescription="@string/location_icon"
-                android:src="@drawable/ic_location_icon" />
+                    <EditText
+                        android:id="@+id/phoneEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="-8dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/my_phone_number"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="239dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/locationEditLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/phoneEditLayout">
 
-                <TextView
-                    android:id="@+id/locationTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@string/location"
-                    android:textSize="18sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/location"
+                        android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/locationTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@string/my_location"
-                    android:textSize="16sp" />
-            </LinearLayout>
 
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <Spinner
+                        android:id="@+id/locationSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:background="@android:drawable/btn_dropdown"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:spinnerMode="dropdown"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-    <TextView
-        android:id="@+id/emailTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="@string/email"
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ViewSwitcher>
+
+    <ImageView
+        android:id="@+id/avatarIcon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="125dp"
+        android:contentDescription="@string/avatar"
+        android:elevation="5dp"
+        android:src="@drawable/ic_no_image"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/avatarIcon" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/addImageButton"
+        android:layout_width="44dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:backgroundTint="@color/main_color"
+        android:elevation="7dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_photo_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/avatarIcon"
+        app:layout_constraintEnd_toEndOf="@+id/avatarIcon"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/avatarIcon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

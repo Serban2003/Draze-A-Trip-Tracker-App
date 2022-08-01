@@ -49,4 +49,7 @@
     <string name="feedFragmentTitle">Feed</string>
     <string name="settingsFragmentTitle">Settings</string>
     <string name="recordFragmentTitle">Record</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>

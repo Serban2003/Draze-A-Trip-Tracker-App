@@ -8,6 +8,7 @@
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/auth_selector.xml" value="0.2995" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/avd_anim.xml" value="0.173" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/background_gradient.xml" value="0.3635" />
+        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/button_border.xml" value="0.3625" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/color_selector.xml" value="0.2995" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/feed_selector.xml" value="0.191" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/gradient_background.xml" value="0.1935" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_menu_camera.xml" value="0.2285" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.142" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2285" />
+        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_photo_icon.xml" value="0.3635" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_profile_icon.xml" value="0.221" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_profile_icon_active.xml" value="0.1" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_record_icon.xml" value="0.1" />
@@ -71,6 +73,7 @@
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/menu/tracking.xml" value="0.35833333333333334" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.114" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.142" />
+        <entry key="..\:/Users/Iustinian Serban/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/btn_dropdown.xml" value="0.3635" />
       </map>
     </option>
   </component>
