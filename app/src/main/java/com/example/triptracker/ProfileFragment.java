@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment {
                         getArguments().getString("gender"),
                         getArguments().getString("phoneNumber"),
                         getArguments().getString("location"),
-                        Uri.parse(getArguments().getString("avatarUri")));
+                        Uri.parse("https://firebasestorage.googleapis.com/v0/b/trip-tracker-2844c.appspot.com/o/images%2F-N8UaMxF3Kw2GWqLl8ZN.png?alt=media&token=722fb0f6-a3c7-4e85-8f2a-b8e51408ce6a"));
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 

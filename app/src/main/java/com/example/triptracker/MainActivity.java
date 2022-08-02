@@ -34,13 +34,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener, SettingsFragment.SendData, EditCredentialsFragment.SendData {
 
     BottomNavigationView bottomNavigationView;
     FeedFragment feedFragment = new FeedFragment();
     RecordFragment recordFragment = new RecordFragment();
     ProfileFragment profileFragment = new ProfileFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
+    EditCredentialsFragment editCredentialsFragment = new EditCredentialsFragment();
 
     private DataSnapshot currentDataSnapshot;
     private FirebaseUser user;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             }
         });
         profileFragment.setArguments(userBundle);
+        editCredentialsFragment.setArguments(userBundle);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -186,5 +188,37 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             if(task.isSuccessful()) Toast.makeText(context, "Image Uploaded Successfully!", Toast.LENGTH_SHORT).show();
             else Toast.makeText(context, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
         });
+    }
+
+    @Override
+    public void someEvent(String s) {
+        switch (s){
+            case "Change Credentials":{
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                        .replace(R.id.rlContainer, editCredentialsFragment)
+                        .commit();
+                return;
+            }
+            case "idk":{
+                return;
+            }
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void getUpdatedData(String action, Bundle bundle){
+        if(Objects.equals(action, "Save")){
+            //Doesn't work!!
+//            FirebaseUserActivities firebaseUserActivities = new FirebaseUserActivities(null, rootReference, null);
+//            User newUser = user;
+//            newUser.setEmail(bundle.getString("email"));
+//            firebaseUserActivities.changeEmailAddress(user, newUser);
+        }
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                .replace(R.id.rlContainer, settingsFragment)
+                .commit();
     }
 }

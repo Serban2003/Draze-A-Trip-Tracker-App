@@ -10,6 +10,7 @@
     <color name="gray">#878787</color>
 
     <color name="main_color">#FF5722</color>
+    <color name="main_color_inactive">#FD7F57</color>
     <color name="accent_color">#F7B42C</color>
     <color name="accent_color_dark">#FC575E</color>
 </resources>
