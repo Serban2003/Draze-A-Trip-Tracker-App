@@ -52,4 +52,26 @@
     <string name="edit_profile">Edit profile</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="title">Title</string>
+
+    <string-array name="account_settings">
+        <item>Change Username</item>
+        <item>Change Email</item>
+        <item>Change Password</item>
+    </string-array>
+
+    <string-array name="preferences_settings">
+        <item>Display</item>
+        <item>FAQ</item>
+        <item>Legal</item>
+        <item>About</item>
+        <item>Delete Your Account</item>
+        <item>Log Out</item>
+    </string-array>
+
+    <array name="settings_menu">
+        <item>Account</item>
+        <item>Preferences</item>
+    </array>
+    
 </resources>

@@ -74,6 +74,11 @@
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.114" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.142" />
         <entry key="..\:/Users/Iustinian Serban/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/btn_dropdown.xml" value="0.3635" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/drawable/recycler_item_background.xml" value="0.199" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/activity_authentication.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/fragment_settings.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/recycler_row.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/recycler_row_main.xml" value="0.3625" />
       </map>
     </option>
   </component>
