@@ -21,6 +21,7 @@
             android:paddingStart="25dp"
             android:paddingEnd = "25dp"
             android:text="@string/title"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="@color/text_color_main"/>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

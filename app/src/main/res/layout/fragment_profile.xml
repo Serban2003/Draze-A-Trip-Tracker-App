@@ -131,7 +131,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/full_name"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textColor="@color/text_color_main"/>
 
                     <TextView
                         android:id="@+id/fullNameTextView"
@@ -142,7 +143,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/my_name"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textColor="@color/text_color_main"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -179,7 +181,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/phone_number"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textColor="@color/text_color_main"/>
 
                     <TextView
                         android:id="@+id/phoneTextView"
@@ -190,7 +193,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/my_phone_number"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textColor="@color/text_color_main"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -228,7 +232,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/gender"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textColor="@color/text_color_main"/>
 
                     <TextView
                         android:id="@+id/genderTextView"
@@ -239,7 +244,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/my_gender"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textColor="@color/text_color_main"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -278,7 +284,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/location"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textColor="@color/text_color_main"/>
 
                     <TextView
                         android:id="@+id/locationTextView"
@@ -289,7 +296,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/my_location"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textColor="@color/text_color_main"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -320,7 +328,7 @@
                         android:id="@+id/cancelButton"
                         android:layout_width="wrap_content"
                         android:layout_height="37dp"
-                        android:textColor="@color/gray"
+                        android:textColor="@color/text_color_main"
                         android:background="@drawable/button_border"
                         android:text="@string/cancel"
                         android:layout_marginEnd="5dp"
@@ -358,6 +366,7 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@string/full_name"
+                    android:textColor="@color/text_color_main"
                     android:textSize="18sp" />
 
                 <EditText
@@ -396,6 +405,7 @@
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:text="@string/gender"
+                    android:textColor="@color/text_color_main"
                     android:textSize="18sp" />
 
                 <EditText
@@ -431,6 +441,7 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/phone_number"
+                        android:textColor="@color/text_color_main"
                         android:textSize="18sp" />
 
                     <EditText
@@ -466,6 +477,7 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/location"
+                        android:textColor="@color/text_color_main"
                         android:textSize="18sp" />
 
 
@@ -480,8 +492,6 @@
                         android:spinnerMode="dropdown"
                         android:textSize="16sp" />
                 </LinearLayout>
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

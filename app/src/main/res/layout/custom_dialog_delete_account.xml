@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="10dp"
+            tools:layout_editor_absoluteY="10dp"
+            android:paddingBottom="10dp">
+
+            <!--TODO: Create a custom alert icon-->
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/alert_icon"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/ic_login_icon_active" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="@string/delete_account"
+                android:textColor="@color/text_color_main"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Are you sure you want to delete this account?"
+            android:textColor="@color/text_color_main"
+            android:background="@drawable/border_top_bottom"
+            android:textSize="18sp"
+            tools:ignore="HardcodedText"
+            android:textAlignment="center"
+            tools:layout_editor_absoluteY="40dp"
+            android:padding="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingTop="10dp"
+>
+
+            <android.widget.Button
+                android:id="@+id/yesButton"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:textColor="@color/text_color_main"
+                android:background="@drawable/button_border"
+                android:text="@string/yes"
+                android:layout_marginEnd="15dp"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="362dp" />
+
+            <android.widget.Button
+                android:id="@+id/noButton"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_border"
+                android:backgroundTint="@color/main_color"
+                android:text="@string/no"
+                android:layout_marginStart="15dp"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="362dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

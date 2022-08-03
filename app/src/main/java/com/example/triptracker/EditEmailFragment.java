@@ -3,10 +3,6 @@ package com.example.triptracker;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,18 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
-public class EditCredentialsFragment extends Fragment {
+public class EditEmailFragment extends Fragment {
 
     public interface SendData {
         public void getUpdatedData(String data, Bundle credentials);
     }
     Bundle credentials = new Bundle();
     SendData sendData;
-
-    EditText usernameEditText, emailEditText, passwordEditText;
-    Button saveButton, cancelButton;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -39,6 +33,9 @@ public class EditCredentialsFragment extends Fragment {
         }
     }
 
+    EditText emailEditText, passwordEditText;
+    Button saveButton, cancelButton;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,21 +44,18 @@ public class EditCredentialsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_credentials, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_username, container, false);
 
-        usernameEditText = view.findViewById(R.id.editTextUsername);
         emailEditText = view.findViewById(R.id.editTextEmailAddress);
-        passwordEditText = view.findViewById(R.id.editTextPassword);
-        saveButton = view.findViewById(R.id.saveButtonCredentials);
-        cancelButton = view.findViewById(R.id.cancelButtonCredentials);
+        passwordEditText = view.findViewById(R.id.editTextPasswordEmail);
+        saveButton = view.findViewById(R.id.saveButtonUsername);
+        cancelButton = view.findViewById(R.id.cancelButtonUsername);
 
         assert getArguments() != null;
         String username = getArguments().getString("username");
-        String email = getArguments().getString("email");
         String password = getArguments().getString("password");
 
-        usernameEditText.setText(username);
-        emailEditText.setText(email);
+        emailEditText.setText(username);
 
         passwordEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -87,10 +81,8 @@ public class EditCredentialsFragment extends Fragment {
 
         cancelButton.setOnClickListener(view1 -> sendData.getUpdatedData("Cancel", credentials));
         saveButton.setOnClickListener(view1 -> {
-            credentials.putString("username", usernameEditText.getText().toString());
             credentials.putString("email", emailEditText.getText().toString());
-
-            sendData.getUpdatedData("Save", credentials);
+            sendData.getUpdatedData("SaveEmail", credentials);
         });
 
         return view;

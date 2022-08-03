@@ -53,6 +53,13 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="title">Title</string>
+    <string name="imperial">Imperial</string>
+    <string name="metric">Metric</string>
+    <string name="units_of_measure">Units of Measure</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="alert_icon">Alert Icon</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 
     <string-array name="account_settings">
         <item>Change Username</item>
@@ -69,11 +76,13 @@
         <item>Log Out</item>
     </string-array>
 
-    <array name="settings_menu">
+    <string-array name="settings_menu">
         <item>Account</item>
         <item>Preferences</item>
-    </array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    </string-array>
+
+    <string-array name="display_settings">
+        <item>Dark Mode</item>
+    </string-array>
 
 </resources>
