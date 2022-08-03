@@ -77,9 +77,15 @@
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/drawable/avd_anim.xml" value="0.3415" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/drawable/border_top_bottom.xml" value="0.2" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/drawable/custom_list.xml" value="0.343" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/drawable/ic_profile_icon.xml" value="0.3005" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/drawable/ic_settings_icon.xml" value="0.3005" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/drawable/recycler_item_background.xml" value="0.199" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/activity_authentication.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/activity_display_settings.xml" value="0.24552429667519182" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/activity_edit_email.xml" value="0.3625" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/activity_edit_username.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/activity_settings.xml" value="0.2553191489361702" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/custom_dialog_delete_account.xml" value="0.3614583333333333" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/custom_list.xml" value="0.3614583333333333" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/custom_list_item_main.xml" value="0.3625" />
@@ -92,6 +98,7 @@
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/fragment_faq.xml" value="0.1859375" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/fragment_feed.xml" value="0.3625" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/fragment_legal.xml" value="0.1859375" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/fragment_map.xml" value="0.3484375" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/fragment_profile.xml" value="0.3625" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/fragment_record.xml" value="0.3625" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/fragment_settings.xml" value="0.358695652173913" />
@@ -99,6 +106,9 @@
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/recycler_row_main.xml" value="0.3625" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/select_units_popup_window.xml" value="0.3614583333333333" />
         <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/settings_list_view.xml" value="0.3625" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/layout/toolbar.xml" value="0.3625" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3625" />
+        <entry key="..\:/Users/Teo/StudioProjects/TripTracker/app/src/main/res/menu/toolbar_menu.xml" value="0.3625" />
       </map>
     </option>
   </component>

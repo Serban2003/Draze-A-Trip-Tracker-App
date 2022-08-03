@@ -504,7 +504,7 @@
         android:layout_marginTop="125dp"
         android:contentDescription="@string/avatar"
         android:elevation="5dp"
-        android:src="@drawable/ic_no_image"
+        tools:srcCompat="@tools:sample/avatars"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

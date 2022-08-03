@@ -40,18 +40,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener, SettingsFragment.SendData, EditUsernameFragment.SendData, EditEmailFragment.SendData, DisplaySettingsFragment.SendData {
+public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
 
     BottomNavigationView bottomNavigationView;
     FeedFragment feedFragment = new FeedFragment();
+    MapFragment mapFragment = new MapFragment();
     RecordFragment recordFragment = new RecordFragment();
     ProfileFragment profileFragment = new ProfileFragment();
-    SettingsFragment settingsFragment = new SettingsFragment();
-    EditUsernameFragment editUsernameFragment = new EditUsernameFragment();
-    DisplaySettingsFragment displaySettingsFragment = new DisplaySettingsFragment();
-    FAQFragment faqFragment = new FAQFragment();
-    LegalFragment legalFragment = new LegalFragment();
-    AboutFragment aboutFragment = new AboutFragment();
 
     private DataSnapshot currentDataSnapshot;
     private FirebaseUser user;
@@ -95,8 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                         updateBundle(ds);
                     }
                 }
-                storageReference = storage.getReference().child("images/" + currentDataSnapshot.getKey());
-                storageReference.getDownloadUrl().addOnSuccessListener(uri -> userBundle.putString("avatarUri", uri.toString()));
+//                storageReference = storage.getReference().child("images/" + currentDataSnapshot.getKey());
+//                storageReference.getDownloadUrl().addOnSuccessListener(uri -> userBundle.putString("avatarUri", uri.toString()));
             }
 
             @Override
@@ -104,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             }
         });
         profileFragment.setArguments(userBundle);
-        editUsernameFragment.setArguments(userBundle);
+
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -119,6 +114,13 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                         .commit();
                 return true;
 
+            case R.id.map:
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                        .replace(R.id.rlContainer, mapFragment)
+                        .commit();
+                return true;
+
             case R.id.record:
                 getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
@@ -130,13 +132,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
                         .replace(R.id.rlContainer, profileFragment)
-                        .commit();
-                return true;
-
-            case R.id.settings:
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
-                        .replace(R.id.rlContainer, settingsFragment)
                         .commit();
                 return true;
         }
@@ -154,15 +149,6 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         inflater.inflate(R.menu.toolbar_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_about_app) {// Do something
-
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     void updateBundle(DataSnapshot ds) {
@@ -204,107 +190,19 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
             });
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
-    public void getEvent(String event) {
-        switch (event) {
-            case "Change Username": {
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
-                        .replace(R.id.rlContainer, editUsernameFragment)
-                        .commit();
-                return;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settingsButton:{
+                Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra("username", Objects.requireNonNull(currentDataSnapshot.child("username").getValue()).toString());
+                intent.putExtra("password", Objects.requireNonNull(currentDataSnapshot.child("password").getValue()).toString());
+                startActivity(intent);
+                return true;
             }
-            case "Change Email": {
-                Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            case "Change Password": {
-                Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            case "Display": {
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
-                        .replace(R.id.rlContainer, displaySettingsFragment)
-                        .commit();
-                return;
-            }
-            case "FAQ": {
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
-                        .replace(R.id.rlContainer, faqFragment)
-                        .commit();
-                return;
-            }
-            case "Legal": {
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
-                        .replace(R.id.rlContainer, legalFragment)
-                        .commit();
-                return;
-            }
-            case "About": {
-                getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
-                        .replace(R.id.rlContainer, aboutFragment)
-                        .commit();
-                return;
-            }
-            case "Delete Your Account": {
-                CustomDialogClass customDialog = new CustomDialogClass(MainActivity.this);
-                customDialog.show();
-                customDialog.yesButton.setOnClickListener(view -> deleteUser());
-//                Button yesButton = (Button) customDialog.findViewById(R.id.yesButton);
-//                yesButton.setOnClickListener(view -> deleteUser());
-                return;
-            }
-            case "Log Out": {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(this, AuthenticationActivity.class));
-            }
+            default:
+                return super.onOptionsItemSelected(item);
         }
-    }
-
-    public void singOut(){
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(this, AuthenticationActivity.class));
-    }
-
-    @SuppressLint("RestrictedApi")
-    @Override
-    public void getUpdatedData(String action, Bundle bundle) {
-        if (Objects.equals(action, "SaveEmail")) {
-//            Doesn't work!!
-//            FirebaseUserActivities firebaseUserActivities = new FirebaseUserActivities(null, rootReference, null);
-//            User newUser = user;
-//            newUser.setEmail(bundle.getString("email"));
-//            firebaseUserActivities.changeEmailAddress(user, newUser);
-        } else if (Objects.equals(action, "SaveUsername")) {
-            userReference.child(Objects.requireNonNull(currentDataSnapshot.getKey())).child("username").setValue(bundle.getString("username"));
-        }
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
-                .replace(R.id.rlContainer, settingsFragment)
-                .commit();
-    }
-
-    @SuppressLint("RestrictedApi")
-    public void deleteUser() {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        // Get auth credentials from the user for re-authentication. The example below shows
-        // email and password credentials but there are multiple possible providers,
-        // such as GoogleAuthProvider or FacebookAuthProvider.
-        assert user != null;
-        AuthCredential credential = EmailAuthProvider.getCredential(Objects.requireNonNull(user.getEmail()), Objects.requireNonNull(currentDataSnapshot.child("password").getValue()).toString());
-
-        // Prompt the user to re-provide their sign-in credentials
-        user.reauthenticate(credential).addOnCompleteListener(task -> {
-                    singOut();
-                    currentDataSnapshot.getRef().removeValue();
-                    user.delete().addOnCompleteListener(task1 -> {
-                                if (task1.isSuccessful()) Log.d(TAG, "User account deleted.");
-                    });
-        });
     }
 }
