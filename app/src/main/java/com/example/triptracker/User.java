@@ -2,7 +2,14 @@ package com.example.triptracker;
 
 import android.net.Uri;
 
-public class User {
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
+
+public class User implements Serializable {
+
+    private final String NOT = "Not provided";
+
     private String keyId;
     private String username;
     private String email;
@@ -11,15 +18,36 @@ public class User {
     private String gender;
     private String phoneNumber;
     private String location;
-    private Uri avatarUri;
+    private String avatarUri;
+
+    private static final String DEFAULT_PATH_AVATAR = "https://firebasestorage.googleapis.com/v0/b/trip-tracker-2844c.appspot.com/o/images%2F-N8UaMxF3Kw2GWqLl8ZN.png?alt=media&token=722fb0f6-a3c7-4e85-8f2a-b8e51408ce6a";
+
+    public User(){
+        this.keyId = NOT;
+        this.username = NOT;
+        this.email = NOT;
+        this.password = NOT;
+        this.fullName = NOT;
+        this.gender = NOT;
+        this.phoneNumber = NOT;
+        this.location = NOT;
+        this.avatarUri = DEFAULT_PATH_AVATAR;
+    }
 
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
+
+        this.keyId = NOT;
+        this.fullName = NOT;
+        this.gender = NOT;
+        this.phoneNumber = NOT;
+        this.location = NOT;
+        this.avatarUri = DEFAULT_PATH_AVATAR;
     }
 
-    public User(String keyId, String username, String email, String password, String fullName, String gender, String phoneNumber, String location, Uri avatarUri){
+    public User(String keyId, String username, String email, String password, String fullName, String gender, String phoneNumber, String location, String avatarUri){
         this.keyId = keyId;
         this.username = username;
         this.email = email;
@@ -94,11 +122,26 @@ public class User {
         this.location = location;
     }
 
-    public Uri getAvatarUri() {
+    public String getAvatarUri() {
         return avatarUri;
     }
 
-    public void setAvatarUri(Uri avatarUri) {
+    public void setAvatarUri(String avatarUri) {
         this.avatarUri = avatarUri;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", location='" + location + '\'' +
+                ", avatarUri=" + avatarUri +
+                '}';
     }
 }

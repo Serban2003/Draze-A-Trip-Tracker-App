@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 public class SettingsActivity extends CustomSecondaryActivity {
@@ -26,14 +27,12 @@ public class SettingsActivity extends CustomSecondaryActivity {
     RecyclerView settingsRecyclerView;
     String[] settingsMenu, accountSettings, preferencesSettings;
 
-    Bundle bundle = new Bundle();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        bundle = getIntent().getExtras();
+        User user = (User) getIntent().getSerializableExtra("user");
 
         settingsRecyclerView = findViewById(R.id.settingsRecyclerView);
 
@@ -49,15 +48,15 @@ public class SettingsActivity extends CustomSecondaryActivity {
             switch (item) {
                 case "Change Username": {
                     Intent intent = new Intent(this, EditUsernameActivity.class);
-                    intent.putExtra("username", bundle.getString("username"));
-                    intent.putExtra("password", bundle.getString("bundle"));
+                    intent.putExtra("username", user.getUsername());
+                    intent.putExtra("password", user.getPassword());
                     startActivity(intent);
                     break;
                 }
                 case "Change Email": {
                     Intent intent = new Intent(this, EditEmailActivity.class);
-                    intent.putExtra("email", bundle.getString("email"));
-                    intent.putExtra("password", bundle.getString("password"));
+                    intent.putExtra("email",user.getEmail());
+                    intent.putExtra("password", user.getPassword());
                     startActivity(intent);
                     break;
                 }
