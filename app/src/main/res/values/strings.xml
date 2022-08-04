@@ -70,7 +70,6 @@
 
     <string-array name="preferences_settings">
         <item>Display</item>
-        <item>FAQ</item>
         <item>Legal</item>
         <item>About</item>
         <item>Delete Your Account</item>

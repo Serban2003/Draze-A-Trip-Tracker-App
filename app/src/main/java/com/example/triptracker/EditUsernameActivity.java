@@ -63,6 +63,11 @@ public class EditUsernameActivity extends CustomSecondaryActivity {
         });
     }
 
+    @Override
+    protected String getTitleView() {
+        return "Change Username";
+    }
+
     private void sendMessage(String message) {
         Intent intent = new Intent("updated-username");
         intent.putExtra("username", message);

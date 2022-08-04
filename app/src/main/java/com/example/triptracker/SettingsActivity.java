@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -18,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
-
 
 public class SettingsActivity extends CustomSecondaryActivity {
 
@@ -76,16 +76,16 @@ public class SettingsActivity extends CustomSecondaryActivity {
                     startActivity(new Intent(this, DisplaySettingsActivity.class));
                     break;
                 }
-                case "FAQ": {
-                    startActivity(new Intent(this, FAQActivity.class));
-                    break;
-                }
                 case "Legal": {
-                    startActivity(new Intent(this, LegalActivity.class));
+                    Uri uri = Uri.parse("http://github.com/Serban2003/TripTracker/blob/master/LICENSE"); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
                     break;
                 }
                 case "About": {
-                    startActivity(new Intent(this, AboutActivity.class));
+                    Uri uri = Uri.parse("http://github.com/Serban2003/TripTracker"); // missing 'http://' will cause crashed
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
                     break;
                 }
                 case "Delete Your Account": {
@@ -116,6 +116,11 @@ public class SettingsActivity extends CustomSecondaryActivity {
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(editUsernameReceiver, new IntentFilter("updated-username"));
+    }
+
+    @Override
+    public String getTitleView() {
+        return "Settings";
     }
 
     @Override

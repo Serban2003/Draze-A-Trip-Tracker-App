@@ -28,4 +28,9 @@ public class DisplaySettingsActivity extends CustomSecondaryActivity {
         displayRecyclerView.setAdapter(displaySettingsAdapter);
         displayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    @Override
+    public String getTitleView() {
+        return "Display";
+    }
 }

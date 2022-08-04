@@ -57,4 +57,9 @@ public class EditEmailActivity extends CustomSecondaryActivity {
 //            sendData.getUpdatedData("SaveEmail", credentials);
 //        });
     }
+
+    @Override
+    protected String getTitleView() {
+        return "Change Email";
+    }
 }
