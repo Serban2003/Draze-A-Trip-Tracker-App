@@ -5,11 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -23,11 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import java.io.Serializable;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
@@ -35,9 +33,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     User user = new User();
     BottomNavigationView bottomNavigationView;
     FeedFragment feedFragment = new FeedFragment();
-    MapFragment mapFragment = new MapFragment();
     RecordFragment recordFragment = new RecordFragment();
     ProfileFragment profileFragment = new ProfileFragment();
+    MapFragment mapFragment = new MapFragment();
 
     private FirebaseUser firebaseUser;
     private static StorageReference storageReference;

@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -26,6 +29,10 @@ public class SettingsActivity extends CustomSecondaryActivity {
     BroadcastReceiver editUsernameReceiver;
     RecyclerView settingsRecyclerView;
     String[] settingsMenu, accountSettings, preferencesSettings;
+
+    private static DatabaseReference userReference;
+    private static final String USER = "users";
+    private static final String PATH_TO_DATABASE = "https://trip-tracker-2844c-default-rtdb.europe-west1.firebasedatabase.app/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,8 @@ public class SettingsActivity extends CustomSecondaryActivity {
         settingsMenu = getResources().getStringArray(R.array.settings_menu);
         accountSettings = getResources().getStringArray(R.array.account_settings);
         preferencesSettings = getResources().getStringArray(R.array.preferences_settings);
+
+        userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
 
         String[] item1 = {""}, item2 = {""};
         item1[0] = settingsMenu[0];
@@ -112,6 +121,8 @@ public class SettingsActivity extends CustomSecondaryActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String username = intent.getStringExtra("username");
+                user.setUsername(username);
+                userReference.child(user.getKeyId()).child("username").setValue(username);
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(editUsernameReceiver, new IntentFilter("updated-username"));

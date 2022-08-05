@@ -59,7 +59,7 @@ public class EditUsernameActivity extends CustomSecondaryActivity {
         });
         saveButton.setOnClickListener(view1 -> {
             passwordEditText.setText("");
-            sendMessage("usernameEditText.getText().toString()");
+            sendMessage(usernameEditText.getText().toString());
         });
     }
 
