@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.triptracker">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,9 +18,26 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppSplash"
+        android:theme="@style/Theme.TripTracker.NoActionBar"
         tools:targetApi="31">
 
+        <service
+            android:name=".LocationProvider"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".SaveTrackedActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TripTracker.NoActionBar" />
+        <activity
+            android:name=".EndTrackingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TripTracker.NoActionBar" />
+
+        <activity android:name=".TrackingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TripTracker.NoActionBar" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -32,7 +51,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="${MAPS_API_KEY}" />
 
         <activity
             android:name=".EditEmailActivity"
@@ -53,12 +72,22 @@
         <activity
             android:name=".AuthenticationActivity"
             android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+
+        <activity android:name=".SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -71,6 +100,8 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+
+        <receiver android:name=".AuthenticationActivity" />
     </application>
 
 </manifest>

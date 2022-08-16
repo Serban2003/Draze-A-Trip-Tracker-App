@@ -1,5 +1,6 @@
 package com.example.triptracker;
 
+import android.net.Uri;
 import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,8 @@ public class User implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private Long localId;
+
+    private int totalActivities;
 
     public Long getLocalId() {
         return localId;
@@ -62,9 +65,9 @@ public class User implements Serializable {
     private String location;
 
     @ColumnInfo(name = "avatarUri")
-    private String avatarUri;
+    private Uri avatarUri;
 
-    private static final String DEFAULT_PATH_AVATAR = "https://firebasestorage.googleapis.com/v0/b/trip-tracker-2844c.appspot.com/o/images%2F-N8UaMxF3Kw2GWqLl8ZN.png?alt=media&token=722fb0f6-a3c7-4e85-8f2a-b8e51408ce6a";
+    private static final Uri DEFAULT_PATH_AVATAR = Uri.parse("https://firebasestorage.googleapis.com/v0/b/trip-tracker-2844c.appspot.com/o/images%2Fdefault_avatar%400.75x.png?alt=media&token=44b6c290-c5c1-4dd6-9979-8d680c695b12");
 
     @ColumnInfo(name = "activities")
     private ArrayList<TrackDetails> activities = new ArrayList<>();
@@ -85,7 +88,6 @@ public class User implements Serializable {
         this.username = username;
         this.email = email;
         this.password = password;
-
         this.keyId = NOT;
         this.fullName = NOT;
         this.gender = NOT;
@@ -94,7 +96,7 @@ public class User implements Serializable {
         this.avatarUri = DEFAULT_PATH_AVATAR;
     }
     @Ignore
-    public User(String keyId, String username, String email, String password, String fullName, String gender, String phoneNumber, String location, String avatarUri){
+    public User(String keyId, String username, String email, String password, String fullName, String gender, String phoneNumber, String location, Uri avatarUri){
         this.keyId = keyId;
         this.username = username;
         this.email = email;
@@ -169,11 +171,11 @@ public class User implements Serializable {
         this.location = location;
     }
 
-    public String getAvatarUri() {
+    public Uri getAvatarUri() {
         return avatarUri;
     }
 
-    public void setAvatarUri(String avatarUri) {
+    public void setAvatarUri(Uri avatarUri) {
         this.avatarUri = avatarUri;
     }
 
@@ -181,6 +183,21 @@ public class User implements Serializable {
         return activities.size();
     }
 
+    public TrackDetails getActivityFromId(int id){
+        return activities.get(id);
+    }
+
+    public void addActivity(TrackDetails trackDetails){
+        activities.add(trackDetails);
+    }
+
+    public int getTotalActivities() {
+        return totalActivities;
+    }
+
+    public void setTotalActivities(int totalActivities) {
+        this.totalActivities = totalActivities;
+    }
 
     @NonNull
     @Override

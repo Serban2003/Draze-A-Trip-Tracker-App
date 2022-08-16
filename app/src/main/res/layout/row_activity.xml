@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/listview_shape_row"
+    android:elevation="3dp">
+
+    <LinearLayout
+        android:id="@+id/trackHeader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/listview_shape_row"
+        android:padding="10dp">
+
+
+        <LinearLayout
+            android:id="@+id/rowHeaderData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textViewRowHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:text="@string/title" />
+
+                <TextView
+                    android:id="@+id/textViewRowHeaderValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    tools:text="track_title" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewRowHeaderDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:text="@string/date"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <View
+                        android:id="@+id/colorView"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/round_view"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewRowHeaderDateValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    tools:text="track_date" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_activity_row"
+        android:orientation="vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/trackHeader">
+
+        <LinearLayout
+            android:id="@+id/rowDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewRowTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/duration"
+                    android:textColor="@color/text_color_main"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textViewRowTitleValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10sp"
+                    android:textColor="@color/text_color_main"
+                    android:textSize="20sp"
+                    tools:text="10:54" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewRowDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/distance"
+                    android:textColor="@color/text_color_main"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textViewRowDistanceValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10sp"
+                    android:textColor="@color/text_color_main"
+                    android:textSize="20sp"
+                    tools:text="112.5km" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewRowElevation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/elevation"
+                    android:textColor="@color/text_color_main"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textViewRowElevationValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10sp"
+                    android:textColor="@color/text_color_main"
+                    android:textSize="20sp"
+                    tools:text="100m" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/separatorView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:id="@+id/textViewRowDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:textColor="@color/text_color_main"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rowDetails" />
+
+            <TextView
+                android:id="@+id/textViewRowDescriptionValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_main"
+                android:textSize="16sp"
+                android:layout_marginBottom="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rowDetails"
+                tools:text="track_description" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

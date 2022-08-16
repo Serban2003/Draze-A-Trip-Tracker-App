@@ -1,24 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    android:gravity="center"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/secondFragment"
-        android:layout_width="wrap_content"
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="@string/map"
+        app:layout_constraintBottom_toTopOf="@+id/button_start_tracking"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        map:cameraZoom="13" />
+
+    <Button
+        android:id="@+id/button_start_tracking"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/main_color"
+        android:padding="25sp"
         android:text="@string/record"
-        android:textColor="@color/main_color"
-        android:textSize="40sp"
-        android:textStyle="italic|bold"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:contentDescription="@string/record"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/styleButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/icon_background"
+        android:contentDescription="@string/style_map"
+        android:padding="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_map_style"
+        app:layout_constraintBottom_toTopOf="@+id/button_start_tracking"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageButton
+        android:id="@+id/locationButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/icon_background"
+        android:contentDescription="@string/focus_location"
+        android:padding="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_map_location"
+        app:layout_constraintBottom_toTopOf="@+id/styleButton"
+        map:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

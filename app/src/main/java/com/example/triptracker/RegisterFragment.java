@@ -10,26 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class RegisterFragment extends Fragment{
 
-    private EditText usernameEditText, emailEditText, passwordEditText;
-    private FirebaseDatabase database;
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
-    private User user;
-    private static final String USER = "users";
     private static final String TAG = "RegisterFragment";
+    private EditText usernameEditText, emailEditText, passwordEditText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,20 +83,15 @@ public class RegisterFragment extends Fragment{
             }
         });
 
-        database = FirebaseDatabase.getInstance("https://trip-tracker-2844c-default-rtdb.europe-west1.firebasedatabase.app/");
-        mDatabase = database.getReference(USER);
-        mAuth = FirebaseAuth.getInstance();
+
 
         loginButton.setOnClickListener(v ->  {
-
             String username = usernameEditText.getText().toString();
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            if(verifyInput(username, email, password)){
-                user = new User(username, email, password);
-                registerUser(email, password);
-            }
+            if(verifyInput(username, email, password)) sendMessage(email, username, password);
+
         });
         return view;
     }
@@ -117,28 +102,27 @@ public class RegisterFragment extends Fragment{
         else return password.length() >= 6;
     }
 
-    public void registerUser(String email, String password){
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                        Toast.makeText(getActivity(), "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+    private void sendMessage(String email, String username,String password) {
+        Log.d("sender", "Broadcasting message");
+        Intent intent = new Intent("getUserCredentials");
+        // You can also include some extra data.
+        intent.putExtra("authType", "register");
+        intent.putExtra("email", email);
+        intent.putExtra("username", username);
+        intent.putExtra("password", password);
+        LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
     }
 
-    public void updateUI(FirebaseUser currentUser){
-        String keyId = mDatabase.push().getKey();
-        assert keyId != null;
-        mDatabase.child(keyId).setValue(user);
-        startActivity(new Intent(getActivity(), MainActivity.class));
-    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        usernameEditText.setText(null);
+        usernameEditText.setError(null);
 
+        emailEditText.setText(null);
+        emailEditText.setError(null);
+
+        passwordEditText.setText(null);
+        passwordEditText.setError(null);
+    }
 }

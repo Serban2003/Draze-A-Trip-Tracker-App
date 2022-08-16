@@ -1,5 +1,7 @@
 package com.example.triptracker;
 
+import static com.example.triptracker.UserDao.user;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,8 +42,6 @@ public class SettingsActivity extends CustomSecondaryActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        User user = (User) getIntent().getSerializableExtra("user");
-
         settingsRecyclerView = findViewById(R.id.settingsRecyclerView);
 
         settingsMenu = getResources().getStringArray(R.array.settings_menu);
@@ -57,15 +58,15 @@ public class SettingsActivity extends CustomSecondaryActivity {
             switch (item) {
                 case "Change Username": {
                     Intent intent = new Intent(this, EditUsernameActivity.class);
-                    intent.putExtra("username", user.getUsername());
-                    intent.putExtra("password", user.getPassword());
+                    intent.putExtra("username", UserDao.user.getUsername());
+                    intent.putExtra("password", UserDao.user.getPassword());
                     startActivity(intent);
                     break;
                 }
                 case "Change Email": {
                     Intent intent = new Intent(this, EditEmailActivity.class);
-                    intent.putExtra("email",user.getEmail());
-                    intent.putExtra("password", user.getPassword());
+                    intent.putExtra("email",UserDao.user.getEmail());
+                    intent.putExtra("password", UserDao.user.getPassword());
                     startActivity(intent);
                     break;
                 }
@@ -97,9 +98,10 @@ public class SettingsActivity extends CustomSecondaryActivity {
                     break;
                 }
                 case "Delete Your Account": {
-                    CustomDialogClass customDialog = new CustomDialogClass(SettingsActivity.this);
+                    CustomDialogClass customDialog = new CustomDialogClass(SettingsActivity.this, "Delete Account", "Are you sure you want to delete this account?");
                     customDialog.show();
-                    //  customDialog.yesButton.setOnClickListener(view -> deleteUser());
+
+                    //customDialog.yesButton.setOnClickListener(view -> deleteUser());
                     break;
                 }
                 case "Log Out": {
@@ -116,13 +118,12 @@ public class SettingsActivity extends CustomSecondaryActivity {
         settingsRecyclerView.setAdapter(concatAdapter);
         settingsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         editUsernameReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String username = intent.getStringExtra("username");
                 user.setUsername(username);
-                userReference.child(user.getKeyId()).child("username").setValue(username);
+                userReference.child(UserDao.user.getKeyId()).child("username").setValue(username);
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(editUsernameReceiver, new IntentFilter("updated-username"));

@@ -13,7 +13,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM user")
     List<User> getAll();
-    @Query("SELECT * FROM user WHERE localId = :id")
+    @Query("SELECT * FROM user WHERE keyId = :id")
     List<User> loadAllById(int id);
     @Insert
     void insertAll(User... users);

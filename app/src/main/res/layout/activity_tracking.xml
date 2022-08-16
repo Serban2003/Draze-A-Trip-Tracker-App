@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TrackingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_view_distance_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/distance"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_weight="1.1"/>
+
+        <TextView
+            android:id="@+id/text_view_distance_tracking"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="70sp"
+            tools:text="0.0"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_weight="0.9"/>
+
+        <TextView
+            android:id="@+id/text_view_time_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/time"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_weight="1.1"/>
+
+        <TextView
+            android:id="@+id/text_view_time_tracking"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="80sp"
+            tools:text="00:00:00.0"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_weight="0.8"/>
+
+        <TextView
+            android:id="@+id/text_view_speed_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/average_speed"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_weight="1.1"/>
+
+        <TextView
+            android:id="@+id/text_view_speed_tracking"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="70sp"
+            tools:text="0.0"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_weight="0.9"/>
+
+        <Button
+            android:id="@+id/button_stop_tracking"
+            android:onClick="onStopTrackingPressed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/stop"
+            android:background="@color/main_color"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:padding="30sp"
+            android:gravity="center"
+            android:layout_weight="0.9"/>
+
+    </LinearLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

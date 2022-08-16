@@ -1,5 +1,7 @@
 package com.example.triptracker;
 
+import android.net.Uri;
+
 import androidx.room.TypeConverter;
 
 import com.google.common.reflect.TypeToken;
@@ -20,4 +22,17 @@ public class DatabaseConverters {
         Gson gson = new Gson();
         return gson.toJson(list);
     }
+
+    @TypeConverter
+    public static Uri fromUriString(String value) {
+        String url = new Gson().toJson(value);
+        return Uri.parse(url);
+    }
+
+    @TypeConverter
+    public static String fromUri(Uri uri) {
+        Gson gson = new Gson();
+        return gson.toJson(uri);
+    }
+
 }
