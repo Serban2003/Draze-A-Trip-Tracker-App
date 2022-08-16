@@ -30,7 +30,7 @@ public class MapFragment extends Fragment {
 
         Activity activity = getActivity();
         if (activity != null) {
-            activity.setTitle(getString(R.string.recordFragmentTitle));
+            activity.setTitle(getString(R.string.mapFragmentTitle));
         }
     }
 }

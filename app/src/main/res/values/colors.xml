@@ -10,8 +10,18 @@
     <color name="gray">#878787</color>
 
     <color name="main_color">#FF5722</color>
+    <color name="main_color_variant">#FB7A24</color>
     <color name="main_color_inactive">#FD7F57</color>
     <color name="text_color_main">#313131</color>
+    <color name="soft_gray">#D5D8DE</color>
+    <color name="text_color_hint">#323941</color>
     <color name="accent_color">#F7B42C</color>
     <color name="accent_color_dark">#FC575E</color>
+
+    <color name="background">#dddddd</color>
+    <color name="transparent">#00000000</color>
+    <color name="white_semi_transparent">#79FFFFFF</color>
+
+    <color name="incorrect">#E71010</color>
+    <color name="correct">#008215</color>
 </resources>

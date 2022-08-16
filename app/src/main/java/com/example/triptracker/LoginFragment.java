@@ -1,14 +1,6 @@
 package com.example.triptracker;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapShader;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.Shader;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,27 +11,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
 public class LoginFragment extends Fragment {
 
+    private final static String TAG = "LoginFragment";
+
     private EditText emailEditText;
     private EditText passwordEditText;
-    private User user;
-    private FirebaseAuth mAuth;
-    private final String TAG = "LoginFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //FirebaseAuth.getInstance().signOut();
     }
 
     @Override
@@ -66,6 +53,7 @@ public class LoginFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
             }
         });
+
         passwordEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -82,16 +70,14 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
 
         Button loginButton = view.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(v ->  {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            if(verifyInput(email, password)){
-                logInUser(email, password);
-            }
+            if(verifyInput(email, password))
+                sendMessage(email, password);
         });
 
         return view;
@@ -102,31 +88,23 @@ public class LoginFragment extends Fragment {
         else return password.length() >= 6;
     }
 
-    public void logInUser(String email, String password){
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), task -> {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "singInWithEmail:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "singInWithEmail:failure", task.getException());
-                        Toast.makeText(getActivity(), "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+    private void sendMessage(String email, String password) {
+        Log.d(TAG, "Broadcasting message");
+        Intent intent = new Intent("getUserCredentials");
+        // You can also include some extra data.
+        intent.putExtra("authType", "login");
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) updateUI(currentUser);
-    }
+    public void onResume() {
+        super.onResume();
+        emailEditText.setText(null);
+        emailEditText.setError(null);
 
-    public void updateUI(FirebaseUser currentUser){
-        startActivity(new Intent(getActivity(), MainActivity.class));
+        passwordEditText.setText(null);
+        passwordEditText.setError(null);
     }
 }

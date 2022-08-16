@@ -7,26 +7,38 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class CustomDialogClass extends Dialog implements android.view.View.OnClickListener {
 
     public Activity activity;
-    public Dialog dialog;
+    public String title, message;
     public Button yesButton, noButton;
+    public TextView titleTextView, messageTextView;
 
-    public CustomDialogClass(Activity activity) {
+    public CustomDialogClass(Activity activity, String title, String message) {
         super(activity);
         this.activity = activity;
+        this.title = title;
+        this.message = message;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.custom_dialog_delete_account);
-        yesButton = (Button) findViewById(R.id.yesButton);
-        noButton = (Button) findViewById(R.id.noButton);
+        setContentView(R.layout.custom_dialog_alert);
+
+        titleTextView = findViewById(R.id.dialogTitle);
+        titleTextView.setText(title);
+
+        messageTextView = findViewById(R.id.dialogMessage);
+        messageTextView.setText(message);
+
+        yesButton = findViewById(R.id.yesButton);
         yesButton.setOnClickListener(this);
+
+        noButton = findViewById(R.id.noButton);
         noButton.setOnClickListener(this);
     }
 

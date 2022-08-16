@@ -5,6 +5,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,12 +41,12 @@ public class EditUsernameActivity extends CustomSecondaryActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(passwordEditText.getText().toString().equals(password)){
-                    saveButton.setBackgroundColor(getResources().getColor(R.color.main_color));
-                    saveButton.setClickable(true);
+                    saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.main_color)));
+                    saveButton.setEnabled(true);
                 }
                 else {
-                    saveButton.setBackgroundColor(getResources().getColor(R.color.main_color_inactive));
-                    saveButton.setClickable(false);
+                    saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.main_color_inactive)));
+                    saveButton.setEnabled(false);
                 }
             }
             @Override

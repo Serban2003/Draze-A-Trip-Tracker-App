@@ -13,27 +13,37 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
-    private TextView fullNameTextView, genderTextView, phoneTextView, locationTextView;
+    private TextView usernameTextView, emailTextView, fullNameTextView, genderTextView, phoneTextView, locationTextView;
     private EditText fullNameEditText, genderEditText, phoneEditText;
     private ImageButton imageButton;
     private Spinner locationSpinner;
-    private User user;
     ArrayAdapter<String> adapter;
     private ImageView avatar;
     private ViewSwitcher switcher;
     ActivityResultLauncher<String> mGetContent;
     private Uri imagePath;
 
+    StorageReference storageReference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,13 +61,12 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        assert getArguments() != null;
-        user = (User) getArguments().getSerializable("user");
-
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        TextView usernameTextView = view.findViewById(R.id.usernameTextView);
-        TextView emailTextView = view.findViewById(R.id.emailTextView);
+        storageReference = FirebaseStorage.getInstance().getReference().child("images/" + UserDao.user.getKeyId());
+
+        usernameTextView = view.findViewById(R.id.usernameTextView);
+        emailTextView = view.findViewById(R.id.emailTextView);
         fullNameTextView = view.findViewById(R.id.fullNameTextView);
         genderTextView = view.findViewById(R.id.genderTextView);
         phoneTextView = view.findViewById(R.id.phoneTextView);
@@ -77,13 +86,8 @@ public class ProfileFragment extends Fragment {
         imageButton = view.findViewById(R.id.addImageButton);
         imageButton.setVisibility(View.GONE);
 
-        emailTextView.setText(user.getEmail());
-        usernameTextView.setText(user.getUsername());
-        fullNameTextView.setText(user.getFullName());
-        genderTextView.setText(user.getGender());
-        phoneTextView.setText(user.getPhoneNumber());
-        locationTextView.setText(user.getLocation());
-        Picasso.get().load(user.getAvatarUri()).into(avatar);
+        Picasso.get().load(UserDao.user.getAvatarUri()).into(avatar);
+        updateUI();
 
         editButton.setOnClickListener(view1 -> {
             switcher.showNext();
@@ -100,25 +104,20 @@ public class ProfileFragment extends Fragment {
         });
 
         saveButton.setOnClickListener(view2 -> {
-            user.setFullName(fullNameEditText.getText().toString());
-            user.setGender(genderEditText.getText().toString());
-            user.setPhoneNumber(phoneEditText.getText().toString());
-            user.setLocation(locationSpinner.getSelectedItem().toString());
-            user.setAvatarUri(imagePath.toString());
 
-            MainActivity.updateUI(user, getActivity());
+            UserDao.user.setFullName(fullNameEditText.getText().toString());
+            UserDao.user.setGender(genderEditText.getText().toString());
+            UserDao.user.setPhoneNumber(phoneEditText.getText().toString());
+            UserDao.user.setLocation(locationSpinner.getSelectedItem().toString());
 
-            fullNameTextView.setText(fullNameEditText.getText().toString());
-            genderTextView.setText(genderEditText.getText().toString());
-            phoneTextView.setText(phoneEditText.getText().toString());
-            locationTextView.setText(locationSpinner.getSelectedItem().toString());
+            uploadImage();
 
             imageButton.setVisibility(View.GONE);
             switcher.showPrevious();
         });
 
         cancelButton.setOnClickListener(view3 -> {
-            Picasso.get().load(user.getAvatarUri()).into(avatar);
+            Picasso.get().load(UserDao.user.getAvatarUri()).into(avatar);
             imageButton.setVisibility(View.GONE);
             switcher.showPrevious();
         });
@@ -126,6 +125,38 @@ public class ProfileFragment extends Fragment {
         imageButton.setOnClickListener(view12 -> mGetContent.launch("image/*"));
 
         return view;
+    }
+
+    private void updateUI(){
+        emailTextView.setText(UserDao.user.getEmail());
+        usernameTextView.setText(UserDao.user.getUsername());
+        fullNameTextView.setText(UserDao.user.getFullName());
+        genderTextView.setText(UserDao.user.getGender());
+        phoneTextView.setText(UserDao.user.getPhoneNumber());
+        locationTextView.setText(UserDao.user.getLocation());
+    }
+
+    public void uploadImage(){
+        if(imagePath != null){
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + UserDao.user.getKeyId());
+            storageReference.putFile(imagePath).addOnCompleteListener(task -> {
+                if(task.isSuccessful()){
+                    Toast.makeText(getActivity(), "Image Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            UserDao.user.setAvatarUri(uri);
+                        }
+                    }).addOnFailureListener(exception -> {
+                        Toast.makeText(getActivity(), "Upload failed!", Toast.LENGTH_SHORT).show();
+                    });
+
+                    updateUI();
+                    MainActivity.updateDatabase();
+                }
+                else Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     @Override

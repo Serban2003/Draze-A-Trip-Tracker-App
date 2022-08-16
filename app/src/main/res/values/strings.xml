@@ -87,5 +87,24 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="time">Time</string>
+    <string name="distance">Distance</string>
+    <string name="stop">Stop</string>
+    <string name="name_your_route">Name your route</string>
+    <string name="my_route">My route</string>
+    <string name="pick_your_route_color">Pick your route color</string>
+    <string name="choose">Choose</string>
+    <string name="your_description">Your description...</string>
+    <string name="activity">Activity</string>
+    <string name="no_tracked_sessions_message">No tracked sessions</string>
+    <string name="mapFragmentTitle">Map</string>
+    <string name="activities">Activities</string>
+    <string name="date">Date</string>
+    <string name="duration">Duration</string>
+    <string name="elevation">Elevation</string>
+    <string name="description">Description</string>
+    <string name="focus_location">Focus Location</string>
+    <string name="style_map">Map Style</string>
+    <string name="average_speed">AVERAGE SPEED (km/h)</string>
 
 </resources>

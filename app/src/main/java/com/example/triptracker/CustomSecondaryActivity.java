@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 
 public abstract class CustomSecondaryActivity extends AppCompatActivity {
     Toolbar toolbar;
-    String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
