@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 @Entity
-public class User implements Serializable {
+public class User{
 
     private final static String NOT = "Not provided";
 
@@ -65,9 +65,11 @@ public class User implements Serializable {
     private String location;
 
     @ColumnInfo(name = "avatarUri")
-    private Uri avatarUri;
+    private String avatarUri;
 
-    private static final Uri DEFAULT_PATH_AVATAR = Uri.parse("https://firebasestorage.googleapis.com/v0/b/trip-tracker-2844c.appspot.com/o/images%2Fdefault_avatar%400.75x.png?alt=media&token=44b6c290-c5c1-4dd6-9979-8d680c695b12");
+    private boolean verified;
+
+    private static final String DEFAULT_PATH_AVATAR = "https://firebasestorage.googleapis.com/v0/b/trip-tracker-2844c.appspot.com/o/images%2Fno_image_1%400.75x.png?alt=media&token=81168beb-f6aa-44c2-8349-cd4c0490357a";
 
     @ColumnInfo(name = "activities")
     private ArrayList<TrackDetails> activities = new ArrayList<>();
@@ -82,6 +84,7 @@ public class User implements Serializable {
         this.phoneNumber = NOT;
         this.location = NOT;
         this.avatarUri = DEFAULT_PATH_AVATAR;
+        this.verified = false;
     }
     @Ignore
     public User(String username, String email, String password) {
@@ -96,7 +99,7 @@ public class User implements Serializable {
         this.avatarUri = DEFAULT_PATH_AVATAR;
     }
     @Ignore
-    public User(String keyId, String username, String email, String password, String fullName, String gender, String phoneNumber, String location, Uri avatarUri){
+    public User(String keyId, String username, String email, String password, String fullName, String gender, String phoneNumber, String location, String avatarUri){
         this.keyId = keyId;
         this.username = username;
         this.email = email;
@@ -171,12 +174,20 @@ public class User implements Serializable {
         this.location = location;
     }
 
-    public Uri getAvatarUri() {
+    public String getAvatarUri() {
         return avatarUri;
     }
 
-    public void setAvatarUri(Uri avatarUri) {
+    public void setAvatarUri(String avatarUri) {
         this.avatarUri = avatarUri;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     public int getActivitiesNumber() {

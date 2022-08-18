@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,8 @@ public class SettingsActivity extends CustomSecondaryActivity {
     RecyclerView settingsRecyclerView;
     String[] settingsMenu, accountSettings, preferencesSettings;
 
+    //TODO: Check if User has validated his email and remove "Verify Email" from list
+
     private static DatabaseReference userReference;
     private static final String USER = "users";
     private static final String PATH_TO_DATABASE = "https://trip-tracker-2844c-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -45,7 +48,9 @@ public class SettingsActivity extends CustomSecondaryActivity {
         settingsRecyclerView = findViewById(R.id.settingsRecyclerView);
 
         settingsMenu = getResources().getStringArray(R.array.settings_menu);
-        accountSettings = getResources().getStringArray(R.array.account_settings);
+
+        if(UserDao.user.isVerified())accountSettings = getResources().getStringArray(R.array.account_settings_verified);
+        else accountSettings = getResources().getStringArray(R.array.account_settings_not_verified);
         preferencesSettings = getResources().getStringArray(R.array.preferences_settings);
 
         userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
@@ -70,6 +75,12 @@ public class SettingsActivity extends CustomSecondaryActivity {
                     startActivity(intent);
                     break;
                 }
+                case "Verify Email": {
+                    findViewById(R.id.alertView).setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.incorrect)));
+                    startActivity(new Intent(this, VerifyEmailActivity.class));
+                    break;
+                }
+
                 case "Change Password": {
                     Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show();
                     break;
@@ -106,8 +117,9 @@ public class SettingsActivity extends CustomSecondaryActivity {
                 }
                 case "Log Out": {
                     FirebaseAuth.getInstance().signOut();
-                    finish();
-                    startActivity(new Intent(this, AuthenticationActivity.class));
+                    Intent intent = new Intent(this,AuthenticationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
             }
 

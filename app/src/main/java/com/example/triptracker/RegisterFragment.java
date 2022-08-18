@@ -83,8 +83,6 @@ public class RegisterFragment extends Fragment{
             }
         });
 
-
-
         loginButton.setOnClickListener(v ->  {
             String username = usernameEditText.getText().toString();
             String email = emailEditText.getText().toString();

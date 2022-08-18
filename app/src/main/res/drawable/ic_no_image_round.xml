@@ -28,11 +28,9 @@
           android:endX="128"
           android:endY="41.23"
           android:type="linear">
-        <item android:offset="0" android:color="#FFF7B42C"/>
-        <item android:offset="0.14" android:color="#FFF8A32A"/>
-        <item android:offset="0.52" android:color="#FFFC7A26"/>
-        <item android:offset="0.82" android:color="#FFFE6023"/>
-        <item android:offset="1" android:color="#FFFF5722"/>
+        <item android:offset="0" android:color="@color/accent_color"/>
+        <item android:offset="0.52" android:color="@color/main_color_inactive"/>
+        <item android:offset="1" android:color="@color/main_color"/>
       </gradient>
     </aapt:attr>
   </path>

@@ -18,17 +18,11 @@ import android.widget.ViewSwitcher;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
@@ -52,7 +46,7 @@ public class ProfileFragment extends Fragment {
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
             if(result != null) {
                 imagePath = result;
-                Picasso.get().load(imagePath).into(avatar);
+                Picasso.get().load(imagePath).placeholder( R.drawable.progress_animation).into(avatar);
             }
         });
     }
@@ -86,7 +80,8 @@ public class ProfileFragment extends Fragment {
         imageButton = view.findViewById(R.id.addImageButton);
         imageButton.setVisibility(View.GONE);
 
-        Picasso.get().load(UserDao.user.getAvatarUri()).into(avatar);
+        Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).placeholder( R.drawable.progress_animation).into(avatar);
+        //Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).into(avatar);
         updateUI();
 
         editButton.setOnClickListener(view1 -> {
@@ -117,7 +112,7 @@ public class ProfileFragment extends Fragment {
         });
 
         cancelButton.setOnClickListener(view3 -> {
-            Picasso.get().load(UserDao.user.getAvatarUri()).into(avatar);
+            Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).placeholder( R.drawable.progress_animation).into(avatar);
             imageButton.setVisibility(View.GONE);
             switcher.showPrevious();
         });
@@ -145,17 +140,20 @@ public class ProfileFragment extends Fragment {
                     storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            UserDao.user.setAvatarUri(uri);
+                            UserDao.user.setAvatarUri(uri.toString());
                         }
                     }).addOnFailureListener(exception -> {
                         Toast.makeText(getActivity(), "Upload failed!", Toast.LENGTH_SHORT).show();
                     });
-
                     updateUI();
                     MainActivity.updateDatabase();
                 }
                 else Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             });
+        }
+        else{
+            updateUI();
+            MainActivity.updateDatabase();
         }
     }
 

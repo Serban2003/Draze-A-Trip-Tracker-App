@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true">
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".MainActivity">
@@ -28,7 +29,7 @@
             android:id="@+id/usernameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="50dp"
             android:text="@string/username"
             android:textColor="@color/white"
             android:textSize="25sp"
@@ -43,7 +44,6 @@
             android:id="@+id/emailTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:text="@string/email"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -139,8 +139,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/full_name"
-                        android:textSize="18sp"
-                        android:textColor="@color/text_color_main"/>
+                        android:textColor="@color/text_color_main"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/fullNameTextView"
@@ -151,8 +151,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/my_name"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_color_main"/>
+                        android:textColor="@color/text_color_main"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -166,7 +166,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.444"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fullNameLayout">
+                app:layout_constraintTop_toBottomOf="@+id/genderLayout">
 
                 <ImageView
                     android:id="@+id/phoneIcon"
@@ -217,7 +217,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.444"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneLayout">
+                app:layout_constraintTop_toBottomOf="@+id/fullNameLayout">
 
                 <ImageView
                     android:id="@+id/genderIcon"
@@ -240,8 +240,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/gender"
-                        android:textSize="18sp"
-                        android:textColor="@color/text_color_main"/>
+                        android:textColor="@color/text_color_main"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/genderTextView"
@@ -252,8 +252,8 @@
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="@string/my_gender"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_color_main"/>
+                        android:textColor="@color/text_color_main"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -270,7 +270,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.444"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/genderLayout">
+                app:layout_constraintTop_toBottomOf="@+id/phoneLayout">
 
                 <ImageView
                     android:id="@+id/locationIcon"

@@ -2,14 +2,10 @@ package com.example.triptracker;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,22 +18,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
+import java.time.Duration;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener{
@@ -74,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         bottomNavigationView.setSelectedItemId(R.id.feed);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(!firebaseUser.isEmailVerified()) Toast.makeText(this, "Please verify your email!", Toast.LENGTH_LONG).show();
 
         DatabaseReference rootReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference();
         userReference = rootReference.child(USER);
@@ -158,8 +152,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         UserDao.user.setPhoneNumber(Objects.requireNonNull(dataSnapshot.child("phoneNumber").getValue()).toString());
         UserDao.user.setLocation(Objects.requireNonNull(dataSnapshot.child("location").getValue()).toString());
         UserDao.user.setTotalActivities(Integer.parseInt(Objects.requireNonNull(dataSnapshot.child("totalActivities").getValue()).toString()));
+        UserDao.user.setVerified(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified());
 
-        if(dataSnapshot.child("avatarUri").getValue() != null) UserDao.user.setAvatarUri(Uri.parse(Objects.requireNonNull(dataSnapshot.child("avatarUri").getValue()).toString()));
+        if(dataSnapshot.child("avatarUri").getValue() != null) UserDao.user.setAvatarUri(Objects.requireNonNull(dataSnapshot.child("avatarUri").getValue()).toString());
     }
 
     static void updateActivities(DataSnapshot dataSnapshot){
@@ -179,8 +174,10 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         userReference.child(UserDao.user.getKeyId()).child("gender").setValue(UserDao.user.getGender());
         userReference.child(UserDao.user.getKeyId()).child("phoneNumber").setValue(UserDao.user.getPhoneNumber());
         userReference.child(UserDao.user.getKeyId()).child("location").setValue(UserDao.user.getLocation());
-        userReference.child(UserDao.user.getKeyId()).child("avatarUri").setValue(UserDao.user.getAvatarUri().toString());
+        userReference.child(UserDao.user.getKeyId()).child("avatarUri").setValue(UserDao.user.getAvatarUri());
         userReference.child(UserDao.user.getKeyId()).child("activitiesNumber").setValue(UserDao.user.getActivitiesNumber());
+        userReference.child(UserDao.user.getKeyId()).child("verified").setValue(UserDao.user.isVerified());
+        userReference.child(UserDao.user.getKeyId()).child("totalActivities").setValue(UserDao.user.getTotalActivities());
     }
 
     @SuppressLint("NonConstantResourceId")

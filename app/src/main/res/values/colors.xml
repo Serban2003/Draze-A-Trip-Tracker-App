@@ -9,14 +9,18 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#878787</color>
 
-    <color name="main_color">#FF5722</color>
-    <color name="main_color_variant">#FB7A24</color>
-    <color name="main_color_inactive">#FD7F57</color>
+    <color name="blue_cs">#045DE9</color>
+    <color name="light_blue_cs">#1BD1FF</color>
+    <color name="blue_variant_cs">#4E65FF</color>
+    <color name="blue_variant2_cs">#393CB5</color>
+
+   <color name="main_color">#045DE9</color> <!-- #FF5722-->
+    <color name="main_color_variant">#0351CC</color> <!-- #FB7A24-->
+    <color name="main_color_inactive">#4B99F8</color> <!-- #FD7F57-->
     <color name="text_color_main">#313131</color>
     <color name="soft_gray">#D5D8DE</color>
     <color name="text_color_hint">#323941</color>
-    <color name="accent_color">#F7B42C</color>
-    <color name="accent_color_dark">#FC575E</color>
+    <color name="accent_color">#00B5FD</color> <!-- #F7B42C-->
 
     <color name="background">#dddddd</color>
     <color name="transparent">#00000000</color>

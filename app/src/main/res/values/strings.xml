@@ -62,7 +62,14 @@
     <string name="yes">Yes</string>
     <string name="map">Map</string>
 
-    <string-array name="account_settings">
+    <string-array name="account_settings_not_verified">
+        <item>Change Username</item>
+        <item>Change Email</item>
+        <item>Verify Email</item>
+        <item>Change Password</item>
+    </string-array>
+
+    <string-array name="account_settings_verified">
         <item>Change Username</item>
         <item>Change Email</item>
         <item>Change Password</item>
@@ -106,5 +113,10 @@
     <string name="focus_location">Focus Location</string>
     <string name="style_map">Map Style</string>
     <string name="average_speed">AVERAGE SPEED (km/h)</string>
+    <string name="email_not_verified">Your email isn\'t verified!</string>
+    <string name="send_another"><u>Send another</u>.</string>
+    <string name="no_verification_email">No verification email?</string>
+    <string name="your_account_will_be_deleted">If you fail to verify your email, your account will be deleted in 5 hours.</string>
+    <string name="check_your_inbox">Please check your inbox and verify your account in order to complete your authentication.</string>
 
 </resources>

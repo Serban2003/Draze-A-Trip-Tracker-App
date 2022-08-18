@@ -8,6 +8,7 @@
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/auth_selector.xml" value="0.2995" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/avd_anim.xml" value="0.173" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/background_gradient.xml" value="0.3635" />
+        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/border_top_bottom.xml" value="0.3635" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/button_background.xml" value="0.3635" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/button_border.xml" value="0.3625" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/color_selector.xml" value="0.2995" />
@@ -30,6 +31,7 @@
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2285" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.114" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_launcher_round.xml" value="0.114" />
+        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_loading_icon.xml" value="0.261" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_location_icon.xml" value="0.299" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_login_icon.xml" value="0.2995" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_login_icon_active.xml" value="0.299" />
@@ -40,6 +42,7 @@
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2285" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_name_icon.xml" value="0.299" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_no_image.xml" value="0.195" />
+        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_no_image_round.xml" value="0.321" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_phone_icon.xml" value="0.299" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_photo_icon.xml" value="0.3635" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/ic_profile_icon.xml" value="0.221" />
@@ -57,6 +60,8 @@
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/login_banner.xml" value="0.3345" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/login_selector.xml" value="0.2995" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/profile_selector.xml" value="0.1" />
+        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/progress_aniamtion.xml" value="0.3625" />
+        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/progress_animation.xml" value="0.321" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/record_selector.xml" value="0.1" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/recycler_item_background.xml" value="0.195" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/drawable/register_selector.xml" value="0.2995" />
@@ -83,6 +88,7 @@
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/activity_save_tracked.xml" value="0.27472527472527475" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/activity_settings.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/activity_tracking.xml" value="0.3625" />
+        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/activity_verify_email.xml" value="0.3625" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/app_bar_main2.xml" value="0.33" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/content_main2.xml" value="0.35280797101449274" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/custom_dialog_delete_account.xml" value="0.3625" />
@@ -98,7 +104,8 @@
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/fragment_slideshow.xml" value="0.35833333333333334" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/login_banner.xml" value="0.3614583333333333" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/nav_header_main2.xml" value="0.35280797101449274" />
-        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/recycler_row_main.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/recycler_row.xml" value="0.3625" />
+        <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/recycler_row_main.xml" value="0.5" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/row_activity.xml" value="0.3625" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/layout/toolbar.xml" value="0.5" />
         <entry key="..\:/Users/Iustinian Serban/AndroidStudioProjects/TripTracker/app/src/main/res/menu/activity_main2_drawer.xml" value="0.35833333333333334" />
