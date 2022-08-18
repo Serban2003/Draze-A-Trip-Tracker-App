@@ -26,10 +26,10 @@ public class ActivityListAdapter extends ArrayAdapter<TrackDetails> {
     // Inflates the view
     @SuppressLint("SetTextI18n")
     @Override
-    public View getView(int position, View view, ViewGroup parent)  {
+    public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         @SuppressLint({"ViewHolder", "InflateParams"})
-        View rowView = inflater.inflate(R.layout.row_activity, null,true);
+        View rowView = inflater.inflate(R.layout.row_activity, null, true);
 
         TextView titleTextView = rowView.findViewById(R.id.textViewRowHeaderValue);
         TextView distanceTextView = rowView.findViewById(R.id.textViewRowDistanceValue);
@@ -43,15 +43,14 @@ public class ActivityListAdapter extends ArrayAdapter<TrackDetails> {
 
         String description = trackDetails.get(position).description;
 
-        if(description.equals("")){
+        if (description.equals("")) {
             descriptionTextView.setVisibility(View.GONE);
             rowView.findViewById(R.id.textViewRowDescription).setVisibility(View.GONE);
             rowView.findViewById(R.id.separatorView).setVisibility(View.GONE);
         }
-        if(description.length() > 35){
+        if (description.length() > 35) {
             description = description.substring(0, 35) + "...";
         }
-
 
         descriptionTextView.setText(description);
 

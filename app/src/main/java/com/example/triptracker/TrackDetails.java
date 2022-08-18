@@ -102,8 +102,8 @@ public class TrackDetails {
         this.color = color;
     }
 
-    public void dataSnapshotToTrackDetails(DataSnapshot dataSnapshot){
-        java.util.logging.Logger logger =  java.util.logging.Logger.getLogger(this.getClass().getName());
+    public void dataSnapshotToTrackDetails(DataSnapshot dataSnapshot) {
+        java.util.logging.Logger logger = java.util.logging.Logger.getLogger(this.getClass().getName());
         logger.warning(dataSnapshot.getKey());
         this.id = Integer.parseInt(Objects.requireNonNull(dataSnapshot.getKey()).replaceAll("[^0-9]", ""));
         this.title = Objects.requireNonNull(dataSnapshot.child("title").getValue()).toString();
@@ -115,13 +115,14 @@ public class TrackDetails {
         this.color = Integer.parseInt(Objects.requireNonNull(dataSnapshot.child("color").getValue()).toString());
 
         Iterable<DataSnapshot> iterable = dataSnapshot.child("locationPoints").getChildren();
-        while(iterable.iterator().hasNext()){
+        while (iterable.iterator().hasNext()) {
             LocationPointDetails locationPointDetails = new LocationPointDetails();
             locationPointDetails.dataSnapshotToLocationPoints(iterable.iterator().next());
             this.locationPoints.add(locationPointDetails);
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "TrackDetails{" +

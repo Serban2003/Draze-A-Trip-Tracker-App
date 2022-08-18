@@ -13,7 +13,8 @@ import java.util.ArrayList;
 public class DatabaseConverters {
     @TypeConverter
     public static ArrayList<TrackDetails> fromString(String value) {
-        Type listType = new TypeToken<ArrayList<TrackDetails>>() {}.getType();
+        Type listType = new TypeToken<ArrayList<TrackDetails>>() {
+        }.getType();
         return new Gson().fromJson(value, listType);
     }
 

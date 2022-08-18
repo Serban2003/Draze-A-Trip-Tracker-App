@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Objects;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     Context context;
     String[] titles;
     String type;
     OnItemClickListener listener;
 
-    public RecyclerViewAdapter(Context context, String[] titles, String type, OnItemClickListener listener){
+    public RecyclerViewAdapter(Context context, String[] titles, String type, OnItemClickListener listener) {
         this.titles = titles;
         this.context = context;
         this.type = type;
@@ -33,7 +33,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view;
 
-        if(Objects.equals(type, "mainCategory")) view = layoutInflater.inflate(R.layout.recycler_row_main, parent, false);
+        if (Objects.equals(type, "mainCategory"))
+            view = layoutInflater.inflate(R.layout.recycler_row_main, parent, false);
         else view = layoutInflater.inflate(R.layout.recycler_row, parent, false);
 
         return new MyViewHolder(view);
@@ -43,7 +44,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.title.setText(titles[position]);
-        if(Objects.equals(titles[position], "Verify Email")) holder.alertView.setBackgroundTintList(ColorStateList.valueOf(-14324993));
+        if (Objects.equals(titles[position], "Verify Email"))
+            holder.alertView.setBackgroundTintList(ColorStateList.valueOf(-56064));
         else holder.alertView.setVisibility(View.GONE);
         holder.bind(titles[position], listener);
     }

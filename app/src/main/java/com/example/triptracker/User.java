@@ -1,21 +1,14 @@
 package com.example.triptracker;
 
-import android.net.Uri;
-import android.provider.ContactsContract;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.google.firebase.database.DataSnapshot;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 
 @Entity
-public class User{
+public class User {
 
     private final static String NOT = "Not provided";
 
@@ -74,7 +67,7 @@ public class User{
     @ColumnInfo(name = "activities")
     private ArrayList<TrackDetails> activities = new ArrayList<>();
 
-    public User(){
+    public User() {
         this.keyId = NOT;
         this.username = NOT;
         this.email = NOT;
@@ -86,30 +79,7 @@ public class User{
         this.avatarUri = DEFAULT_PATH_AVATAR;
         this.verified = false;
     }
-    @Ignore
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.keyId = NOT;
-        this.fullName = NOT;
-        this.gender = NOT;
-        this.phoneNumber = NOT;
-        this.location = NOT;
-        this.avatarUri = DEFAULT_PATH_AVATAR;
-    }
-    @Ignore
-    public User(String keyId, String username, String email, String password, String fullName, String gender, String phoneNumber, String location, String avatarUri){
-        this.keyId = keyId;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.fullName = fullName;
-        this.gender = gender;
-        this.phoneNumber = phoneNumber;
-        this.location = location;
-        this.avatarUri = avatarUri;
-    }
+
     public String getKeyId() {
         return keyId;
     }
@@ -194,11 +164,11 @@ public class User{
         return activities.size();
     }
 
-    public TrackDetails getActivityFromId(int id){
+    public TrackDetails getActivityFromId(int id) {
         return activities.get(id);
     }
 
-    public void addActivity(TrackDetails trackDetails){
+    public void addActivity(TrackDetails trackDetails) {
         activities.add(trackDetails);
     }
 
@@ -208,6 +178,21 @@ public class User{
 
     public void setTotalActivities(int totalActivities) {
         this.totalActivities = totalActivities;
+    }
+
+    public void setNewUser() {
+        this.keyId = NOT;
+        this.username = NOT;
+        this.email = NOT;
+        this.password = NOT;
+        this.fullName = NOT;
+        this.gender = NOT;
+        this.phoneNumber = NOT;
+        this.location = NOT;
+        this.avatarUri = DEFAULT_PATH_AVATAR;
+        this.verified = false;
+        this.totalActivities = 0;
+        activities = new ArrayList<>();
     }
 
     @NonNull

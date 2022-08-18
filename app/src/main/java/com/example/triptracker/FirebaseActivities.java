@@ -3,10 +3,15 @@ package com.example.triptracker;
 import static com.example.triptracker.UserDao.user;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -14,32 +19,24 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class FirebaseActivities {
 
-    public static  final String TAG = "FirebaseActivities";
+    public static final String TAG = "FirebaseActivities";
     private static final String USER = "users";
     private static final String PATH_TO_DATABASE = "https://trip-tracker-2844c-default-rtdb.europe-west1.firebasedatabase.app/";
 
-//    public FirebaseActivities(){
-//        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//        storageReference = FirebaseStorage.getInstance().getReference().child("images/");
-//        userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
-//    }
-
-    public static void findUser(FirebaseUser firebaseUser) {
+    public static void findUserInDatabase(FirebaseUser firebaseUser) {
         DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
         userReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren())
-                    if (Objects.equals(ds.child("email").getValue(), firebaseUser.getEmail())){
+                    if (Objects.equals(ds.child("email").getValue(), firebaseUser.getEmail())) {
                         updateActivities(ds);
                         updateUser(ds);
                     }
@@ -52,7 +49,7 @@ public class FirebaseActivities {
     }
 
 
-    public static void updateUser(DataSnapshot dataSnapshot){
+    public static void updateUser(DataSnapshot dataSnapshot) {
         user.setKeyId(dataSnapshot.getKey());
         user.setUsername(Objects.requireNonNull(dataSnapshot.child("username").getValue()).toString());
         user.setEmail(Objects.requireNonNull(dataSnapshot.child("email").getValue()).toString());
@@ -62,9 +59,10 @@ public class FirebaseActivities {
         user.setPhoneNumber(Objects.requireNonNull(dataSnapshot.child("phoneNumber").getValue()).toString());
         user.setLocation(Objects.requireNonNull(dataSnapshot.child("location").getValue()).toString());
         user.setTotalActivities(Integer.parseInt(Objects.requireNonNull(dataSnapshot.child("totalActivities").getValue()).toString()));
-        user.setVerified(FirebaseAuth.getInstance().getCurrentUser().isEmailVerified());
+        user.setVerified(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).isEmailVerified());
 
-        if(dataSnapshot.child("avatarUri").getValue() != null) user.setAvatarUri(Objects.requireNonNull(dataSnapshot.child("avatarUri").getValue()).toString());
+        if (dataSnapshot.child("avatarUri").getValue() != null)
+            user.setAvatarUri(Objects.requireNonNull(dataSnapshot.child("avatarUri").getValue()).toString());
 
         Log.d(TAG, "User updated: " + user);
     }
@@ -81,8 +79,7 @@ public class FirebaseActivities {
         userReference.child(UserDao.user.getKeyId()).child("totalActivities").setValue(UserDao.user.getTotalActivities());
     }
 
-
-    public static void updateActivities(DataSnapshot dataSnapshot){
+    public static void updateActivities(DataSnapshot dataSnapshot) {
         Iterable<DataSnapshot> iterable = dataSnapshot.child("activities").getChildren();
 
         ArrayList<TrackDetails> activities = new ArrayList<>();
@@ -94,7 +91,31 @@ public class FirebaseActivities {
         user.setActivities(activities);
     }
 
-    public static void deleteUser(){
+    public static void createUser(FirebaseUser firebaseUser, OnSuccessListener onSuccessListener) {
+        FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).setValue(UserDao.user).addOnSuccessListener(onSuccessListener);
+    }
 
+    public static void sendEmailVerification(FirebaseUser firebaseUser, Activity activity) {
+        firebaseUser.sendEmailVerification().addOnCompleteListener(activity, new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(activity, "Verification email sent to " + firebaseUser.getEmail(),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e(TAG, "sendEmailVerification", task.getException());
+                    Toast.makeText(activity, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public static void deleteUser(FirebaseUser firebaseUser) {
+        FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).removeValue();
+        firebaseUser.delete();
+    }
+
+    public static void signOutUser() {
+        FirebaseAuth.getInstance().signOut();
     }
 }

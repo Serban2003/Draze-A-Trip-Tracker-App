@@ -126,9 +126,7 @@ public class EndTrackingActivity extends FragmentActivity implements OnMapReadyC
         SettingsClient client = LocationServices.getSettingsClient(this);
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
 
-        task.addOnSuccessListener(locationSettingsResponse -> {
-            resumeTracking();
-        });
+        task.addOnSuccessListener(locationSettingsResponse -> resumeTracking());
 
         task.addOnFailureListener(this, this::promptToChangeLocationSettings);
     }

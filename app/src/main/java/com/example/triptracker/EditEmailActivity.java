@@ -7,6 +7,8 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 
+import static com.example.triptracker.UserDao.user;
+
 public class EditEmailActivity extends CustomSecondaryActivity {
 
     EditText emailEditText, passwordEditText;
@@ -17,16 +19,12 @@ public class EditEmailActivity extends CustomSecondaryActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_email);
 
-        Bundle bundle = getIntent().getExtras();
-        String email = bundle.getString("email");
-        String password = bundle.getString("password");
-
         emailEditText = findViewById(R.id.editTextEmailAddress);
         passwordEditText = findViewById(R.id.editTextPasswordEmail);
         saveButton = findViewById(R.id.saveButtonUsername);
         cancelButton = findViewById(R.id.cancelButtonUsername);
 
-        emailEditText.setText(email);
+        emailEditText.setText(user.getEmail());
 
         passwordEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -35,11 +33,10 @@ public class EditEmailActivity extends CustomSecondaryActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(passwordEditText.getText().toString().equals(password)){
+                if (passwordEditText.getText().toString().equals(user.getPassword())) {
                     saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.main_color)));
                     saveButton.setEnabled(true);
-                }
-                else {
+                } else {
                     saveButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.main_color_inactive)));
                     saveButton.setEnabled(false);
                 }

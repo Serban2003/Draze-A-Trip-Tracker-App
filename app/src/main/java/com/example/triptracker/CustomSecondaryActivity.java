@@ -1,19 +1,12 @@
 package com.example.triptracker;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
 
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class CustomSecondaryActivity extends AppCompatActivity {
     Toolbar toolbar;

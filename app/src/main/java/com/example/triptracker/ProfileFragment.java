@@ -25,6 +25,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class ProfileFragment extends Fragment {
 
     private TextView usernameTextView, emailTextView, fullNameTextView, genderTextView, phoneTextView, locationTextView;
@@ -44,9 +46,9 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), result -> {
-            if(result != null) {
+            if (result != null) {
                 imagePath = result;
-                Picasso.get().load(imagePath).placeholder( R.drawable.progress_animation).into(avatar);
+                Picasso.get().load(imagePath).placeholder(R.drawable.progress_animation).into(avatar);
             }
         });
     }
@@ -67,9 +69,9 @@ public class ProfileFragment extends Fragment {
         locationTextView = view.findViewById(R.id.locationTextView);
         avatar = view.findViewById(R.id.avatarIcon);
         Button editButton = view.findViewById(R.id.editButton);
-        switcher =  view.findViewById(R.id.profileSwitcher);
+        switcher = view.findViewById(R.id.profileSwitcher);
 
-        String [] country_list = getResources().getStringArray(R.array.country_arrays);
+        String[] country_list = getResources().getStringArray(R.array.country_arrays);
 
         fullNameEditText = view.findViewById(R.id.fullNameEditText);
         genderEditText = view.findViewById(R.id.genderEditText);
@@ -80,7 +82,7 @@ public class ProfileFragment extends Fragment {
         imageButton = view.findViewById(R.id.addImageButton);
         imageButton.setVisibility(View.GONE);
 
-        Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).placeholder( R.drawable.progress_animation).into(avatar);
+        Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).placeholder(R.drawable.progress_animation).into(avatar);
         //Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).into(avatar);
         updateUI();
 
@@ -95,7 +97,8 @@ public class ProfileFragment extends Fragment {
             adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, country_list);
             locationSpinner.setAdapter(adapter);
 
-            if(locationTextView != null) locationSpinner.setSelection(adapter.getPosition(locationTextView.getText().toString()));
+            if (locationTextView != null)
+                locationSpinner.setSelection(adapter.getPosition(locationTextView.getText().toString()));
         });
 
         saveButton.setOnClickListener(view2 -> {
@@ -112,7 +115,7 @@ public class ProfileFragment extends Fragment {
         });
 
         cancelButton.setOnClickListener(view3 -> {
-            Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).placeholder( R.drawable.progress_animation).into(avatar);
+            Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).placeholder(R.drawable.progress_animation).into(avatar);
             imageButton.setVisibility(View.GONE);
             switcher.showPrevious();
         });
@@ -122,7 +125,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void updateUI(){
+    private void updateUI() {
         emailTextView.setText(UserDao.user.getEmail());
         usernameTextView.setText(UserDao.user.getUsername());
         fullNameTextView.setText(UserDao.user.getFullName());
@@ -131,29 +134,21 @@ public class ProfileFragment extends Fragment {
         locationTextView.setText(UserDao.user.getLocation());
     }
 
-    public void uploadImage(){
-        if(imagePath != null){
+    public void uploadImage() {
+        if (imagePath != null) {
             StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + UserDao.user.getKeyId());
             storageReference.putFile(imagePath).addOnCompleteListener(task -> {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     Toast.makeText(getActivity(), "Image Uploaded Successfully!", Toast.LENGTH_SHORT).show();
-                    storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            UserDao.user.setAvatarUri(uri.toString());
-                        }
-                    }).addOnFailureListener(exception -> {
-                        Toast.makeText(getActivity(), "Upload failed!", Toast.LENGTH_SHORT).show();
-                    });
+                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> UserDao.user.setAvatarUri(uri.toString())).addOnFailureListener(exception -> Toast.makeText(getActivity(), "Upload failed!", Toast.LENGTH_SHORT).show());
                     updateUI();
-                    MainActivity.updateDatabase();
-                }
-                else Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    FirebaseActivities.updateDatabase();
+                } else
+                    Toast.makeText(getActivity(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
             });
-        }
-        else{
+        } else {
             updateUI();
-            MainActivity.updateDatabase();
+            FirebaseActivities.updateDatabase();
         }
     }
 

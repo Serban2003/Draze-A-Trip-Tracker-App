@@ -11,10 +11,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -212,6 +214,7 @@ public final class LocationProvider extends Service {
     }
 
     //Creates the notification that allows the user to come back to the tracking screen
+    @RequiresApi(api = Build.VERSION_CODES.S)
     private Notification createNotification() {
         //Take the user to the Tracking Activity when clicking on the notification
         Intent notificationIntent = new Intent(this, TrackingActivity.class);

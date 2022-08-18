@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -45,8 +44,9 @@ public class LoginFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String email = emailEditText.getText().toString();
-                if(!EmailValidator.getInstance().isValid(email)) emailEditText.setError("Not a valid email");
-                else  emailEditText.setError(null);
+                if (!EmailValidator.getInstance().isValid(email))
+                    emailEditText.setError("Not a valid email");
+                else emailEditText.setError(null);
             }
 
             @Override
@@ -61,7 +61,8 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(passwordEditText.getText().toString().length() < 6) passwordEditText.setError("Password must be over at least 6 characters long");
+                if (passwordEditText.getText().toString().length() < 6)
+                    passwordEditText.setError("Password must be over at least 6 characters long");
                 else passwordEditText.setError(null);
             }
 
@@ -72,19 +73,19 @@ public class LoginFragment extends Fragment {
 
 
         Button loginButton = view.findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(v ->  {
+        loginButton.setOnClickListener(v -> {
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            if(verifyInput(email, password))
+            if (verifyInput(email, password))
                 sendMessage(email, password);
         });
 
         return view;
     }
 
-    public boolean verifyInput(String email, String password){
-        if(!EmailValidator.getInstance().isValid(email)) return false;
+    public boolean verifyInput(String email, String password) {
+        if (!EmailValidator.getInstance().isValid(email)) return false;
         else return password.length() >= 6;
     }
 
@@ -95,7 +96,7 @@ public class LoginFragment extends Fragment {
         intent.putExtra("authType", "login");
         intent.putExtra("email", email);
         intent.putExtra("password", password);
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent);
     }
 
     @Override

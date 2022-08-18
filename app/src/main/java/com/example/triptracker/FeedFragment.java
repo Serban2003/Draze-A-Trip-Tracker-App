@@ -2,22 +2,15 @@ package com.example.triptracker;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Logger;
 
 import java.util.ArrayList;
 
@@ -28,7 +21,6 @@ public class FeedFragment extends Fragment {
     ArrayList<TrackDetails> trackDetailsArrayList;
 
     private ShimmerFrameLayout mShimmerViewContainer;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,10 +41,11 @@ public class FeedFragment extends Fragment {
         return view;
     }
 
-    public void setUpActivityList(){
-        if(UserDao.user.getActivitiesNumber() == 0) view.findViewById(R.id.text_view_no_activities).setVisibility(View.VISIBLE);
+    public void setUpActivityList() {
+        if (UserDao.user.getActivitiesNumber() == 0)
+            view.findViewById(R.id.text_view_no_activities).setVisibility(View.VISIBLE);
 
-        for(int id = 0; id < UserDao.user.getActivitiesNumber(); ++id){
+        for (int id = 0; id < UserDao.user.getActivitiesNumber(); ++id) {
             TrackDetails trackDetails = UserDao.user.getActivityFromId(id);
             trackDetailsArrayList.add(trackDetails);
         }

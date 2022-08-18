@@ -5,7 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 
 public class App extends Application {
-    public static final String CHANNEL_ID = "TrackingChannel";
+    public static final String CHANNEL_ID = "LocationTrackingChannel";
 
     @Override
     public void onCreate() {
@@ -17,8 +17,8 @@ public class App extends Application {
     private void createNotificationChannel() {
         NotificationChannel serviceChannel = new NotificationChannel(
                 CHANNEL_ID,
-                "Tracking Channel",
-                NotificationManager.IMPORTANCE_DEFAULT
+                "Location Tracking Channel",
+                NotificationManager.IMPORTANCE_HIGH
         );
 
         NotificationManager manager = getSystemService(NotificationManager.class);

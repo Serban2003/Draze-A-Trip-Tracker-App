@@ -42,7 +42,7 @@ public class LocationPointDetails {
         this.latitude = latitude;
     }
 
-    public void dataSnapshotToLocationPoints(DataSnapshot dataSnapshot){
+    public void dataSnapshotToLocationPoints(DataSnapshot dataSnapshot) {
         this.timeCreated = Long.parseLong(Objects.requireNonNull(dataSnapshot.child("timeCreated").getValue()).toString());
         this.elevation = Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("elevation").getValue()).toString());
         this.longitude = Double.parseDouble(Objects.requireNonNull(dataSnapshot.child("longitude").getValue()).toString());

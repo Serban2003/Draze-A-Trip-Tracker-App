@@ -39,7 +39,7 @@ public class SaveTrackedActivity extends CustomSecondaryActivity {
     private View colorPreview;
     private int mDefaultColor = 0;
 
-    private ServiceConnection serviceConnection = new ServiceConnection() {
+    private final ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(TAG, "onServiceConnected: ");
@@ -80,12 +80,12 @@ public class SaveTrackedActivity extends CustomSecondaryActivity {
                 .showValue(false)
                 .build()
                 .show(view, new ColorPickerPopup.ColorPickerObserver() {
-                            @Override
-                            public void
-                            onColorPicked(int color) {
-                                mDefaultColor = color;
-                                colorPreview.setBackgroundTintList(ColorStateList.valueOf(mDefaultColor));
-                            }
+                    @Override
+                    public void
+                    onColorPicked(int color) {
+                        mDefaultColor = color;
+                        colorPreview.setBackgroundTintList(ColorStateList.valueOf(mDefaultColor));
+                    }
                 }));
     }
 
@@ -229,6 +229,7 @@ public class SaveTrackedActivity extends CustomSecondaryActivity {
         super.onDestroy();
         unbindService(serviceConnection);
     }
+
     @Override
     public String getTitleView() {
         return "Save activity";

@@ -45,15 +45,13 @@ public class RecordFragment extends Fragment implements OnMapReadyCallback, Goog
     public static final String TAG = "Record Fragment";
 
     int index;
-    private final String[] mapStyles= {"NORMAL", "HYBRID", "SATELLITE", "TERRAIN"};
+    private final String[] mapStyles = {"NORMAL", "HYBRID", "SATELLITE", "TERRAIN"};
     SharedPreferences preferences;
 
     private GoogleMap mMap;
     private Button buttonStartTracking;
-    private ImageButton buttonMapStyle, buttonLocation;
     private MapView mapView;
     private static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
-    public static boolean HAS_LOCATION_PERMISSION = false;
 
     @Nullable
     @Override
@@ -82,12 +80,12 @@ public class RecordFragment extends Fragment implements OnMapReadyCallback, Goog
             }
         });
 
-        buttonLocation = view.findViewById(R.id.locationButton);
+        ImageButton buttonLocation = view.findViewById(R.id.locationButton);
         buttonLocation.setOnClickListener(view2 -> getMyLocation(mMap));
 
-        buttonMapStyle = view.findViewById(R.id.styleButton);
+        ImageButton buttonMapStyle = view.findViewById(R.id.styleButton);
         buttonMapStyle.setOnClickListener(view12 -> {
-            if(index == 3) index = -1;
+            if (index == 3) index = -1;
             setGoogleMapsStyle(mapStyles[++index]);
         });
 
@@ -95,28 +93,28 @@ public class RecordFragment extends Fragment implements OnMapReadyCallback, Goog
     }
 
     @SuppressLint("CommitPrefEdits")
-    void setGoogleMapsStyle(String style){
+    void setGoogleMapsStyle(String style) {
         Toast toast;
-        switch (style){
-            case "NORMAL":{
+        switch (style) {
+            case "NORMAL": {
                 toast = Toast.makeText(getActivity(), "Standard Map", Toast.LENGTH_SHORT);
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 index = 0;
                 break;
             }
-            case "HYBRID":{
+            case "HYBRID": {
                 toast = Toast.makeText(getActivity(), "Hybrid Map", Toast.LENGTH_SHORT);
                 mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 index = 1;
                 break;
             }
-            case "SATELLITE":{
+            case "SATELLITE": {
                 toast = Toast.makeText(getActivity(), "Satellite Map", Toast.LENGTH_SHORT);
                 mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                 index = 2;
                 break;
             }
-            case "TERRAIN":{
+            case "TERRAIN": {
                 toast = Toast.makeText(getActivity(), "Terrain Map", Toast.LENGTH_SHORT);
                 mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 index = 3;
@@ -125,7 +123,7 @@ public class RecordFragment extends Fragment implements OnMapReadyCallback, Goog
             default:
                 throw new IllegalStateException("Unexpected value: " + style);
         }
-        toast.setGravity(Gravity.CENTER, 0, getView().getHeight() / 2  - buttonStartTracking.getHeight() - 100);
+        toast.setGravity(Gravity.CENTER, 0, requireView().getHeight() / 2 - buttonStartTracking.getHeight() - 100);
         toast.show();
         preferences.edit().putString("MapStyle", style).apply();
         Log.d(TAG, "MapStyle: " + style);
@@ -143,7 +141,7 @@ public class RecordFragment extends Fragment implements OnMapReadyCallback, Goog
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
 
         task.addOnSuccessListener(locationSettingsResponse -> startTrackingActivity());
-        task.addOnFailureListener(getActivity(), e -> promptToChangeLocationSettings(e));
+        task.addOnFailureListener(requireActivity(), this::promptToChangeLocationSettings);
     }
 
 
@@ -152,7 +150,7 @@ public class RecordFragment extends Fragment implements OnMapReadyCallback, Goog
         startActivity(intent);
 
         Intent serviceIntent = new Intent(getContext(), LocationProvider.class);
-        getContext().startService(serviceIntent);
+        requireContext().startService(serviceIntent);
 
     }
 
@@ -161,7 +159,7 @@ public class RecordFragment extends Fragment implements OnMapReadyCallback, Goog
         if (e instanceof ResolvableApiException) {
             try {
                 ResolvableApiException resolvable = (ResolvableApiException) e;
-                resolvable.startResolutionForResult(getActivity(), MainActivity.REQUEST_CHECK_SETTINGS);
+                resolvable.startResolutionForResult(requireActivity(), MainActivity.REQUEST_CHECK_SETTINGS);
             } catch (IntentSender.SendIntentException ignored) {
             }
         }
@@ -177,28 +175,27 @@ public class RecordFragment extends Fragment implements OnMapReadyCallback, Goog
         mMap.setOnMyLocationClickListener(this);
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
-        preferences = getActivity().getSharedPreferences("com.example.triptracker", Context.MODE_PRIVATE);
+        preferences = requireActivity().getSharedPreferences("com.example.triptracker", Context.MODE_PRIVATE);
         String style = preferences.getString("MapStyle", "");
 
-        if(Objects.equals(style, "")) style = "NORMAL";
+        if (Objects.equals(style, "")) style = "NORMAL";
         setGoogleMapsStyle(style);
         getMyLocation(mMap);
     }
 
     @SuppressLint("MissingPermission")
-    public void getMyLocation(GoogleMap googleMap){
-        @SuppressLint("VisibleForTests") FusedLocationProviderClient fusedLocationProviderClient = new FusedLocationProviderClient(getActivity());
+    public void getMyLocation(GoogleMap googleMap) {
+        @SuppressLint("VisibleForTests") FusedLocationProviderClient fusedLocationProviderClient = new FusedLocationProviderClient(requireActivity());
         fusedLocationProviderClient.getLastLocation()
-                .addOnSuccessListener(getActivity(), location -> {
+                .addOnSuccessListener(requireActivity(), location -> {
                     // Got last known location. In some rare situations this can be null.
                     if (location != null) {
                         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 16);
                         googleMap.animateCamera(cameraUpdate);
                         googleMap.moveCamera(cameraUpdate);
-                    }
-                    else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
                         builder.setMessage("Can't find location!")
                                 .setTitle("Error")
                                 .setPositiveButton("OK", null);

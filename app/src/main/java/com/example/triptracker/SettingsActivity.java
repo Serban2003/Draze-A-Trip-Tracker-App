@@ -9,12 +9,8 @@ import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,18 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.StorageReference;
-
-import java.io.Serializable;
-import java.util.Objects;
 
 public class SettingsActivity extends CustomSecondaryActivity {
 
     BroadcastReceiver editUsernameReceiver;
     RecyclerView settingsRecyclerView;
     String[] settingsMenu, accountSettings, preferencesSettings;
-
-    //TODO: Check if User has validated his email and remove "Verify Email" from list
 
     private static DatabaseReference userReference;
     private static final String USER = "users";
@@ -49,7 +39,8 @@ public class SettingsActivity extends CustomSecondaryActivity {
 
         settingsMenu = getResources().getStringArray(R.array.settings_menu);
 
-        if(UserDao.user.isVerified())accountSettings = getResources().getStringArray(R.array.account_settings_verified);
+        if (UserDao.user.isVerified())
+            accountSettings = getResources().getStringArray(R.array.account_settings_verified);
         else accountSettings = getResources().getStringArray(R.array.account_settings_not_verified);
         preferencesSettings = getResources().getStringArray(R.array.preferences_settings);
 
@@ -59,20 +50,14 @@ public class SettingsActivity extends CustomSecondaryActivity {
         item1[0] = settingsMenu[0];
 
         RecyclerViewAdapter settingsMenuAdapterItem1 = new RecyclerViewAdapter(this, item1, "mainCategory", null);
-        RecyclerViewAdapter accountSettingsAdapter = new RecyclerViewAdapter(this, accountSettings, "normal", item ->{
+        RecyclerViewAdapter accountSettingsAdapter = new RecyclerViewAdapter(this, accountSettings, "normal", item -> {
             switch (item) {
                 case "Change Username": {
-                    Intent intent = new Intent(this, EditUsernameActivity.class);
-                    intent.putExtra("username", UserDao.user.getUsername());
-                    intent.putExtra("password", UserDao.user.getPassword());
-                    startActivity(intent);
+                    startActivity(new Intent(this, EditUsernameActivity.class));
                     break;
                 }
                 case "Change Email": {
-                    Intent intent = new Intent(this, EditEmailActivity.class);
-                    intent.putExtra("email",UserDao.user.getEmail());
-                    intent.putExtra("password", UserDao.user.getPassword());
-                    startActivity(intent);
+                    startActivity(new Intent(this, EditEmailActivity.class));
                     break;
                 }
                 case "Verify Email": {
@@ -90,20 +75,20 @@ public class SettingsActivity extends CustomSecondaryActivity {
 
         item2[0] = settingsMenu[1];
         RecyclerViewAdapter settingsMenuAdapterItem2 = new RecyclerViewAdapter(this, item2, "mainCategory", null);
-        RecyclerViewAdapter preferencesSettingsAdapter = new RecyclerViewAdapter(this, preferencesSettings, "normal", item ->{
+        RecyclerViewAdapter preferencesSettingsAdapter = new RecyclerViewAdapter(this, preferencesSettings, "normal", item -> {
             switch (item) {
                 case "Display": {
                     startActivity(new Intent(this, DisplaySettingsActivity.class));
                     break;
                 }
                 case "Legal": {
-                    Uri uri = Uri.parse("http://github.com/Serban2003/TripTracker/blob/master/LICENSE"); // missing 'http://' will cause crashed
+                    Uri uri = Uri.parse("http://github.com/Serban2003/TripTracker/blob/master/LICENSE");
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
                     break;
                 }
                 case "About": {
-                    Uri uri = Uri.parse("http://github.com/Serban2003/TripTracker"); // missing 'http://' will cause crashed
+                    Uri uri = Uri.parse("http://github.com/Serban2003/TripTracker");
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(intent);
                     break;
@@ -117,8 +102,8 @@ public class SettingsActivity extends CustomSecondaryActivity {
                 }
                 case "Log Out": {
                     FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(this,AuthenticationActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Intent intent = new Intent(this, AuthenticationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
             }

@@ -16,7 +16,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-public class RegisterFragment extends Fragment{
+import java.util.Objects;
+
+public class RegisterFragment extends Fragment {
 
     private static final String TAG = "RegisterFragment";
     private EditText usernameEditText, emailEditText, passwordEditText;
@@ -44,9 +46,11 @@ public class RegisterFragment extends Fragment{
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(usernameEditText.getText().toString().length() < 4)  usernameEditText.setError("Not a valid username");
-                else  usernameEditText.setError(null);
+                if (usernameEditText.getText().toString().length() < 4)
+                    usernameEditText.setError("Not a valid username");
+                else usernameEditText.setError(null);
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
             }
@@ -59,8 +63,9 @@ public class RegisterFragment extends Fragment{
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String email = emailEditText.getText().toString();
-                if(!EmailValidator.getInstance().isValid(email)) emailEditText.setError("Not a valid email");
-                else  emailEditText.setError(null);
+                if (!EmailValidator.getInstance().isValid(email))
+                    emailEditText.setError("Not a valid email");
+                else emailEditText.setError(null);
             }
 
             @Override
@@ -74,8 +79,9 @@ public class RegisterFragment extends Fragment{
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                 if(passwordEditText.getText().toString().length() < 6) passwordEditText.setError("Password must be over at least 6 characters long");
-                 else passwordEditText.setError(null);
+                if (passwordEditText.getText().toString().length() < 6)
+                    passwordEditText.setError("Password must be over at least 6 characters long");
+                else passwordEditText.setError(null);
             }
 
             @Override
@@ -83,24 +89,24 @@ public class RegisterFragment extends Fragment{
             }
         });
 
-        loginButton.setOnClickListener(v ->  {
+        loginButton.setOnClickListener(v -> {
             String username = usernameEditText.getText().toString();
             String email = emailEditText.getText().toString();
             String password = passwordEditText.getText().toString();
 
-            if(verifyInput(username, email, password)) sendMessage(email, username, password);
+            if (verifyInput(username, email, password)) sendMessage(email, username, password);
 
         });
         return view;
     }
 
-    public boolean verifyInput(String username, String email, String password){
-        if(username.length() < 4) return false;
-        else if(!EmailValidator.getInstance().isValid(email)) return false;
+    public boolean verifyInput(String username, String email, String password) {
+        if (username.length() < 4) return false;
+        else if (!EmailValidator.getInstance().isValid(email)) return false;
         else return password.length() >= 6;
     }
 
-    private void sendMessage(String email, String username,String password) {
+    private void sendMessage(String email, String username, String password) {
         Log.d("sender", "Broadcasting message");
         Intent intent = new Intent("getUserCredentials");
         // You can also include some extra data.
@@ -108,7 +114,7 @@ public class RegisterFragment extends Fragment{
         intent.putExtra("email", email);
         intent.putExtra("username", username);
         intent.putExtra("password", password);
-        LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(requireActivity()).sendBroadcast(intent);
     }
 
     @Override
