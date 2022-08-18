@@ -1,5 +1,5 @@
-# TripTracker
-![AppLogo x0 75](https://user-images.githubusercontent.com/46806049/181751897-9f99932a-72a1-49d0-ab56-32a6627fe436.png)
+# Draze: A Trip Tracker App
+![App_icon@0 75x](https://user-images.githubusercontent.com/46806049/185414393-7889452f-9779-405c-b663-f72bb06fd062.png)
 
 An Android tracking app which records your car trip.
 
@@ -11,7 +11,7 @@ The app is still a work in progress.
 ### Upcoming functionalities/features
 - [x] Create the App's basic structure
 - [x] Create an Authentication form for users
-- [ ] Implement an Email Verification System for new Users
+- [x] Implement an Email Verification System for new Users
 - [x] Implement the Authentication process using [Firebase](https://firebase.google.com)
 - [x] Create a User profile tab
 - [x] Update UI based on logged user
@@ -21,11 +21,12 @@ The app is still a work in progress.
 - [ ] Show the complete details of the previous tracked trips
 - [ ] Create a Map tab where the User can see all the tracked trips on the map (color coded)
 - [ ] Implement friend list and activities
+- [ ] Create support for wearables (Smart Watches)
 
 
 ## License Statement
 ```
-TripTracker - An Android tracking app which records your car trip
+Draze - An Android tracking app which records your car trip.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
