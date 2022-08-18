@@ -17,6 +17,7 @@
    <color name="main_color">#045DE9</color> <!-- #FF5722-->
     <color name="main_color_variant">#0351CC</color> <!-- #FB7A24-->
     <color name="main_color_inactive">#4B99F8</color> <!-- #FD7F57-->
+    <color name="main_color_variant2">#0000D1</color>
     <color name="text_color_main">#313131</color>
     <color name="soft_gray">#D5D8DE</color>
     <color name="text_color_hint">#323941</color>
