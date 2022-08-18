@@ -1,5 +1,5 @@
 # Draze: A Trip Tracker App
-![App_icon@0 75x](https://user-images.githubusercontent.com/46806049/185414393-7889452f-9779-405c-b663-f72bb06fd062.png)
+![app_logo_3@0 75x](https://user-images.githubusercontent.com/46806049/185481807-566bb61a-d439-4902-9b66-40459381d67a.png)
 
 An Android tracking app which records your car trip.
 
