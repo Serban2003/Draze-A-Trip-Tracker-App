@@ -11,12 +11,16 @@ The app is still a work in progress.
 ### Upcoming functionalities/features
 - [x] Create the App's basic structure
 - [x] Create an Authentication form for users
+- [ ] Implement an Email Verification System for new Users
 - [x] Implement the Authentication process using [Firebase](https://firebase.google.com)
 - [x] Create a User profile tab
 - [x] Update UI based on logged user
 - [x] Create Settings tab
-- [ ] Create Record Tab
-- [ ] Create and update the Feed Tab based on previous tracked trips
+- [x] Create Record Tab
+- [x] Create and update the Feed Tab based on previous tracked trips
+- [ ] Show the complete details of the previous tracked trips
+- [ ] Create a Map tab where the User can see all the tracked trips on the map (color coded)
+- [ ] Implement friend list and activities
 
 
 ## License Statement
@@ -36,3 +40,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
+
+## Screenshots
+
+Coming soon...
