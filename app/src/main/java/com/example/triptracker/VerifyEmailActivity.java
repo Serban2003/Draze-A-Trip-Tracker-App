@@ -19,7 +19,7 @@ public class VerifyEmailActivity extends CustomSecondaryActivity {
         sendEmailTextView.setOnClickListener(view -> {
             FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             assert firebaseUser != null;
-            FirebaseActivities.sendEmailVerification(firebaseUser, VerifyEmailActivity.this);
+            DatabaseActivities.sendEmailVerification(firebaseUser, VerifyEmailActivity.this);
         });
 
     }

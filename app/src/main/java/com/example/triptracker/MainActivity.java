@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -32,8 +34,11 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     ProfileFragment profileFragment = new ProfileFragment();
     MapFragment mapFragment = new MapFragment();
 
+    UserViewModel userViewModel;
+
     public static final int REQUEST_CHECK_SETTINGS = 1;
     private static final int ACCESS_FINE_LOCATION = 1;
+    private Menu mainMenu;
 
     @SuppressLint("CommitPrefEdits")
     @Override
@@ -53,7 +58,26 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         assert firebaseUser != null;
         if (!firebaseUser.isEmailVerified())
             Toast.makeText(this, "Please verify your email!", Toast.LENGTH_LONG).show();
-        FirebaseActivities.findUserInDatabase(firebaseUser);
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getUserById(firebaseUser.getUid()).observe(MainActivity.this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                UserDao.user.setKeyId(user.getKeyId());
+                UserDao.user.setUsername(user.getUsername());
+                UserDao.user.setEmail(user.getEmail());
+                UserDao.user.setPassword(user.getPassword());
+                UserDao.user.setFullName(user.getFullName());
+                UserDao.user.setGender(user.getGender());
+                UserDao.user.setPhoneNumber(user.getPhoneNumber());
+                UserDao.user.setLocation(user.getLocation());
+                UserDao.user.setTotalActivities(user.getTotalActivities());
+                UserDao.user.setVerified(user.isVerified());
+                UserDao.user.setAvatarUri(user.getAvatarUri());
+
+                if(!user.isVerified()) mainMenu.findItem(R.id.settingsButton).setIcon(R.drawable.ic_settings_icon_notification);
+            }
+        });
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -106,9 +130,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (UserDao.user.isVerified())
-            menu.findItem(R.id.settingsButton).setIcon(R.drawable.ic_settings_icon);
-        else menu.findItem(R.id.settingsButton).setIcon(R.drawable.ic_settings_icon_notification);
+        mainMenu = menu;
+        menu.findItem(R.id.settingsButton).setIcon(R.drawable.ic_settings_icon);
         return super.onPrepareOptionsMenu(menu);
     }
 

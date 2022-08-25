@@ -1,32 +1,56 @@
 package com.example.triptracker;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
+@Entity(tableName = "activities_table")
 public class TrackDetails {
-    int id;
+    
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    Integer id;
+
+    @ColumnInfo(name = "title")
     String title;
+
+    @ColumnInfo(name = "description")
     String description;
+
+    @ColumnInfo(name = "timeCreated")
     String timeCreated;
+
+    @ColumnInfo(name = "distance")
     String distance;
+
+    @ColumnInfo(name = "duration")
     String duration;
+
+    @ColumnInfo(name = "averageSpeed")
     String averageSpeed;
+
+    @ColumnInfo(name = "elevation")
     String elevation;
+
+    @ColumnInfo(name = "color")
     int color;
+
+    @ColumnInfo(name = "locationPoints")
     ArrayList<LocationPointDetails> locationPoints = new ArrayList<>();
 
-    public TrackDetails() {
-    }
 
-    public int getId() {
+    @NonNull
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -105,7 +129,6 @@ public class TrackDetails {
     public void dataSnapshotToTrackDetails(DataSnapshot dataSnapshot) {
         java.util.logging.Logger logger = java.util.logging.Logger.getLogger(this.getClass().getName());
         logger.warning(dataSnapshot.getKey());
-        this.id = Integer.parseInt(Objects.requireNonNull(dataSnapshot.getKey()).replaceAll("[^0-9]", ""));
         this.title = Objects.requireNonNull(dataSnapshot.child("title").getValue()).toString();
         this.description = Objects.requireNonNull(dataSnapshot.child("description").getValue()).toString();
         this.timeCreated = Objects.requireNonNull(dataSnapshot.child("timeCreated").getValue()).toString();

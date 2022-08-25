@@ -1,26 +1,27 @@
 package com.example.triptracker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class FeedFragment extends Fragment {
+public class FeedFragment extends Fragment implements RecyclerViewClickListener {
 
-    private ListView activitiesListView;
-    View view;
-    ArrayList<TrackDetails> trackDetailsArrayList;
-
-    private ShimmerFrameLayout mShimmerViewContainer;
+    private ActivitiesViewModel activitiesViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,53 +29,78 @@ public class FeedFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_feed, container, false);
-        activitiesListView = view.findViewById(R.id.list_view_activities);
+    public void recyclerViewListClicked(View view, int position) {
 
-        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
+        TextView idTextView = view.findViewById(R.id.activityId);
+        String id = idTextView.getText().toString();
 
-        trackDetailsArrayList = new ArrayList<>();
-        setUpActivityList();
-
-        return view;
+        Intent intent = new Intent(getActivity(), RouteDetailsActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 
-    public void setUpActivityList() {
-        if (UserDao.user.getActivitiesNumber() == 0)
-            view.findViewById(R.id.text_view_no_activities).setVisibility(View.VISIBLE);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
-        for (int id = 0; id < UserDao.user.getActivitiesNumber(); ++id) {
-            TrackDetails trackDetails = UserDao.user.getActivityFromId(id);
-            trackDetailsArrayList.add(trackDetails);
-        }
+        view.findViewById(R.id.text_view_no_activities).setVisibility(View.GONE);
+        RecyclerView recyclerView = view.findViewById(R.id.list_view_activities);
 
 
-        ActivityListAdapter activityListAdapter = new ActivityListAdapter(getActivity(), trackDetailsArrayList);
-        activitiesListView = view.findViewById(R.id.list_view_activities);
-        activitiesListView.setAdapter(activityListAdapter);
+        ActivityListAdapter adapter = new ActivityListAdapter(getContext(), this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        activitiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        activitiesViewModel = new ViewModelProvider(this).get(ActivitiesViewModel.class);
+        activitiesViewModel.getAllActivities().observe(getViewLifecycleOwner(), new Observer<List<TrackDetails>>() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                //goToSessionDetailsActivity.putExtra("id", "" + id);
-                //Starting for result to be able to check if it was deleted so the listview can be refreshed
-                //startActivityForResult(goToSessionDetailsActivity, 0);
+            public void onChanged(List<TrackDetails> trackDetails) {
+                adapter.setActivities(trackDetails);
+                if (adapter.getItemCount() == 0)
+                    view.findViewById(R.id.text_view_no_activities).setVisibility(View.VISIBLE);
             }
         });
 
-        mShimmerViewContainer.stopShimmerAnimation();
-        mShimmerViewContainer.setVisibility(View.GONE);
+
+        ItemTouchHelper helper = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(0,
+                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView,
+                                          RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder,
+                                         int direction) {
+                        int position = viewHolder.getAbsoluteAdapterPosition();
+                        TrackDetails trackDetails = adapter.getTrackAtPosition(position);
+                        ///Toast.makeText(getActivity(), "Deleting " + trackDetails.getTitle(), Toast.LENGTH_LONG).show();
+                        activitiesViewModel.deleteActivity(trackDetails);
+
+                        Snackbar.make(view, "Deleting " + trackDetails.getTitle() + "...", Snackbar.LENGTH_LONG)
+                                .setAnchorView(view.findViewById(R.id.bottom_navigation))
+                                .setTextColor(getResources().getColor(R.color.white))
+                                .setActionTextColor(getResources().getColor(R.color.accent_color))
+                                .setAction("Undo", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        activitiesViewModel.insert(trackDetails);
+                                        view.findViewById(R.id.text_view_no_activities).setVisibility(View.GONE);
+                                    }
+                                }).show();
+                    }
+                });
+        helper.attachToRecyclerView(recyclerView);
+        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        mShimmerViewContainer.startShimmerAnimation();
-
         Activity activity = getActivity();
         if (activity != null) {
             activity.setTitle(getString(R.string.feedFragmentTitle));
@@ -83,7 +109,6 @@ public class FeedFragment extends Fragment {
 
     @Override
     public void onPause() {
-        //mShimmerViewContainer.stopShimmerAnimation();
         super.onPause();
     }
 }

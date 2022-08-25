@@ -10,19 +10,24 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import top.defaults.colorpicker.ColorPickerPopup;
 
@@ -134,7 +139,6 @@ public class SaveTrackedActivity extends CustomSecondaryActivity {
 
         //Save the tracked session data
         TrackDetails trackDetails = new TrackDetails();
-        trackDetails.setId(UserDao.user.getTotalActivities() + 1);
         trackDetails.setTitle(locationServiceBinder.getTitle());
         trackDetails.setDescription(locationServiceBinder.getDescription());
 
@@ -151,6 +155,21 @@ public class SaveTrackedActivity extends CustomSecondaryActivity {
         //Save the track locations
         ArrayList<Location> locations = locationServiceBinder.getLocations();
 
+        if(locations.size() == 0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Couldn't save the tracked activity! No locations recorded.")
+                    .setTitle("Error")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            backToMainActivity();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return;
+        }
+
         for (Location location : locations) {
             LocationPointDetails locationPointDetails = new LocationPointDetails();
             locationPointDetails.setTimeCreated(location.getTime());
@@ -160,12 +179,17 @@ public class SaveTrackedActivity extends CustomSecondaryActivity {
             trackDetails.locationPoints.add(locationPointDetails);
         }
 
-        UserDao.user.addActivity(trackDetails);
-        UserDao.user.setTotalActivities(UserDao.user.getTotalActivities() + 1);
-        DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
-        userReference.child(UserDao.user.getKeyId()).child("activities").child("actId" + trackDetails.getId()).setValue(trackDetails);
-        userReference.child(UserDao.user.getKeyId()).child("totalActivities").setValue(UserDao.user.getTotalActivities());
-        //Clean up and go back to the main activity
+//        Executor executor = Executors.newSingleThreadExecutor();
+//        executor.execute(() -> {
+            ActivitiesViewModel activitiesViewModel = new ViewModelProvider(this).get(ActivitiesViewModel.class);
+            activitiesViewModel.insert(trackDetails);
+       // });
+//        UserDao.user.addActivity(trackDetails);
+//        UserDao.user.setTotalActivities(UserDao.user.getTotalActivities() + 1);
+//        DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
+//        userReference.child(UserDao.user.getKeyId()).child("activities").child("actId" + trackDetails.getId()).setValue(trackDetails);
+//        userReference.child(UserDao.user.getKeyId()).child("totalActivities").setValue(UserDao.user.getTotalActivities());
+//        //Clean up and go back to the main activity
         backToMainActivity();
     }
 

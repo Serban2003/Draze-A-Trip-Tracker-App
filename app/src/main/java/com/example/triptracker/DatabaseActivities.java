@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,11 +22,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class FirebaseActivities {
+public class DatabaseActivities {
 
-    public static final String TAG = "FirebaseActivities";
-    private static final String USER = "users";
-    private static final String PATH_TO_DATABASE = "https://trip-tracker-2844c-default-rtdb.europe-west1.firebasedatabase.app/";
+    public static final String TAG = "DatabaseActivities";
+    public static final String USER = "users";
+    public static final String PATH_TO_DATABASE = "https://trip-tracker-2844c-default-rtdb.europe-west1.firebasedatabase.app/";
 
     public static void findUserInDatabase(FirebaseUser firebaseUser) {
         DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
@@ -91,8 +90,8 @@ public class FirebaseActivities {
         user.setActivities(activities);
     }
 
-    public static void createUser(FirebaseUser firebaseUser, OnSuccessListener onSuccessListener) {
-        FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).setValue(UserDao.user).addOnSuccessListener(onSuccessListener);
+    public static void createUserInFirebaseDatabase(FirebaseUser firebaseUser) {
+        FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).setValue(UserDao.user);
     }
 
     public static void sendEmailVerification(FirebaseUser firebaseUser, Activity activity) {
@@ -110,12 +109,63 @@ public class FirebaseActivities {
         });
     }
 
-    public static void deleteUser(FirebaseUser firebaseUser) {
+    public static void deleteUserFromFirebaseDatabase(FirebaseUser firebaseUser) {
         FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).removeValue();
         firebaseUser.delete();
     }
 
-    public static void signOutUser() {
+    public static void signOutUserFromFirebase() {
         FirebaseAuth.getInstance().signOut();
     }
+
+    public static void loadUserFromFirebaseDatabase(String keyId){
+        DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
+        userReference.child(keyId).get().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.e(TAG, "Error getting data from Firebase Database", task.getException());
+            }
+            else {
+                Log.d(TAG, "Data loaded from Firebase Database" + task.getResult().getValue());
+                updateUser(task.getResult());
+            }
+        });
+    }
+
+
+    //Local Room Database
+
+//    public static void deleteUserFromLocalDatabase(UserDatabase database, String keyId){
+//        if(isUserInLocalDatabase(database, keyId))
+//            database.userDao().deleteUserById(keyId);
+//    }
+
+//    public static boolean isUserInLocalDatabase(UserDatabase database, String keyId){
+//        User user = database.userDao().loadUserById(keyId);
+//       if(user == null){
+//           Log.d(TAG, "User with keyId=" + keyId + " doesn't exist in local database");
+//           return false;
+//       }
+//       else {
+//           Log.d(TAG, "User with keyId=" + keyId + " exists in local database");
+//           return true;
+//       }
+//    }
+
+//    public static void loadUserFromLocalDatabase(UserDatabase database, String keyId){
+//        User user = database.userDao().loadUserById(keyId);
+//        UserDao.user.setKeyId(user.getKeyId());
+//        UserDao.user.setUsername(user.getUsername());
+//        UserDao.user.setEmail(user.getEmail());
+//        UserDao.user.setPassword(user.getPassword());
+//        UserDao.user.setFullName(user.getFullName());
+//        UserDao.user.setGender(user.getGender());
+//        UserDao.user.setPhoneNumber(user.getPhoneNumber());
+//        UserDao.user.setLocation(user.getLocation());
+//        UserDao.user.setTotalActivities(user.getTotalActivities());
+//        UserDao.user.setVerified(user.isVerified());
+//        UserDao.user.setActivities(user.getActivities());
+//    }
+
+
+
 }

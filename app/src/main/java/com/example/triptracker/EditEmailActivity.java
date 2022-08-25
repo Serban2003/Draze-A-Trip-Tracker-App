@@ -4,15 +4,25 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import static com.example.triptracker.UserDao.user;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.List;
+
 public class EditEmailActivity extends CustomSecondaryActivity {
 
     EditText emailEditText, passwordEditText;
     Button saveButton, cancelButton;
+
+    UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

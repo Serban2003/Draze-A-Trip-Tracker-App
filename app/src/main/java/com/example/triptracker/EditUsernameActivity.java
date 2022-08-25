@@ -12,6 +12,11 @@ import android.widget.EditText;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class EditUsernameActivity extends CustomSecondaryActivity {
 
     EditText usernameEditText, passwordEditText;
@@ -51,23 +56,25 @@ public class EditUsernameActivity extends CustomSecondaryActivity {
 
         cancelButton.setOnClickListener(view1 -> {
             passwordEditText.setText("");
-            sendMessage("Cancel");
+            finish();
         });
         saveButton.setOnClickListener(view1 -> {
             passwordEditText.setText("");
-            sendMessage(usernameEditText.getText().toString());
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    UserDatabase userDatabase = UserDatabase.getDatabase(getApplication());
+                    userDatabase.userDao().updateUsername(usernameEditText.getText().toString(), UserDao.user.getKeyId());
+                }
+            });
+            finish();
         });
     }
 
     @Override
     protected String getTitleView() {
         return "Change Username";
-    }
-
-    private void sendMessage(String message) {
-        Intent intent = new Intent("updated-username");
-        intent.putExtra("username", message);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-        finish();
     }
 }

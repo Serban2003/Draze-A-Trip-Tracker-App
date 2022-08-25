@@ -18,7 +18,7 @@ public class App extends Application {
         NotificationChannel serviceChannel = new NotificationChannel(
                 CHANNEL_ID,
                 "Location Tracking Channel",
-                NotificationManager.IMPORTANCE_HIGH
+                NotificationManager.IMPORTANCE_DEFAULT
         );
 
         NotificationManager manager = getSystemService(NotificationManager.class);

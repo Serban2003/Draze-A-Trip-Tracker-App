@@ -2,27 +2,42 @@ package com.example.triptracker;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 @Dao
 public interface UserDao {
     User user = new User();
 
-    @Query("SELECT * FROM user")
-    List<User> getAll();
+    @Query("SELECT * FROM users_table")
+    LiveData<List<User>> getAllUsers();
 
-    @Query("SELECT * FROM user WHERE keyId = :id")
-    List<User> loadAllById(int id);
+    @Query("SELECT * FROM users_table WHERE keyId = :id")
+    LiveData<User> getUserById(String id);
+
+    @Query("DELETE FROM users_table WHERE keyId = :id")
+    void deleteUserById(String id);
 
     @Insert
-    void insertAll(User... users);
+    void insertUser(User user);
+
+    @Query("UPDATE users_table SET fullName = :fullName, gender = :gender, phoneNumber = :phoneNumber, location = :location WHERE keyId = :id")
+    void updateUser(String fullName, String gender, String phoneNumber, String location, String id);
+
+    @Query("UPDATE users_table SET avatarUri = :avatarUri WHERE keyId = :id")
+    void updateAvatarUri(String avatarUri, String id);
+
+    @Query("UPDATE users_table SET username = :username WHERE keyId = :id")
+    void updateUsername(String username,  String id);
 
     @Delete
     void delete(User user);
 
-    @Query("DELETE FROM User")
-    void deleteAll();
+    @Query("DELETE FROM users_table")
+    void deleteAllUsers();
 }

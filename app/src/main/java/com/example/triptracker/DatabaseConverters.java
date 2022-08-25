@@ -12,14 +12,26 @@ import java.util.ArrayList;
 
 public class DatabaseConverters {
     @TypeConverter
-    public static ArrayList<TrackDetails> fromString(String value) {
+    public static ArrayList<TrackDetails> trackDetailsFromString(String value) {
         Type listType = new TypeToken<ArrayList<TrackDetails>>() {
         }.getType();
         return new Gson().fromJson(value, listType);
     }
 
     @TypeConverter
-    public static String fromArrayList(ArrayList<TrackDetails> list) {
+    public static String trackDetailsFromArrayList(ArrayList<TrackDetails> list) {
+        Gson gson = new Gson();
+        return gson.toJson(list);
+    }
+
+    @TypeConverter
+    public static ArrayList<LocationPointDetails> locationPointDetailsFromString(String value){
+        Type listType = new TypeToken<ArrayList<LocationPointDetails>>(){}.getType();
+        return  new Gson().fromJson(value, listType);
+    }
+
+    @TypeConverter
+    public static String locationPointDetailsFromArrayList(ArrayList<LocationPointDetails> list){
         Gson gson = new Gson();
         return gson.toJson(list);
     }

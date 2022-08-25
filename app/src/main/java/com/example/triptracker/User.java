@@ -7,23 +7,13 @@ import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 
-@Entity
+@Entity(tableName = "users_table")
 public class User {
 
     private final static String NOT = "Not provided";
 
-    @PrimaryKey(autoGenerate = true)
-    private Long localId;
-
+    @ColumnInfo(name = "totalActivities")
     private int totalActivities;
-
-    public Long getLocalId() {
-        return localId;
-    }
-
-    public void setLocalId(Long localId) {
-        this.localId = localId;
-    }
 
     public ArrayList<TrackDetails> getActivities() {
         return activities;
@@ -32,6 +22,20 @@ public class User {
     public void setActivities(ArrayList<TrackDetails> activities) {
         this.activities = activities;
     }
+
+
+    @NonNull
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(@NonNull Integer id) {
+        this.id = id;
+    }
+
+    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    private Integer id;
 
     @ColumnInfo(name = "keyId")
     private String keyId;

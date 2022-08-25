@@ -18,7 +18,7 @@ The app is still a work in progress.
 - [x] Create Settings tab
 - [x] Create Record Tab
 - [x] Create and update the Feed Tab based on previous tracked trips
-- [ ] Show the complete details of the previous tracked trips
+- [x] Show the complete details of the previous tracked trips
 - [ ] Create a Map tab where the User can see all the tracked trips on the map (color coded)
 - [ ] Implement friend list and activities
 - [ ] Create support for wearables (Smart Watches)

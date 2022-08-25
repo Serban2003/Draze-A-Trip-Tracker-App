@@ -58,6 +58,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textColorHint="#757575"
+        android:windowSoftInputMode="stateVisible|adjustPan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginBanner" />
@@ -76,6 +77,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textColorHint="#757575"
+        android:windowSoftInputMode="stateVisible|adjustPan"
         app:layout_constraintEnd_toEndOf="@+id/inputEmailAddress"
         app:layout_constraintStart_toStartOf="@+id/inputEmailAddress"
         app:layout_constraintTop_toBottomOf="@+id/inputEmailAddress" />

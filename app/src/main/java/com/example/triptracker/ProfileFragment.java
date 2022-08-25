@@ -1,5 +1,7 @@
 package com.example.triptracker;
 
+import static com.example.triptracker.UserDao.user;
+
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,13 +21,21 @@ import android.widget.ViewSwitcher;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Executable;
 import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ProfileFragment extends Fragment {
 
@@ -40,6 +50,7 @@ public class ProfileFragment extends Fragment {
     private Uri imagePath;
 
     StorageReference storageReference;
+    UserViewModel userViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +70,28 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        storageReference = FirebaseStorage.getInstance().getReference().child("images/" + UserDao.user.getKeyId());
+        storageReference = FirebaseStorage.getInstance().getReference().child("images/" + user.getKeyId());
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.getUserById(firebaseUser.getUid()).observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                emailTextView.setText(user.getEmail());
+                usernameTextView.setText(user.getUsername());
+                fullNameTextView.setText(user.getFullName());
+                genderTextView.setText(user.getGender());
+                phoneTextView.setText(user.getPhoneNumber());
+                locationTextView.setText(user.getLocation());
+
+                fullNameEditText.setText(user.getFullName());
+                genderEditText.setText(user.getGender());
+                phoneEditText.setText(user.getPhoneNumber());
+
+                Picasso.get().load(Uri.parse(user.getAvatarUri())).placeholder(R.drawable.progress_animation).into(avatar);
+            }
+        });
 
         usernameTextView = view.findViewById(R.id.usernameTextView);
         emailTextView = view.findViewById(R.id.emailTextView);
@@ -82,17 +114,17 @@ public class ProfileFragment extends Fragment {
         imageButton = view.findViewById(R.id.addImageButton);
         imageButton.setVisibility(View.GONE);
 
-        Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).placeholder(R.drawable.progress_animation).into(avatar);
+        //Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).placeholder(R.drawable.progress_animation).into(avatar);
         //Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).into(avatar);
-        updateUI();
+        //updateUI();
 
         editButton.setOnClickListener(view1 -> {
             switcher.showNext();
 
             imageButton.setVisibility(View.VISIBLE);
-            fullNameEditText.setText(fullNameTextView.getText().toString());
-            genderEditText.setText(genderTextView.getText().toString());
-            phoneEditText.setText(phoneTextView.getText().toString());
+//            fullNameEditText.setText(fullNameTextView.getText().toString());
+//            genderEditText.setText(genderTextView.getText().toString());
+//            phoneEditText.setText(phoneTextView.getText().toString());
 
             adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, country_list);
             locationSpinner.setAdapter(adapter);
@@ -102,20 +134,27 @@ public class ProfileFragment extends Fragment {
         });
 
         saveButton.setOnClickListener(view2 -> {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    UserDatabase userDatabase = UserDatabase.getDatabase(getContext());
+                    userDatabase.userDao().updateUser(fullNameEditText.getText().toString(), genderEditText.getText().toString(), phoneEditText.getText().toString(), locationSpinner.getSelectedItem().toString(), firebaseUser.getUid());
 
-            UserDao.user.setFullName(fullNameEditText.getText().toString());
-            UserDao.user.setGender(genderEditText.getText().toString());
-            UserDao.user.setPhoneNumber(phoneEditText.getText().toString());
-            UserDao.user.setLocation(locationSpinner.getSelectedItem().toString());
-
-            uploadImage();
+                    if(imagePath != null) userDatabase.userDao().updateAvatarUri(imagePath.toString(), firebaseUser.getUid());
+                }
+            });
 
             imageButton.setVisibility(View.GONE);
             switcher.showPrevious();
         });
 
+
+           // uploadImage();
+
+
         cancelButton.setOnClickListener(view3 -> {
-            Picasso.get().load(Uri.parse(UserDao.user.getAvatarUri())).placeholder(R.drawable.progress_animation).into(avatar);
+            Picasso.get().load(Uri.parse(user.getAvatarUri())).placeholder(R.drawable.progress_animation).into(avatar);
             imageButton.setVisibility(View.GONE);
             switcher.showPrevious();
         });
@@ -126,29 +165,29 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updateUI() {
-        emailTextView.setText(UserDao.user.getEmail());
-        usernameTextView.setText(UserDao.user.getUsername());
-        fullNameTextView.setText(UserDao.user.getFullName());
-        genderTextView.setText(UserDao.user.getGender());
-        phoneTextView.setText(UserDao.user.getPhoneNumber());
-        locationTextView.setText(UserDao.user.getLocation());
+        emailTextView.setText(user.getEmail());
+        usernameTextView.setText(user.getUsername());
+        fullNameTextView.setText(user.getFullName());
+        genderTextView.setText(user.getGender());
+        phoneTextView.setText(user.getPhoneNumber());
+        locationTextView.setText(user.getLocation());
     }
 
     public void uploadImage() {
         if (imagePath != null) {
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + UserDao.user.getKeyId());
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + user.getKeyId());
             storageReference.putFile(imagePath).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     Toast.makeText(getActivity(), "Image Uploaded Successfully!", Toast.LENGTH_SHORT).show();
-                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> UserDao.user.setAvatarUri(uri.toString())).addOnFailureListener(exception -> Toast.makeText(getActivity(), "Upload failed!", Toast.LENGTH_SHORT).show());
+                    storageReference.getDownloadUrl().addOnSuccessListener(uri -> user.setAvatarUri(uri.toString())).addOnFailureListener(exception -> Toast.makeText(getActivity(), "Upload failed!", Toast.LENGTH_SHORT).show());
                     updateUI();
-                    FirebaseActivities.updateDatabase();
+                    DatabaseActivities.updateDatabase();
                 } else
                     Toast.makeText(getActivity(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
             });
         } else {
             updateUI();
-            FirebaseActivities.updateDatabase();
+            DatabaseActivities.updateDatabase();
         }
     }
 

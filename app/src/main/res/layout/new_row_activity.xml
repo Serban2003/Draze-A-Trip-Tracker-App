@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/listview_shape_row"
+    android:background="@drawable/gradient_activity_row"
     android:layout_marginBottom="15dp"
     android:elevation="3dp">
 
@@ -12,21 +12,20 @@
         android:id="@+id/activityId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:visibility="gone"
+        android:tooltipText="id"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/trackHeader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/listview_shape_row"
         android:orientation="vertical"
-        android:padding="10dp"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="5dp">
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="5dp">
 
 
         <LinearLayout
@@ -38,7 +37,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -47,26 +46,25 @@
                     android:id="@+id/textViewRowHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:textFontWeight="600"
                     android:maxLines="1"
                     android:text="@string/title"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textColor="@color/text_color_main"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textViewRowHeaderValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textColor="@color/text_color_main"
+                    android:textSize="16sp"
                     tools:text="track_title" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -83,15 +81,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:maxLines="1"
+                        android:textFontWeight="600"
                         android:text="@string/date"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                    <View
-                        android:id="@+id/colorView"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:background="@drawable/round_view" />
+                        android:textColor="@color/text_color_main"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <TextView
@@ -100,8 +93,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textColor="@color/text_color_main"
+                    android:textSize="16sp"
                     tools:text="track_date" />
             </LinearLayout>
 
@@ -109,15 +102,10 @@
 
     </LinearLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_activity_row"
         android:orientation="vertical"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,112 +116,122 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:paddingTop="5dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
+
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewRowTitle"
+                    android:id="@+id/textViewRowDuration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/duration"
                     android:textColor="@color/text_color_main"
-                    android:textSize="20sp" />
+                    android:textSize="16sp"
+                    android:textFontWeight="600"/>
 
                 <TextView
-                    android:id="@+id/textViewRowTitleValue"
+                    android:id="@+id/textViewRowDurationValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10sp"
                     android:textColor="@color/text_color_main"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     tools:text="10:54" />
 
             </LinearLayout>
 
+            <View
+                android:id="@+id/separatorView3"
+                android:layout_width="1dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/darker_gray" />
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewRowDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:textFontWeight="600"
                     android:text="@string/distance"
                     android:textColor="@color/text_color_main"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/textViewRowDistanceValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10sp"
                     android:textColor="@color/text_color_main"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     tools:text="112.5km" />
 
             </LinearLayout>
 
+            <View
+                android:id="@+id/separatorView4"
+                android:layout_width="1dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/darker_gray" />
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/textViewRowElevation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/elevation"
                     android:textColor="@color/text_color_main"
-                    android:textSize="20sp" />
+                    android:textSize="16sp"
+                    android:textFontWeight="600"/>
 
                 <TextView
                     android:id="@+id/textViewRowElevationValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10sp"
                     android:textColor="@color/text_color_main"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     tools:text="100m" />
 
             </LinearLayout>
         </LinearLayout>
 
-        <View
-            android:id="@+id/separatorView"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="5dp">
+            android:paddingTop="5dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
 
             <TextView
                 android:id="@+id/textViewRowDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/description"
+                android:textFontWeight="600"
                 android:textColor="@color/text_color_main"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rowDetails" />
@@ -242,14 +240,21 @@
                 android:id="@+id/textViewRowDescriptionValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:textColor="@color/text_color_main"
                 android:textSize="16sp"
-                android:layout_marginBottom="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rowDetails"
                 tools:text="track_description" />
+
         </LinearLayout>
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -271,7 +276,7 @@
             android:clickable="false"
             android:layout_weight="2"
             android:hapticFeedbackEnabled="true"
-            android:textColor="@android:color/white"/>
+            android:textColor="@color/white"/>
 
         <TextView
             android:layout_width="0dp"

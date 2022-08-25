@@ -21,14 +21,18 @@
         android:theme="@style/Theme.TripTracker.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".RouteDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".VerifyEmailActivity"
             android:exported="false" />
 
         <service
             android:name=".LocationProvider"
             android:enabled="true"
-            android:exported="true"
-            android:foregroundServiceType="location" />
+            android:exported="false"
+            android:foregroundServiceType="location"
+            android:permission="TODO" />
 
         <activity
             android:name=".SaveTrackedActivity"

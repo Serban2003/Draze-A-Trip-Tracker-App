@@ -118,5 +118,7 @@
     <string name="no_verification_email">No verification email?</string>
     <string name="your_account_will_be_deleted">If you fail to verify your email, your account will be deleted in 5 hours.</string>
     <string name="check_your_inbox">Please check your inbox and verify your account in order to complete your authentication.</string>
+    <string name="loading">Loading…</string>
+    <string name="average_speed_simple">Average Speed</string>
 
 </resources>
