@@ -12,18 +12,6 @@ public class User {
 
     private final static String NOT = "Not provided";
 
-    @ColumnInfo(name = "totalActivities")
-    private int totalActivities;
-
-    public ArrayList<TrackDetails> getActivities() {
-        return activities;
-    }
-
-    public void setActivities(ArrayList<TrackDetails> activities) {
-        this.activities = activities;
-    }
-
-
     @NonNull
     public Integer getId() {
         return id;
@@ -67,9 +55,6 @@ public class User {
     private boolean verified;
 
     private static final String DEFAULT_PATH_AVATAR = "https://firebasestorage.googleapis.com/v0/b/trip-tracker-2844c.appspot.com/o/images%2Fno_image_1%400.75x.png?alt=media&token=81168beb-f6aa-44c2-8349-cd4c0490357a";
-
-    @ColumnInfo(name = "activities")
-    private ArrayList<TrackDetails> activities = new ArrayList<>();
 
     public User() {
         this.keyId = NOT;
@@ -164,25 +149,6 @@ public class User {
         this.verified = verified;
     }
 
-    public int getActivitiesNumber() {
-        return activities.size();
-    }
-
-    public TrackDetails getActivityFromId(int id) {
-        return activities.get(id);
-    }
-
-    public void addActivity(TrackDetails trackDetails) {
-        activities.add(trackDetails);
-    }
-
-    public int getTotalActivities() {
-        return totalActivities;
-    }
-
-    public void setTotalActivities(int totalActivities) {
-        this.totalActivities = totalActivities;
-    }
 
     public void setNewUser() {
         this.keyId = NOT;
@@ -195,8 +161,6 @@ public class User {
         this.location = NOT;
         this.avatarUri = DEFAULT_PATH_AVATAR;
         this.verified = false;
-        this.totalActivities = 0;
-        activities = new ArrayList<>();
     }
 
     @NonNull

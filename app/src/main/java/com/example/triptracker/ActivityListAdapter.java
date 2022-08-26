@@ -4,26 +4,14 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
-import android.widget.AbsListView;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager2.adapter.FragmentViewHolder;
-
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,15 +22,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.hudomju.swipe.adapter.ViewAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.ActivityViewHolder> implements ViewAdapter {
+public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.ActivityViewHolder>{
 
     private static final String TAG = "ActivityListAdapter";
     private final LayoutInflater layoutInflater;
@@ -64,6 +50,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ActivityViewHolder holder, int position) {
+
         if (activities != null) {
             TrackDetails currentTrack = activities.get(position);
             holder.activityIdTextView.setText(currentTrack.getId().toString());
@@ -111,16 +98,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
             holder.bound = builder.build();
 
-            //plotTrackPoints(map, currentTrack);
-
-            setAnimation(holder.itemView);
         }
-    }
-
-    private void setAnimation(View view) {
-        Animation animation = new AlphaAnimation(0.0f, 1.0f);
-        animation.setDuration(500);
-        view.startAnimation(animation);
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -135,49 +113,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         else return 0;
     }
 
-    @Override
-    public Context getContext() {
-        return null;
+    public void clear(){
+        if(activities != null) activities.clear();
     }
-
-    @Override
-    public int getWidth() {
-        return 0;
-    }
-
-    @Override
-    public int getChildCount() {
-        return 0;
-    }
-
-    @Override
-    public void getLocationOnScreen(int[] locations) {
-
-    }
-
-    @Override
-    public View getChildAt(int index) {
-        return null;
-    }
-
-    @Override
-    public int getChildPosition(View position) {
-        return 0;
-    }
-
-    @Override
-    public void requestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-    }
-
-    @Override
-    public void onTouchEvent(MotionEvent e) {
-    }
-
-    @Override
-    public Object makeScrollListener(AbsListView.OnScrollListener listener) {
-        return null;
-    }
-
 
     static class ActivityViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, OnMapReadyCallback {
         GoogleMap mapCurrent;
@@ -220,7 +158,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             mapCurrent = googleMap;
             mapCurrent.addPolyline(polylineOptions);
 
-            final CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bound, 100);
+            final CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bound, 500, 500, 100);
             mapCurrent.moveCamera(cu);
             mapCurrent.getUiSettings().setAllGesturesEnabled(false);
         }

@@ -24,10 +24,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/listview_shape_row"
         android:orientation="vertical"
-        android:padding="10dp"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="5dp">
-
+        android:padding="10dp">
 
         <LinearLayout
             android:id="@+id/rowHeaderData"

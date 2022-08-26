@@ -30,9 +30,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         //FirebaseAuth.getInstance().signOut();
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (firebaseUser != null) DatabaseActivities.findUserInDatabase(firebaseUser);
-
-
         handler = new Handler();
         handler.postDelayed(() -> {
             Intent intent;

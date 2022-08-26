@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class DatabaseActivities {
@@ -57,7 +58,6 @@ public class DatabaseActivities {
         user.setGender(Objects.requireNonNull(dataSnapshot.child("gender").getValue()).toString());
         user.setPhoneNumber(Objects.requireNonNull(dataSnapshot.child("phoneNumber").getValue()).toString());
         user.setLocation(Objects.requireNonNull(dataSnapshot.child("location").getValue()).toString());
-        user.setTotalActivities(Integer.parseInt(Objects.requireNonNull(dataSnapshot.child("totalActivities").getValue()).toString()));
         user.setVerified(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).isEmailVerified());
 
         if (dataSnapshot.child("avatarUri").getValue() != null)
@@ -66,16 +66,19 @@ public class DatabaseActivities {
         Log.d(TAG, "User updated: " + user);
     }
 
-    public static void updateDatabase() {
+    public static void updateUserToDatabase(User user) {
         DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
-        userReference.child(UserDao.user.getKeyId()).child("fullName").setValue(UserDao.user.getFullName());
-        userReference.child(UserDao.user.getKeyId()).child("gender").setValue(UserDao.user.getGender());
-        userReference.child(UserDao.user.getKeyId()).child("phoneNumber").setValue(UserDao.user.getPhoneNumber());
-        userReference.child(UserDao.user.getKeyId()).child("location").setValue(UserDao.user.getLocation());
-        userReference.child(UserDao.user.getKeyId()).child("avatarUri").setValue(UserDao.user.getAvatarUri());
-        userReference.child(UserDao.user.getKeyId()).child("activitiesNumber").setValue(UserDao.user.getActivitiesNumber());
-        userReference.child(UserDao.user.getKeyId()).child("verified").setValue(UserDao.user.isVerified());
-        userReference.child(UserDao.user.getKeyId()).child("totalActivities").setValue(UserDao.user.getTotalActivities());
+        userReference.child(user.getKeyId()).child("fullName").setValue(UserDao.user.getFullName());
+        userReference.child(user.getKeyId()).child("gender").setValue(UserDao.user.getGender());
+        userReference.child(user.getKeyId()).child("phoneNumber").setValue(UserDao.user.getPhoneNumber());
+        userReference.child(user.getKeyId()).child("location").setValue(UserDao.user.getLocation());
+        userReference.child(user.getKeyId()).child("avatarUri").setValue(UserDao.user.getAvatarUri());
+        userReference.child(user.getKeyId()).child("verified").setValue(UserDao.user.isVerified());
+    }
+
+    public static void updateActivitiesToDatabase(List<TrackDetails> activities){
+        DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
+        userReference.child(user.getKeyId()).child("activities").setValue(activities);
     }
 
     public static void updateActivities(DataSnapshot dataSnapshot) {
@@ -87,7 +90,6 @@ public class DatabaseActivities {
             trackDetails.dataSnapshotToTrackDetails(iterable.iterator().next());
             activities.add(trackDetails);
         }
-        user.setActivities(activities);
     }
 
     public static void createUserInFirebaseDatabase(FirebaseUser firebaseUser) {

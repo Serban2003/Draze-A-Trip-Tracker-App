@@ -3,6 +3,7 @@ package com.example.triptracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -45,56 +47,30 @@ public class FeedFragment extends Fragment implements RecyclerViewClickListener 
         View view = inflater.inflate(R.layout.fragment_feed, container, false);
 
         view.findViewById(R.id.text_view_no_activities).setVisibility(View.GONE);
-        RecyclerView recyclerView = view.findViewById(R.id.list_view_activities);
+        //RecyclerView recyclerView = view.findViewById(R.id.list_view_activities);
 
+        ShimmerRecyclerView recyclerView = view.findViewById(R.id.list_view_activities);
 
         ActivityListAdapter adapter = new ActivityListAdapter(getContext(), this);
         recyclerView.setAdapter(adapter);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.showShimmerAdapter();
 
         activitiesViewModel = new ViewModelProvider(this).get(ActivitiesViewModel.class);
         activitiesViewModel.getAllActivities().observe(getViewLifecycleOwner(), new Observer<List<TrackDetails>>() {
             @Override
             public void onChanged(List<TrackDetails> trackDetails) {
+                adapter.clear();
                 adapter.setActivities(trackDetails);
+                recyclerView.hideShimmerAdapter();
+
                 if (adapter.getItemCount() == 0)
                     view.findViewById(R.id.text_view_no_activities).setVisibility(View.VISIBLE);
+
+                DatabaseActivities.updateActivitiesToDatabase(trackDetails);
             }
         });
-
-
-        ItemTouchHelper helper = new ItemTouchHelper(
-                new ItemTouchHelper.SimpleCallback(0,
-                        ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-                    @Override
-                    public boolean onMove(RecyclerView recyclerView,
-                                          RecyclerView.ViewHolder viewHolder,
-                                          RecyclerView.ViewHolder target) {
-                        return false;
-                    }
-
-                    @Override
-                    public void onSwiped(RecyclerView.ViewHolder viewHolder,
-                                         int direction) {
-                        int position = viewHolder.getAbsoluteAdapterPosition();
-                        TrackDetails trackDetails = adapter.getTrackAtPosition(position);
-                        ///Toast.makeText(getActivity(), "Deleting " + trackDetails.getTitle(), Toast.LENGTH_LONG).show();
-                        activitiesViewModel.deleteActivity(trackDetails);
-
-                        Snackbar.make(view, "Deleting " + trackDetails.getTitle() + "...", Snackbar.LENGTH_LONG)
-                                .setAnchorView(view.findViewById(R.id.bottom_navigation))
-                                .setTextColor(getResources().getColor(R.color.white))
-                                .setActionTextColor(getResources().getColor(R.color.accent_color))
-                                .setAction("Undo", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        activitiesViewModel.insert(trackDetails);
-                                        view.findViewById(R.id.text_view_no_activities).setVisibility(View.GONE);
-                                    }
-                                }).show();
-                    }
-                });
-        helper.attachToRecyclerView(recyclerView);
         return view;
     }
 

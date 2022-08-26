@@ -16,14 +16,20 @@
         android:visibility="gone"
         android:textColor="@color/main_color"/>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/list_view_activities"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
+        app:shimmer_demo_child_count="5"
+        app:shimmer_demo_grid_child_count="1"
+        app:shimmer_demo_layout="@layout/shimmer_layout_row_activity"
+        app:shimmer_demo_view_holder_item_background="@drawable/view_holder_background"
+        app:shimmer_demo_layout_manager_type="linear_vertical"
+        app:shimmer_demo_angle="20"
         android:divider="@color/transparent"
-        android:elevation="5dp"
-        android:scrollbars="none"/>
+        android:scrollbars="none"
+        android:layout_marginBottom="-15dp"/>
 
 
 </LinearLayout>

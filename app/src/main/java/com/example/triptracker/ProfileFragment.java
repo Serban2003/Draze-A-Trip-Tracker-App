@@ -25,6 +25,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -122,12 +123,11 @@ public class ProfileFragment extends Fragment {
             switcher.showNext();
 
             imageButton.setVisibility(View.VISIBLE);
-//            fullNameEditText.setText(fullNameTextView.getText().toString());
-//            genderEditText.setText(genderTextView.getText().toString());
-//            phoneEditText.setText(phoneTextView.getText().toString());
 
             adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, country_list);
             locationSpinner.setAdapter(adapter);
+
+
 
             if (locationTextView != null)
                 locationSpinner.setSelection(adapter.getPosition(locationTextView.getText().toString()));
@@ -141,7 +141,32 @@ public class ProfileFragment extends Fragment {
                     UserDatabase userDatabase = UserDatabase.getDatabase(getContext());
                     userDatabase.userDao().updateUser(fullNameEditText.getText().toString(), genderEditText.getText().toString(), phoneEditText.getText().toString(), locationSpinner.getSelectedItem().toString(), firebaseUser.getUid());
 
-                    if(imagePath != null) userDatabase.userDao().updateAvatarUri(imagePath.toString(), firebaseUser.getUid());
+                    if(imagePath != null){
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/" + UserDao.user.getKeyId());
+                        storageReference.putFile(imagePath).addOnCompleteListener(task -> {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getActivity(), "Image Uploaded Successfully!", Toast.LENGTH_SHORT).show();
+                                storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        ExecutorService executorService = Executors.newSingleThreadExecutor();
+                                        executorService.execute(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                userDatabase.userDao().updateAvatarUri(uri.toString(), firebaseUser.getUid());
+                                            }
+                                        });
+
+
+                                    }
+                                }).addOnFailureListener(exception -> {
+                                    Toast.makeText(getActivity(), "Upload failed!", Toast.LENGTH_SHORT).show();
+                                });
+                            }
+                            else Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+                    }
+
                 }
             });
 
@@ -180,14 +205,9 @@ public class ProfileFragment extends Fragment {
                 if (task.isSuccessful()) {
                     Toast.makeText(getActivity(), "Image Uploaded Successfully!", Toast.LENGTH_SHORT).show();
                     storageReference.getDownloadUrl().addOnSuccessListener(uri -> user.setAvatarUri(uri.toString())).addOnFailureListener(exception -> Toast.makeText(getActivity(), "Upload failed!", Toast.LENGTH_SHORT).show());
-                    updateUI();
-                    DatabaseActivities.updateDatabase();
                 } else
                     Toast.makeText(getActivity(), Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
             });
-        } else {
-            updateUI();
-            DatabaseActivities.updateDatabase();
         }
     }
 

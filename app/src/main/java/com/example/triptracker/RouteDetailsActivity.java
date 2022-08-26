@@ -1,9 +1,16 @@
 package com.example.triptracker;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -23,9 +30,9 @@ public class RouteDetailsActivity extends CustomSecondaryActivity implements OnM
     Integer sessionId;
     TextView sessionTitleTextView, sessionDescriptionTextView, sessionDistanceTextView, sessionDateTextView, sessionDurationTextView, sessionElevationTextView, sessionAverageSpeedTextView;
     GoogleMap map;
-    TrackDetails trackDetails;
     ActivitiesViewModel activitiesViewModel;
-    ActivitiesDatabase activitiesDatabase;
+    TrackDetails track;
+    Observer<TrackDetails> observer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +52,17 @@ public class RouteDetailsActivity extends CustomSecondaryActivity implements OnM
         activitiesViewModel.getActivityById(sessionId).observe(this, new Observer<TrackDetails>() {
             @Override
             public void onChanged(TrackDetails trackDetails) {
-                sessionTitleTextView.setText(trackDetails.getTitle());
-                sessionDateTextView.setText(trackDetails.getTimeCreated());
-                sessionDescriptionTextView.setText(trackDetails.getDescription());
-                sessionDurationTextView.setText(trackDetails.getDescription());
-                sessionDistanceTextView.setText(trackDetails.getDistance());
-                sessionAverageSpeedTextView.setText(trackDetails.getAverageSpeed());
-                sessionElevationTextView.setText(trackDetails.getElevation());
-                plotTrackPoints(trackDetails.getLocationPoints());
+                if(trackDetails != null){
+                    track = trackDetails;
+                    sessionTitleTextView.setText(trackDetails.getTitle());
+                    sessionDateTextView.setText(trackDetails.getTimeCreated());
+                    sessionDescriptionTextView.setText(trackDetails.getDescription());
+                    sessionDurationTextView.setText(trackDetails.getDescription());
+                    sessionDistanceTextView.setText(trackDetails.getDistance());
+                    sessionAverageSpeedTextView.setText(trackDetails.getAverageSpeed());
+                    sessionElevationTextView.setText(trackDetails.getElevation());
+                    plotTrackPoints(trackDetails.getLocationPoints());
+                }
             }
         });
 
@@ -77,6 +87,7 @@ public class RouteDetailsActivity extends CustomSecondaryActivity implements OnM
             polylineOptions.add(latLng);
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
         }
+        polylineOptions.color(R.color.main_color);
         //Add polyline to map
         map.addPolyline(polylineOptions);
 
@@ -85,5 +96,38 @@ public class RouteDetailsActivity extends CustomSecondaryActivity implements OnM
     @Override
     public String getTitleView() {
         return "Track Details";
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.session_details_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId() == R.id.deleteButton) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure you want to delete this track?")
+                    .setTitle("Delete")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            finish();
+
+                            activitiesViewModel.deleteActivity(track);
+                        }
+                    })
+                    .setNegativeButton("No", null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -5,7 +5,6 @@ import static com.example.triptracker.DatabaseActivities.USER;
 import static com.example.triptracker.DatabaseActivities.deleteUserFromFirebaseDatabase;
 import static com.example.triptracker.DatabaseActivities.sendEmailVerification;
 import static com.example.triptracker.DatabaseActivities.signOutUserFromFirebase;
-import static com.example.triptracker.UserDao.user;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -100,7 +99,6 @@ public class AuthenticationActivity extends AppCompatActivity implements Navigat
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
             if (Objects.equals(authType, "login")) {
-                dialog.show();
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(AuthenticationActivity.this, task -> {
                             if (task.isSuccessful()) {
@@ -147,7 +145,6 @@ public class AuthenticationActivity extends AppCompatActivity implements Navigat
                                                     user.setGender(Objects.requireNonNull(task1.getResult().child("gender").getValue()).toString());
                                                     user.setPhoneNumber(Objects.requireNonNull(task1.getResult().child("phoneNumber").getValue()).toString());
                                                     user.setLocation(Objects.requireNonNull(task1.getResult().child("location").getValue()).toString());
-                                                    user.setTotalActivities(Integer.parseInt(Objects.requireNonNull(task1.getResult().child("totalActivities").getValue()).toString()));
                                                     user.setVerified(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).isEmailVerified());
 
                                                     if (task1.getResult().child("avatarUri").getValue() != null)
@@ -160,6 +157,7 @@ public class AuthenticationActivity extends AppCompatActivity implements Navigat
                                                         trackDetails.dataSnapshotToTrackDetails(iterable.iterator().next());
                                                         activitiesViewModel.insert(trackDetails);
                                                     }
+                                                    userViewModel.insertUser(user);
                                                     handler.post(() -> {
                                                         dialog.dismiss();
 
@@ -199,7 +197,6 @@ public class AuthenticationActivity extends AppCompatActivity implements Navigat
                                                 user.setGender(Objects.requireNonNull(task12.getResult().child("gender").getValue()).toString());
                                                 user.setPhoneNumber(Objects.requireNonNull(task12.getResult().child("phoneNumber").getValue()).toString());
                                                 user.setLocation(Objects.requireNonNull(task12.getResult().child("location").getValue()).toString());
-                                                user.setTotalActivities(Integer.parseInt(Objects.requireNonNull(task12.getResult().child("totalActivities").getValue()).toString()));
                                                 user.setVerified(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).isEmailVerified());
 
                                                 if (task12.getResult().child("avatarUri").getValue() != null)
@@ -243,11 +240,14 @@ public class AuthenticationActivity extends AppCompatActivity implements Navigat
                                 Log.d(TAG, "createUserWithEmail:success");
                                 Toast.makeText(AuthenticationActivity.this, "Account created successfully.", Toast.LENGTH_SHORT).show();
 
+                                activitiesViewModel.deleteAllActivities();
+                                userViewModel.deleteAllUsers();
+
                                 firebaseUser = mAuth.getCurrentUser();
                                 assert firebaseUser != null;
                                 sendEmailVerification(firebaseUser, AuthenticationActivity.this);
 
-                                user.setNewUser();
+                                User user = new User();
                                 user.setKeyId(firebaseUser.getUid());
                                 user.setUsername(username);
                                 user.setEmail(email);
@@ -256,7 +256,7 @@ public class AuthenticationActivity extends AppCompatActivity implements Navigat
                                 Executor executor = Executors.newSingleThreadExecutor();
                                 Handler handler = new Handler(Looper.getMainLooper());
                                 executor.execute(() -> {
-                                    FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).setValue(UserDao.user);
+                                    FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).setValue(user);
                                     userViewModel.insertUser(user);
                                             handler.post(() -> {
                                                 dialog.dismiss();

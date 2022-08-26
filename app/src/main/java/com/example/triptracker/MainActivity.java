@@ -1,5 +1,7 @@
 package com.example.triptracker;
 
+import static com.example.triptracker.DatabaseActivities.updateUserToDatabase;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -71,11 +73,10 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 UserDao.user.setGender(user.getGender());
                 UserDao.user.setPhoneNumber(user.getPhoneNumber());
                 UserDao.user.setLocation(user.getLocation());
-                UserDao.user.setTotalActivities(user.getTotalActivities());
                 UserDao.user.setVerified(user.isVerified());
                 UserDao.user.setAvatarUri(user.getAvatarUri());
 
-                if(!user.isVerified()) mainMenu.findItem(R.id.settingsButton).setIcon(R.drawable.ic_settings_icon_notification);
+                updateUserToDatabase(user);
             }
         });
     }
@@ -132,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     public boolean onPrepareOptionsMenu(Menu menu) {
         mainMenu = menu;
         menu.findItem(R.id.settingsButton).setIcon(R.drawable.ic_settings_icon);
+        if(!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) mainMenu.findItem(R.id.settingsButton).setIcon(R.drawable.ic_settings_icon_notification);
         return super.onPrepareOptionsMenu(menu);
     }
 
