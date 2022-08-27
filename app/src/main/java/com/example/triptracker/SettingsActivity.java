@@ -102,7 +102,7 @@ public class SettingsActivity extends CustomSecondaryActivity {
                 }
                 case "Log Out": {
                     FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(this, AuthenticationActivity.class);
+                    Intent intent = new Intent(this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }

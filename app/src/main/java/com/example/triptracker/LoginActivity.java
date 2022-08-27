@@ -5,6 +5,7 @@ import static com.example.triptracker.DatabaseActivities.USER;
 import static com.example.triptracker.DatabaseActivities.deleteUserFromFirebaseDatabase;
 import static com.example.triptracker.DatabaseActivities.signOutUserFromFirebase;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -69,11 +70,46 @@ public class LoginActivity extends AppCompatActivity {
         emailLayout = findViewById(R.id.inputEmailAddress);
         passwordLayout = findViewById(R.id.inputPassword);
 
+        emailLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!EmailValidator.getInstance().isValid(s.toString()))
+                    emailLayout.setError(getString(R.string.invalid_email));
+                else emailLayout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        passwordLayout.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length() < 6)
+                    passwordLayout.setError(getString(R.string.invalid_password));
+                else passwordLayout.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(v -> {
-            emailLayout.setError(null);
-            passwordLayout.setError(null);
-
             String email = emailLayout.getEditText().getText().toString();
             String password = passwordLayout.getEditText().getText().toString();
 
@@ -132,12 +168,13 @@ public class LoginActivity extends AppCompatActivity {
                             signOutUserFromFirebase();
                             deleteUserFromFirebaseDatabase(firebaseUser);
                         } else {
+                            dialog.show();
                             Log.d(TAG, "signInWithEmail:success");
                             Toast.makeText(LoginActivity.this, "Login successful.", Toast.LENGTH_SHORT).show();
 
                             activitiesViewModel.deleteAllActivities();
                             userViewModel.deleteAllUsers();
-                            dialog.show();
+
 
                             Executor executor = Executors.newSingleThreadExecutor();
                             Handler handler = new Handler(Looper.getMainLooper());
