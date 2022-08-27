@@ -6,6 +6,7 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             Intent intent;
             if (firebaseUser != null)
                 intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-            else intent = new Intent(SplashScreenActivity.this, AuthenticationActivity.class);
+            else intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }, 2000);

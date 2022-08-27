@@ -121,8 +121,11 @@
     <string name="loading">Loading…</string>
     <string name="average_speed_simple">Average Speed</string>
     <string name="delete">DELETE</string>
-    <string name="acra_toast_text">Error Message Sent!</string>
+    <string name="acra_toast_text">Please send error message!</string>
     <string name="mail_subject">App Crash</string>
     <string name="mail_body">Draze encountered an error.</string>
+    <string name="no_email">Please enter your email</string>
+    <string name="no_password">Please enter your password</string>
+    <string name="signup">SignUp</string>
 
 </resources>

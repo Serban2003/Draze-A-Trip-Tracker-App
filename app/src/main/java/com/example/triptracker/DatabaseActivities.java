@@ -76,6 +76,10 @@ public class DatabaseActivities {
         userReference.child(user.getKeyId()).child("verified").setValue(UserDao.user.isVerified());
     }
 
+    public static void updateUILogin(){
+
+    }
+
     public static void updateActivitiesToDatabase(List<TrackDetails> activities){
         DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
         userReference.child(user.getKeyId()).child("activities").setValue(activities);
