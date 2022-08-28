@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fillViewport="true">
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ProfileFragment"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="160dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/gradient_background"
-        android:elevation="4dp"
+        android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -25,11 +20,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
+
         <TextView
             android:id="@+id/usernameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="25dp"
             android:text="@string/username"
             android:textColor="@color/white"
             android:textSize="25sp"
@@ -53,471 +49,424 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ViewSwitcher
-        android:id="@+id/profileSwitcher"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="35dp"
-        android:inAnimation="@anim/slide_in"
-        android:outAnimation="@anim/slide_out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatarIcon"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@id/avatarIcon">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/userInformationLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"/>
 
-            <LinearLayout
-                android:id="@+id/editButtonLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="4dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.444"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-                <Button
-                    android:id="@+id/editButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/main_color"
-                    android:textColor="@color/white"
-        android:textFontWeight="500"
-        android:textSize="16sp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/edit_profile"
-                    tools:layout_editor_absoluteX="153dp"
-                    tools:layout_editor_absoluteY="362dp" />
-            </LinearLayout>
+<!--    <ViewSwitcher-->
+<!--        android:id="@+id/profileSwitcher"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="35dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginEnd="35dp"-->
+<!--        android:inAnimation="@anim/slide_in"-->
+<!--        android:outAnimation="@anim/slide_out"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/avatarIcon"-->
+<!--        app:layout_constraintVertical_bias="0.0">-->
 
-            <LinearLayout
-                android:id="@+id/fullNameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:elevation="4dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.444"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editButtonLayout"
-                tools:ignore="UseCompoundDrawables">
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/userInformationLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.487"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.0">-->
 
-                <ImageView
-                    android:id="@+id/fullNameIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="@string/name_icon"
-                    android:src="@drawable/ic_name_icon" />
+<!--            <LinearLayout-->
+<!--                android:id="@+id/editButtonLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:elevation="4dp"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.444"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+<!--                <Button-->
+<!--                    android:id="@+id/editButton"-->
+<!--                    android:layout_width="150dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:backgroundTint="@color/main_color"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textAllCaps="false"-->
+<!--        android:textFontWeight="500"-->
+<!--        android:textSize="16sp"-->
+<!--                    android:paddingStart="16dp"-->
+<!--                    android:paddingEnd="16dp"-->
+<!--                    android:text="@string/edit_profile"-->
+<!--                    tools:layout_editor_absoluteX="153dp"-->
+<!--                    tools:layout_editor_absoluteY="362dp" />-->
+<!--            </LinearLayout>-->
 
-                    <TextView
-                        android:id="@+id/fullNameTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/full_name"
-                        android:textColor="@color/text_color_main"
-                        android:textSize="18sp" />
+<!--            <LinearLayout-->
+<!--                android:id="@+id/fullNameLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:elevation="4dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.444"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editButtonLayout"-->
+<!--                tools:ignore="UseCompoundDrawables">-->
 
-                    <TextView
-                        android:id="@+id/fullNameTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/my_name"
-                        android:textColor="@color/text_color_main"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </LinearLayout>
+<!--                <ImageView-->
+<!--                    android:id="@+id/fullNameIcon"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:contentDescription="@string/name_icon"-->
+<!--                    android:src="@drawable/ic_name_icon" />-->
 
-            <LinearLayout
-                android:id="@+id/phoneLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:elevation="4dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.444"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/genderLayout">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="vertical">-->
 
-                <ImageView
-                    android:id="@+id/phoneIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="@string/phone_icon"
-                    android:src="@drawable/ic_phone_icon" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/fullNameTitle"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:paddingStart="5dp"-->
+<!--                        android:paddingEnd="5dp"-->
+<!--                        android:text="@string/full_name"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:textColor="@color/text_color_main"/>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+<!--                    <TextView-->
+<!--                        android:id="@+id/fullNameTextView"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:paddingStart="5dp"-->
+<!--                        android:paddingEnd="5dp"-->
+<!--                        android:text="@string/full_name"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="@color/text_color_main"/>-->
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
 
-                    <TextView
-                        android:id="@+id/phoneTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/phone_number"
-                        android:textSize="18sp"
-                        android:textColor="@color/text_color_main"/>
+<!--            <LinearLayout-->
+<!--                android:id="@+id/phoneLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:elevation="4dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.444"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/genderLayout">-->
 
-                    <TextView
-                        android:id="@+id/phoneTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/my_phone_number"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_color_main"/>
-                </LinearLayout>
+<!--                <ImageView-->
+<!--                    android:id="@+id/phoneIcon"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:contentDescription="@string/phone_icon"-->
+<!--                    android:src="@drawable/ic_phone_icon" />-->
 
-            </LinearLayout>
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="vertical">-->
 
-            <LinearLayout
-                android:id="@+id/genderLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:elevation="4dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.444"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fullNameLayout">
+<!--                    <TextView-->
+<!--                        android:id="@+id/phoneTitle"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:paddingStart="5dp"-->
+<!--                        android:paddingEnd="5dp"-->
+<!--                        android:text="@string/phone_number"-->
+<!--                        android:textSize="18sp"-->
+<!--                        android:textColor="@color/text_color_main"/>-->
 
-                <ImageView
-                    android:id="@+id/genderIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="@string/gender_icon"
-                    android:src="@drawable/ic_gender_icon" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/phoneTextView"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:paddingStart="5dp"-->
+<!--                        android:paddingEnd="5dp"-->
+<!--                        android:text="@string/my_phone_number"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="@color/text_color_main"/>-->
+<!--                </LinearLayout>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+<!--            </LinearLayout>-->
 
-                    <TextView
-                        android:id="@+id/genderTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/gender"
-                        android:textColor="@color/text_color_main"
-                        android:textSize="18sp" />
+<!--            <LinearLayout-->
+<!--                android:id="@+id/genderLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:elevation="4dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.444"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/fullNameLayout">-->
 
-                    <TextView
-                        android:id="@+id/genderTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/my_gender"
-                        android:textColor="@color/text_color_main"
-                        android:textSize="16sp" />
-                </LinearLayout>
+<!--                <ImageView-->
+<!--                    android:id="@+id/genderIcon"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:contentDescription="@string/gender_icon"-->
+<!--                    android:src="@drawable/ic_gender_icon" />-->
 
-            </LinearLayout>
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="vertical">-->
 
-            <LinearLayout
-                android:id="@+id/locationLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:elevation="4dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.444"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/phoneLayout">
+<!--                    <TextView-->
+<!--                        android:id="@+id/genderTitle"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:paddingStart="5dp"-->
+<!--                        android:paddingEnd="5dp"-->
+<!--                        android:text="@string/gender"-->
+<!--                        android:textColor="@color/text_color_main"-->
+<!--                        android:textSize="18sp" />-->
 
-                <ImageView
-                    android:id="@+id/locationIcon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:contentDescription="@string/location_icon"
-                    android:src="@drawable/ic_location_icon" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/genderTextView"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:paddingStart="5dp"-->
+<!--                        android:paddingEnd="5dp"-->
+<!--                        android:text="@string/my_gender"-->
+<!--                        android:textColor="@color/text_color_main"-->
+<!--                        android:textSize="16sp" />-->
+<!--                </LinearLayout>-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+<!--            </LinearLayout>-->
 
-                    <TextView
-                        android:id="@+id/locationTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/location"
-                        android:textSize="18sp"
-                        android:textColor="@color/text_color_main"/>
+<!--            <LinearLayout-->
+<!--                android:id="@+id/locationLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_marginBottom="15dp"-->
+<!--                android:elevation="4dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.444"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/phoneLayout">-->
 
-                    <TextView
-                        android:id="@+id/locationTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/my_location"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_color_main"/>
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                <ImageView-->
+<!--                    android:id="@+id/locationIcon"-->
+<!--                    android:layout_width="50dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:contentDescription="@string/location_icon"-->
+<!--                    android:src="@drawable/ic_location_icon" />-->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/userEditLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="vertical">-->
 
-                <LinearLayout
-                    android:id="@+id/editButtonsLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="4dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.444"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+<!--                    <TextView-->
+<!--                        android:id="@+id/locationTitle"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:paddingStart="5dp"-->
+<!--                        android:paddingEnd="5dp"-->
+<!--                        android:text="@string/location"-->
+<!--                        android:textSize="18sp"-->
+<!--                        android:textColor="@color/text_color_main"/>-->
 
-                    <android.widget.Button
-                        android:id="@+id/cancelButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="37dp"
-                        android:textColor="@color/gray"
-                        android:background="@drawable/button_border"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
-                        android:textFontWeight="500"
-                        android:textSize="16sp"
-                        android:text="@string/cancel"
-                        android:layout_marginEnd="5dp"
-                        tools:layout_editor_absoluteX="153dp"
-                        tools:layout_editor_absoluteY="362dp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/locationTextView"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:paddingStart="5dp"-->
+<!--                        android:paddingEnd="5dp"-->
+<!--                        android:text="@string/my_location"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:textColor="@color/text_color_main"/>-->
+<!--                </LinearLayout>-->
+<!--            </LinearLayout>-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-                    <Button
-                        android:id="@+id/saveButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:paddingStart="16dp"
-                        android:textFontWeight="500"
-                        android:textSize="16sp"
-                        android:paddingEnd="16dp"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/main_color"
-                        android:text="@string/save"
-                        tools:layout_editor_absoluteX="153dp"
-                        tools:layout_editor_absoluteY="362dp" />
-                </LinearLayout>
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/userEditLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            android:paddingStart="10dp"-->
+<!--            android:paddingEnd="10dp"-->
+<!--            app:layout_constraintHorizontal_bias="0.487"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintVertical_bias="0.0">-->
 
-            <LinearLayout
-                android:id="@+id/fullNameEditLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editButtonsLayout">
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/editButtonsLayout"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:elevation="4dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintHorizontal_bias="0.444"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@string/full_name"
-                    android:textColor="@color/text_color_main"
-                    android:textSize="18sp" />
+<!--                    <android.widget.Button-->
+<!--                        android:id="@+id/cancelButton"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="37dp"-->
+<!--                        android:textColor="@color/gray"-->
+<!--                        android:background="@drawable/button_border"-->
+<!--                        android:paddingStart="16dp"-->
+<!--                        android:paddingEnd="16dp"-->
+<!--                        android:textFontWeight="500"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:text="@string/cancel"-->
+<!--                        android:layout_marginEnd="5dp"-->
+<!--                        tools:layout_editor_absoluteX="153dp"-->
+<!--                        tools:layout_editor_absoluteY="362dp" />-->
 
-                <EditText
-                    android:id="@+id/fullNameEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:autofillHints=""
-                    android:inputType="textPersonName"
-                    android:background="@drawable/custom_input"
-                    android:padding="10dp"
-                    android:text="@string/my_name"
-                    android:textSize="16sp" />
+<!--                    <Button-->
+<!--                        android:id="@+id/saveButton"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="5dp"-->
+<!--                        android:paddingStart="16dp"-->
+<!--                        android:textFontWeight="500"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:paddingEnd="16dp"-->
+<!--                        android:textColor="@color/white"-->
+<!--                        android:backgroundTint="@color/main_color"-->
+<!--                        android:text="@string/save"-->
+<!--                        tools:layout_editor_absoluteX="153dp"-->
+<!--                        tools:layout_editor_absoluteY="362dp" />-->
+<!--                </LinearLayout>-->
 
-            </LinearLayout>
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/inputFullName"-->
+<!--                style="@style/CustomInputOutline"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:hint="@string/full_name"-->
+<!--                app:endIconMode="clear_text"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editButtonsLayout">-->
 
-            <LinearLayout
-                android:id="@+id/genderEditLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fullNameEditLayout">
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="textPersonName"-->
+<!--                    android:padding="12dp" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:text="@string/gender"
-                    android:textColor="@color/text_color_main"
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/genderEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/custom_input"
-                    android:padding="10dp"
-                    android:text="@string/my_gender"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/phoneEditLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/genderEditLayout">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/phone_number"
-                        android:textColor="@color/text_color_main"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/phoneEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/custom_input"
-                        android:padding="10dp"
-                        android:text="@string/my_phone_number"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/locationEditLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/phoneEditLayout">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_weight="1"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/location"
-                        android:textColor="@color/text_color_main"
-                        android:textSize="18sp" />
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
 
-                    <Spinner
-                        android:id="@+id/locationSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginBottom="15dp"
-                        android:background="@drawable/custom_dropdown"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:spinnerMode="dropdown"
-                        android:textSize="16sp" />
-                </LinearLayout>
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/inputGender"-->
+<!--                style="@style/CustomDropdownMenu"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:hint="@string/gender"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/inputFullName">-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                <AutoCompleteTextView-->
+<!--                    android:id="@+id/genderDropdown"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="none"-->
+<!--                    android:padding="12dp" />-->
 
-    </ViewSwitcher>
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/inputPhoneNumber"-->
+<!--                style="@style/CustomInputOutline"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:hint="@string/phone_number"-->
+<!--                app:endIconMode="clear_text"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/inputGender">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="textPersonName"-->
+<!--                    android:padding="12dp" />-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/inputLocation"-->
+<!--                style="@style/CustomDropdownMenu"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:hint="@string/location"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/inputPhoneNumber">-->
+
+<!--                <AutoCompleteTextView-->
+<!--                    android:id="@+id/locationDropdown"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:inputType="none"-->
+<!--                    android:padding="12dp" />-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    </ViewSwitcher>-->
 
     <ImageView
         android:id="@+id/avatarIcon"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="125dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="100dp"
         android:contentDescription="@string/avatar"
         android:elevation="5dp"
         android:src="@drawable/ic_no_image"
@@ -528,8 +477,8 @@
 
     <ImageButton
         android:id="@+id/addImageButton"
-        android:layout_width="44dp"
-        android:layout_height="46dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
@@ -543,5 +492,3 @@
         app:layout_constraintStart_toStartOf="@+id/avatarIcon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>

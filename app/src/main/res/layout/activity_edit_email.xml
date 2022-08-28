@@ -6,77 +6,80 @@
     android:layout_height="match_parent"
     tools:context=".EditEmailActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/settingsToolbar"
+        layout="@layout/toolbar" />
 
-    <EditText
-        android:id="@+id/editTextEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:ems="10"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputEmailAddress"
+        style="@style/CustomInputOutline"
+        android:layout_marginTop="50dp"
         android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/settingsToolbar">
 
-
-    <EditText
-        android:id="@+id/editTextPasswordEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress"
-        android:autofillHints="" />
-
-    <LinearLayout
-        android:id="@+id/editButtonsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:elevation="4dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordEmail">
-
-        <android.widget.Button
-            android:id="@+id/cancelButtonEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_marginEnd="5dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textFontWeight="500"
-            android:textSize="16sp"
-            android:background="@drawable/button_border"
-            android:text="@string/cancel"
-            android:textColor="@color/gray"
-            tools:layout_editor_absoluteX="153dp"
-            tools:layout_editor_absoluteY="362dp" />
-
-        <Button
-            android:id="@+id/saveButtonEmail"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:textFontWeight="500"
-            android:textSize="16sp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:backgroundTint="@color/main_color_inactive"
-            android:text="@string/save"
-            android:textColor="@color/white"
-            tools:layout_editor_absoluteX="153dp"
-            tools:layout_editor_absoluteY="362dp"
-            android:enabled="false"/>
-    </LinearLayout>
+            android:inputType="textEmailAddress"
+            android:padding="12dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputPassword"
+        style="@style/CustomInputOutline"
+        android:layout_marginTop="5dp"
+        android:hint="@string/password"
+        app:endIconMode="password_toggle"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputEmailAddress">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:padding="12dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="@dimen/custom_width_input"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:maxWidth="@dimen/custom_max_width_input"
+        android:minWidth="@dimen/custom_min_width_input"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        android:textFontWeight="500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="@dimen/custom_width_input"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:maxWidth="@dimen/custom_max_width_input"
+        android:minWidth="@dimen/custom_min_width_input"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/main_color"
+        android:textFontWeight="600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saveButton" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

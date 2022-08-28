@@ -18,6 +18,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
+    <string name="incorrect_password">Incorrect password</string>
     <string name="login_failed">"Login failed"</string>
     <string name="username">Username</string>
     <string name="invalid_email">Invalid Email</string>
@@ -49,7 +50,7 @@
     <string name="feedFragmentTitle">Feed</string>
     <string name="settingsFragmentTitle">Settings</string>
     <string name="recordFragmentTitle">Record</string>
-    <string name="edit_profile">Edit profile</string>
+    <string name="edit_profile">Edit Profile</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="title">Title</string>
@@ -62,36 +63,6 @@
     <string name="yes">Yes</string>
     <string name="map">Map</string>
 
-    <string-array name="account_settings_not_verified">
-        <item>Change Username</item>
-        <item>Change Email</item>
-        <item>Verify Email</item>
-        <item>Change Password</item>
-    </string-array>
-
-    <string-array name="account_settings_verified">
-        <item>Change Username</item>
-        <item>Change Email</item>
-        <item>Change Password</item>
-    </string-array>
-
-    <string-array name="preferences_settings">
-        <item>Display</item>
-        <item>Legal</item>
-        <item>About</item>
-        <item>Delete Your Account</item>
-        <item>Log Out</item>
-    </string-array>
-
-    <string-array name="settings_menu">
-        <item>Account</item>
-        <item>Preferences</item>
-    </string-array>
-
-    <string-array name="display_settings">
-        <item>Dark Mode</item>
-    </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="time">Time</string>
@@ -128,5 +99,11 @@
     <string name="no_password">Please enter your password</string>
     <string name="signup">SignUp</string>
     <string name="no_username">Please enter your username</string>
+    <string name="edit">Edit</string>
+    <string name="preferences">Preferences</string>
+    <string name="account">Account</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New Password</string>
+    <string name="no_new_password">Please enter your new password</string>
 
 </resources>

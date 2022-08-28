@@ -106,4 +106,6 @@ dependencies {
     implementation "ch.acra:acra-toast:$acraVersion"
 
     implementation "com.google.android.material:material:1.7.0-beta01"
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
 }

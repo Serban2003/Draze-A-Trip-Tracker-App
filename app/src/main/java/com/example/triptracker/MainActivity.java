@@ -56,9 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.feed);
 
+
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert firebaseUser != null;
-        if (!firebaseUser.isEmailVerified())
+        if (! FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())
             Toast.makeText(this, "Please verify your email!", Toast.LENGTH_LONG).show();
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
@@ -185,5 +186,11 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 Toast.makeText(this, "Location must be turned on to track a session", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        FirebaseAuth.getInstance().getCurrentUser().reload();
+        super.onResume();
     }
 }

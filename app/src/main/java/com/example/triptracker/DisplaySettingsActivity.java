@@ -3,12 +3,16 @@ package com.example.triptracker;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class DisplaySettingsActivity extends CustomSecondaryActivity {
 
-    RecyclerView displayRecyclerView;
     String[] displaySettings;
 
     @Override
@@ -16,16 +20,25 @@ public class DisplaySettingsActivity extends CustomSecondaryActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_settings);
 
-        displayRecyclerView = findViewById(R.id.displayRecyclerView);
         displaySettings = getResources().getStringArray(R.array.display_settings);
 
-        RecyclerViewAdapter displaySettingsAdapter = new RecyclerViewAdapter(this, displaySettings, "normal", item -> {
-            if ("Dark Mode".equals(item)) {
-                Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show();
+        ListView listViewDisplay = findViewById(R.id.listAccountSettings);
+
+        ListViewAdapter adapter = new ListViewAdapter(displaySettings, getApplicationContext());
+
+
+        listViewDisplay.setAdapter(adapter);
+        listViewDisplay.setOnItemClickListener((parent, view, position, id) -> {
+            String item = displaySettings[position];
+            adapter.mSelectedItem = position;
+            adapter.notifyDataSetChanged();
+            switch (item) {
+                case "Dark Mode": {
+                    startActivity(new Intent(DisplaySettingsActivity.this, EditUsernameActivity.class));
+                    break;
+                }
             }
         });
-        displayRecyclerView.setAdapter(displaySettingsAdapter);
-        displayRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

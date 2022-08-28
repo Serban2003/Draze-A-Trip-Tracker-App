@@ -1,84 +1,72 @@
 package com.example.triptracker;
 
-import static com.example.triptracker.UserDao.user;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.ConcatAdapter;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class SettingsActivity extends CustomSecondaryActivity {
 
-    BroadcastReceiver editUsernameReceiver;
-    RecyclerView settingsRecyclerView;
-    String[] settingsMenu, accountSettings, preferencesSettings;
-
-    private static DatabaseReference userReference;
-    private static final String USER = "users";
-    private static final String PATH_TO_DATABASE = "https://trip-tracker-2844c-default-rtdb.europe-west1.firebasedatabase.app/";
+    String[] accountSettings, preferencesSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        settingsRecyclerView = findViewById(R.id.settingsRecyclerView);
+        ListView listViewAccount = findViewById(R.id.listAccountSettings);
+        ListView listViewPreferences = findViewById(R.id.listPreferencesSettings);
 
-        settingsMenu = getResources().getStringArray(R.array.settings_menu);
-
-        if (UserDao.user.isVerified())
+        if (FirebaseAuth.getInstance().getCurrentUser().isEmailVerified())
             accountSettings = getResources().getStringArray(R.array.account_settings_verified);
         else accountSettings = getResources().getStringArray(R.array.account_settings_not_verified);
+
         preferencesSettings = getResources().getStringArray(R.array.preferences_settings);
 
-        userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
+        ListViewAdapter adapter1 = new ListViewAdapter(accountSettings, getApplicationContext());
+        ListViewAdapter adapter2 = new ListViewAdapter(preferencesSettings, getApplicationContext());
 
-        String[] item1 = {""}, item2 = {""};
-        item1[0] = settingsMenu[0];
-
-        RecyclerViewAdapter settingsMenuAdapterItem1 = new RecyclerViewAdapter(this, item1, "mainCategory", null);
-        RecyclerViewAdapter accountSettingsAdapter = new RecyclerViewAdapter(this, accountSettings, "normal", item -> {
+        listViewAccount.setAdapter(adapter1);
+        listViewAccount.setOnItemClickListener((parent, view, position, id) -> {
+            String item = accountSettings[position];
+            adapter1.mSelectedItem = position;
+            adapter1.notifyDataSetChanged();
             switch (item) {
                 case "Change Username": {
-                    startActivity(new Intent(this, EditUsernameActivity.class));
+                    startActivity(new Intent(SettingsActivity.this, EditUsernameActivity.class));
                     break;
                 }
                 case "Change Email": {
-                    startActivity(new Intent(this, EditEmailActivity.class));
+                    startActivity(new Intent(SettingsActivity.this, EditEmailActivity.class));
                     break;
                 }
                 case "Verify Email": {
-                    findViewById(R.id.alertView).setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.incorrect)));
-                    startActivity(new Intent(this, VerifyEmailActivity.class));
+                    view.findViewById(R.id.alertView).setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.incorrect)));
+                    startActivity(new Intent(SettingsActivity.this, VerifyEmailActivity.class));
                     break;
                 }
 
                 case "Change Password": {
-                    Toast.makeText(this, "Not Implemented!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(SettingsActivity.this, ChangePasswordActivity.class));
                     break;
                 }
             }
         });
 
-        item2[0] = settingsMenu[1];
-        RecyclerViewAdapter settingsMenuAdapterItem2 = new RecyclerViewAdapter(this, item2, "mainCategory", null);
-        RecyclerViewAdapter preferencesSettingsAdapter = new RecyclerViewAdapter(this, preferencesSettings, "normal", item -> {
+        listViewPreferences.setAdapter(adapter2);
+        listViewPreferences.setOnItemClickListener((parent, view, position, id) -> {
+
+            String item = preferencesSettings[position];
+            adapter2.mSelectedItem = position;
+            adapter2.notifyDataSetChanged();
+
             switch (item) {
                 case "Display": {
-                    startActivity(new Intent(this, DisplaySettingsActivity.class));
+                    startActivity(new Intent(SettingsActivity.this, DisplaySettingsActivity.class));
                     break;
                 }
                 case "Legal": {
@@ -102,40 +90,17 @@ public class SettingsActivity extends CustomSecondaryActivity {
                 }
                 case "Log Out": {
                     FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(this, LoginActivity.class);
+                    Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
             }
-
         });
-
-        ConcatAdapter concatAdapter = new ConcatAdapter(settingsMenuAdapterItem1, accountSettingsAdapter, settingsMenuAdapterItem2, preferencesSettingsAdapter);
-
-        settingsRecyclerView.setAdapter(concatAdapter);
-        settingsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        editUsernameReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String username = intent.getStringExtra("username");
-                user.setUsername(username);
-                userReference.child(UserDao.user.getKeyId()).child("username").setValue(username);
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(editUsernameReceiver, new IntentFilter("updated-username"));
     }
 
     @Override
     public String getTitleView() {
         return "Settings";
-    }
-
-    @Override
-    protected void onDestroy() {
-        // Unregister since the activity is about to be closed.
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(editUsernameReceiver);
-        super.onDestroy();
     }
 
     @Override

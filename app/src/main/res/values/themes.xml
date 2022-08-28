@@ -36,6 +36,12 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="CustomDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@color/white_semi_transparent</item>
+        <item name="android:layout_width">@dimen/custom_width_input</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 
     <style name="Theme.TripTracker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

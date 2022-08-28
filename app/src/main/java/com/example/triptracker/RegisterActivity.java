@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -188,6 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Handler handler = new Handler(Looper.getMainLooper());
                         executor.execute(() -> {
                             FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).setValue(user);
+                            FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).child("emailChanged").setValue(new Date().toString());
                             userViewModel.insertUser(user);
                             handler.post(() -> {
                                 dialog.dismiss();

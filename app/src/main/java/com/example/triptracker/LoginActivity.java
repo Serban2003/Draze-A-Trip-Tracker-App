@@ -148,84 +148,98 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginUser(String email, String password) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
+        dialog.show();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(LoginActivity.this, task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
 
                         firebaseUser = mAuth.getCurrentUser();
-                        assert firebaseUser != null;
-                        Date signupDate = new Date(Objects.requireNonNull(firebaseUser.getMetadata()).getCreationTimestamp());
+                        DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid());
 
-                        final long HOUR = 3600 * 1000;
-                        Date deadline = new Date(signupDate.getTime() + 5 * HOUR);
-                        Date currentSystemDate = new Date();
+                        userReference.child("emailChanged").get().addOnCompleteListener(task1 -> {
+                            if (!task1.isSuccessful()) {
+                                Log.e(TAG, "Error getting data from Firebase Database", task1.getException());
+                            } else {
+                                Log.d(TAG, task1.getResult().getValue().toString());
+                                Date signupDate = new Date(task1.getResult().getValue().toString());
+                                final long HOUR = 3600 * 1000;
+                                Date deadline = new Date(signupDate.getTime() + 5 * HOUR);
+                                Date currentSystemDate = new Date();
 
-                        if (!firebaseUser.isEmailVerified() && currentSystemDate.after(deadline)) {
-                            Log.d(TAG, "signInWithEmail:account disabled");
-                            Toast.makeText(LoginActivity.this, "The account was disabled due to no validated email. You can create another one.", Toast.LENGTH_LONG).show();
-                            signOutUserFromFirebase();
-                            deleteUserFromFirebaseDatabase(firebaseUser);
-                        } else {
-                            dialog.show();
-                            Log.d(TAG, "signInWithEmail:success");
-                            Toast.makeText(LoginActivity.this, "Login successful.", Toast.LENGTH_SHORT).show();
+                                if (!firebaseUser.isEmailVerified() && currentSystemDate.after(deadline)) {
+                                    dialog.dismiss();
+                                    Log.d(TAG, "signInWithEmail:account disabled");
+                                    Toast.makeText(LoginActivity.this, "The account was disabled due to no validated email. You can create another one.", Toast.LENGTH_LONG).show();
+                                    signOutUserFromFirebase();
+                                    deleteUserFromFirebaseDatabase(firebaseUser);
+                                } else {
 
-                            activitiesViewModel.deleteAllActivities();
-                            userViewModel.deleteAllUsers();
+                                    Log.d(TAG, "signInWithEmail:success");
+                                    Toast.makeText(LoginActivity.this, "Login successful.", Toast.LENGTH_SHORT).show();
+
+                                    activitiesViewModel.deleteAllActivities();
+                                    userViewModel.deleteAllUsers();
 
 
-                            Executor executor = Executors.newSingleThreadExecutor();
-                            Handler handler = new Handler(Looper.getMainLooper());
-                            executor.execute(() -> {
+                                    Executor executor = Executors.newSingleThreadExecutor();
+                                    Handler handler = new Handler(Looper.getMainLooper());
+                                    executor.execute(() -> {
 
-                                DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
-                                userReference.child(firebaseUser.getUid()).get().addOnCompleteListener(task1 -> {
-                                    if (!task1.isSuccessful()) {
-                                        Log.e(TAG, "Error getting data from Firebase Database", task1.getException());
-                                    } else {
-                                        Log.d(TAG, "Data loaded from Firebase Database" + task1.getResult().getValue());
-                                        User user = new User();
-                                        user.setKeyId(task1.getResult().getKey());
-                                        user.setUsername(Objects.requireNonNull(task1.getResult().child("username").getValue()).toString());
-                                        user.setEmail(Objects.requireNonNull(task1.getResult().child("email").getValue()).toString());
-                                        user.setPassword(Objects.requireNonNull(task1.getResult().child("password").getValue()).toString());
-                                        user.setFullName(Objects.requireNonNull(task1.getResult().child("fullName").getValue()).toString());
-                                        user.setGender(Objects.requireNonNull(task1.getResult().child("gender").getValue()).toString());
-                                        user.setPhoneNumber(Objects.requireNonNull(task1.getResult().child("phoneNumber").getValue()).toString());
-                                        user.setLocation(Objects.requireNonNull(task1.getResult().child("location").getValue()).toString());
-                                        user.setVerified(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).isEmailVerified());
 
-                                        if (task1.getResult().child("avatarUri").getValue() != null)
-                                            user.setAvatarUri(Objects.requireNonNull(task1.getResult().child("avatarUri").getValue()).toString());
+                                        userReference.get().addOnCompleteListener(task2 -> {
+                                            if (!task2.isSuccessful()) {
+                                                Log.e(TAG, "Error getting data from Firebase Database", task2.getException());
+                                            } else {
+                                                Log.d(TAG, "Data loaded from Firebase Database" + task2.getResult().getValue());
+                                                User user = new User();
+                                                user.setKeyId(task2.getResult().getKey());
+                                                user.setUsername(Objects.requireNonNull(task2.getResult().child("username").getValue()).toString());
+                                                user.setEmail(Objects.requireNonNull(task2.getResult().child("email").getValue()).toString());
+                                                user.setPassword(Objects.requireNonNull(task2.getResult().child("password").getValue()).toString());
+                                                user.setFullName(Objects.requireNonNull(task2.getResult().child("fullName").getValue()).toString());
+                                                user.setGender(Objects.requireNonNull(task2.getResult().child("gender").getValue()).toString());
+                                                user.setPhoneNumber(Objects.requireNonNull(task2.getResult().child("phoneNumber").getValue()).toString());
+                                                user.setLocation(Objects.requireNonNull(task2.getResult().child("location").getValue()).toString());
+                                                user.setVerified(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).isEmailVerified());
 
-                                        Iterable<DataSnapshot> iterable = task1.getResult().child("activities").getChildren();
+                                                if (task2.getResult().child("avatarUri").getValue() != null)
+                                                    user.setAvatarUri(Objects.requireNonNull(task2.getResult().child("avatarUri").getValue()).toString());
 
-                                        while (iterable.iterator().hasNext()) {
-                                            TrackDetails trackDetails = new TrackDetails();
-                                            trackDetails.dataSnapshotToTrackDetails(iterable.iterator().next());
-                                            activitiesViewModel.insert(trackDetails);
-                                        }
+                                                Iterable<DataSnapshot> iterable = task2.getResult().child("activities").getChildren();
 
-                                        userViewModel.insertUser(user);
+                                                while (iterable.iterator().hasNext()) {
+                                                    TrackDetails trackDetails = new TrackDetails();
+                                                    trackDetails.dataSnapshotToTrackDetails(iterable.iterator().next());
+                                                    activitiesViewModel.insert(trackDetails);
+                                                }
 
-                                        handler.post(() -> {
-                                            dialog.dismiss();
+                                                userViewModel.insertUser(user);
 
-                                            Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
-                                            newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                            startActivity(newIntent);
+                                                handler.post(() -> {
+                                                    dialog.dismiss();
+
+                                                    Intent newIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                    startActivity(newIntent);
+                                                });
+                                            }
                                         });
-                                    }
-                                });
-                            });
-                        }
+                                    });
+                                }
+
+                            }
+                        });
                     } else {
                         // If sign in fails, display a message to the user.
+                        dialog.dismiss();
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                         Toast.makeText(LoginActivity.this, "Login failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
+
     }
+
+
 }
+

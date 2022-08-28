@@ -4,14 +4,13 @@
     <item
         android:id="@+id/feed"
         android:title="@string/feed"
-        android:icon="@drawable/feed_selector"
+        android:icon="@drawable/home_selector"
         android:state_checked="true" />
 
-    <!--TODO: Create new icon for Maps Tab -->
     <item
         android:id="@+id/map"
         android:title="@string/map"
-        android:icon="@android:drawable/ic_menu_agenda"/>
+        android:icon="@drawable/map_selector"/>
 
     <item
         android:id="@+id/record"
