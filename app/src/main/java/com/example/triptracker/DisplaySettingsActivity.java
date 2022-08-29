@@ -1,15 +1,9 @@
 package com.example.triptracker;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 public class DisplaySettingsActivity extends CustomSecondaryActivity {
 
@@ -22,10 +16,9 @@ public class DisplaySettingsActivity extends CustomSecondaryActivity {
 
         displaySettings = getResources().getStringArray(R.array.display_settings);
 
-        ListView listViewDisplay = findViewById(R.id.listAccountSettings);
+        ListView listViewDisplay = findViewById(R.id.listDisplaySettings);
 
         ListViewAdapter adapter = new ListViewAdapter(displaySettings, getApplicationContext());
-
 
         listViewDisplay.setAdapter(adapter);
         listViewDisplay.setOnItemClickListener((parent, view, position, id) -> {
@@ -34,7 +27,7 @@ public class DisplaySettingsActivity extends CustomSecondaryActivity {
             adapter.notifyDataSetChanged();
             switch (item) {
                 case "Dark Mode": {
-                    startActivity(new Intent(DisplaySettingsActivity.this, EditUsernameActivity.class));
+                    Toast.makeText(this, "Not yet implemented!", Toast.LENGTH_SHORT).show();
                     break;
                 }
             }

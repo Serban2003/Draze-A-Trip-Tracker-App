@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import java.util.Objects;
 
@@ -20,6 +23,7 @@ public class ListViewAdapter extends ArrayAdapter<String> implements View.OnClic
     private static class ViewHolder {
         TextView settingsName;
         View alertView;
+        SwitchMaterial aSwitch;
     }
 
     public ListViewAdapter(String[] data, Context context) {
@@ -44,13 +48,20 @@ public class ListViewAdapter extends ArrayAdapter<String> implements View.OnClic
 
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.list_view_row, parent, false);
-            viewHolder.settingsName = convertView.findViewById(R.id.settingsTitle);
-            viewHolder.alertView = convertView.findViewById(R.id.alertView);
 
-            if (Objects.equals(settings, "Verify Email"))
-                viewHolder.alertView.setBackgroundTintList(ColorStateList.valueOf(-56064));
-            else viewHolder.alertView.setVisibility(View.GONE);
+            if (Objects.equals(settings, "Dark Mode")){
+                convertView = inflater.inflate(R.layout.list_view_switch_row, parent, false);
+                viewHolder.settingsName = convertView.findViewById(R.id.settingsTitle);
+                viewHolder.aSwitch = convertView.findViewById(R.id.darkModeSwitch);
+            }
+            else  {
+                convertView = inflater.inflate(R.layout.list_view_row, parent, false);
+                viewHolder.settingsName = convertView.findViewById(R.id.settingsTitle);
+                viewHolder.alertView = convertView.findViewById(R.id.alertView);
+                if (Objects.equals(settings, "Verify Email"))
+                    viewHolder.alertView.setBackgroundTintList(ColorStateList.valueOf(-56064));
+                else viewHolder.alertView.setVisibility(View.GONE);
+            }
 
             result = convertView;
 
@@ -59,16 +70,6 @@ public class ListViewAdapter extends ArrayAdapter<String> implements View.OnClic
             viewHolder = (ViewHolder) convertView.getTag();
             result = convertView;
         }
-
-//        if (position == mSelectedItem) {
-//            Animation animation = new TranslateAnimation(0, 200,0, 0);
-//            animation.setDuration(500);
-//            animation.setFillAfter(true);
-//            result.startAnimation(animation);
-//        }
-
-
-
 
         viewHolder.settingsName.setText(settings);
 

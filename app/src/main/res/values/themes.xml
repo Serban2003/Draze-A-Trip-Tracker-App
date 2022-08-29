@@ -24,8 +24,8 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:textColor">@color/text_color_main</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorAccent</item>
-        <item name="colorSecondaryVariant">@color/colorAccent</item>
+        <item name="colorSecondary">@color/main_color</item>
+        <item name="colorSecondaryVariant">@color/main_color</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="fontFamily">@font/montserrat_light</item>
     </style>
