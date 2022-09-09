@@ -14,6 +14,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
@@ -38,6 +39,8 @@ public final class LocationProvider extends Service {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
+
+    private PowerManager.WakeLock wakeLock;
     //Holds all the details about the tracked session
     private final TrackedSession trackedSession = new TrackedSession();
 
@@ -46,6 +49,9 @@ public final class LocationProvider extends Service {
     public void onCreate() {
         Log.d(TAG, "onCreate: called");
         super.onCreate();
+        // PARTIAL_WAKELOCK
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"INSERT_YOUR_APP_NAME:wakelock");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.S)
@@ -146,7 +152,7 @@ public final class LocationProvider extends Service {
             return trackedSession.getElevation();
         }
 
-        //Get the elevation as a string ready for priting
+        //Get the elevation as a string ready for printing
         String getElevationString() {
             return trackedSession.getElevationString();
         }
@@ -242,11 +248,18 @@ public final class LocationProvider extends Service {
 
     @Override
     public void onDestroy() {
+        // PARTIAL_WAKELOCK
+        if (wakeLock != null && wakeLock.isHeld()) {
+            wakeLock.release();
+        }
         super.onDestroy();
     }
 
     @Override
     public IBinder onBind(Intent intent) {
+        if (wakeLock != null && !wakeLock.isHeld()) {
+            wakeLock.acquire();
+        }
         return binder;
     }
 

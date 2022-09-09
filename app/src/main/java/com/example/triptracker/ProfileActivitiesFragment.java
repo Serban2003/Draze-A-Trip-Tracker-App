@@ -48,9 +48,11 @@ public class ProfileActivitiesFragment extends Fragment {
                 for (TrackDetails activity : activities) {
                     totalDuration += Double.parseDouble(activity.getDuration().replaceAll("[\\s+a-zA-Z :]", ""));
                     totalKM += Double.parseDouble(activity.getDistance().replaceAll("[\\s+a-zA-Z :]", ""));
-                    //averageSpeed += Double.parseDouble(activity.getAverageSpeed().replaceAll("[\\s+a-zA-Z :]",""));
+                    averageSpeed += Double.parseDouble(activity.getAverageSpeed().replaceAll("[\\s+a-zA-Z :]",""));
                 }
                 Integer size = activities.size();
+                averageSpeed  = averageSpeed / size;
+
                 activitiesNumberTextView.setText(size.toString());
                 totalDurationTextView.setText(totalDuration.toString());
                 totalKMTextView.setText(totalKM.toString());

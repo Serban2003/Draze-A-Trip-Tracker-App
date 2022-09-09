@@ -150,6 +150,7 @@ public class SaveTrackedActivity extends CustomSecondaryActivity {
         trackDetails.setDistance(locationServiceBinder.getDistanceString());
         trackDetails.setDuration(locationServiceBinder.getTimeString());
         trackDetails.setElevation(locationServiceBinder.getElevationString());
+        trackDetails.setAverageSpeed(locationServiceBinder.getAverageSpeedString());
         trackDetails.setColor(mDefaultColor);
 
         //Save the track locations

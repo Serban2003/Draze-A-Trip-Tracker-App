@@ -72,7 +72,6 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             if (description.equals("")) {
                 holder.descriptionTextView.setVisibility(View.GONE);
                 holder.itemView.findViewById(R.id.textViewRowDescription).setVisibility(View.GONE);
-                holder.itemView.findViewById(R.id.separatorView).setVisibility(View.GONE);
             }
             if (description.length() > 35) {
                 description = description.substring(0, 35) + "...";
@@ -95,9 +94,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 holder.polylineOptions.add(latLng);
                 // googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
             }
-
             holder.bound = builder.build();
-
         }
     }
 

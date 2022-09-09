@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RouteDetailsActivity extends CustomSecondaryActivity implements OnMapReadyCallback {
 
@@ -56,8 +58,15 @@ public class RouteDetailsActivity extends CustomSecondaryActivity implements OnM
                     track = trackDetails;
                     sessionTitleTextView.setText(trackDetails.getTitle());
                     sessionDateTextView.setText(trackDetails.getTimeCreated());
+
+                    if(trackDetails.getDescription().equals("")){
+                        findViewById(R.id.textViewRowDescription).setVisibility(View.GONE);
+                        findViewById(R.id.separatorView6).setVisibility(View.GONE);
+                        sessionDescriptionTextView.setVisibility(View.GONE);
+                    }
+
                     sessionDescriptionTextView.setText(trackDetails.getDescription());
-                    sessionDurationTextView.setText(trackDetails.getDescription());
+                    sessionDurationTextView.setText(trackDetails.getDuration());
                     sessionDistanceTextView.setText(trackDetails.getDistance());
                     sessionAverageSpeedTextView.setText(trackDetails.getAverageSpeed());
                     sessionElevationTextView.setText(trackDetails.getElevation());

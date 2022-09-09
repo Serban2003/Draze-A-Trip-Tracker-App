@@ -1,13 +1,16 @@
 package com.example.triptracker;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -15,7 +18,6 @@ import java.util.Objects;
 
 public class ListViewAdapter extends ArrayAdapter<String> implements View.OnClickListener {
 
-    private String[] settings;
     Context mContext;
     int mSelectedItem = -1;
 
@@ -28,7 +30,6 @@ public class ListViewAdapter extends ArrayAdapter<String> implements View.OnClic
 
     public ListViewAdapter(String[] data, Context context) {
         super(context, R.layout.list_view_row, data);
-        this.settings = data;
         this.mContext = context;
     }
 
@@ -53,6 +54,17 @@ public class ListViewAdapter extends ArrayAdapter<String> implements View.OnClic
                 convertView = inflater.inflate(R.layout.list_view_switch_row, parent, false);
                 viewHolder.settingsName = convertView.findViewById(R.id.settingsTitle);
                 viewHolder.aSwitch = convertView.findViewById(R.id.darkModeSwitch);
+
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("com.example.triptracker",  Context.MODE_PRIVATE);
+                viewHolder.aSwitch.setChecked(sharedPreferences.getBoolean("DarkMode", false));
+
+                viewHolder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                        sharedPreferences.edit().putBoolean("DarkMode", isChecked).apply();
+                        Toast.makeText(getContext(), "Not yet implemented!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
             else  {
                 convertView = inflater.inflate(R.layout.list_view_row, parent, false);
@@ -76,4 +88,5 @@ public class ListViewAdapter extends ArrayAdapter<String> implements View.OnClic
         // Return the completed view to render on screen
         return convertView;
     }
+
 }
