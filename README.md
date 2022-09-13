@@ -44,4 +44,20 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ## Screenshots
 
-Coming soon...
+### Login Page
+<img src="https://user-images.githubusercontent.com/46806049/189968756-1b980a52-c828-4ce8-a749-2a626b4ea3e7.jpg" alt="Login_page" width="300px">
+
+### Register Page
+<img src="https://user-images.githubusercontent.com/46806049/189968769-8dc4fbcc-3911-400c-853e-81038177fbae.jpg" alt="Register_page" width="300px">
+
+### Feed Page with no Tracked Sessions
+<img src="https://user-images.githubusercontent.com/46806049/189968750-03d227b2-58c7-48d3-bc18-51704b85323a.jpg" alt="Feed_page_no_activities" width="300px">
+
+### Record Page
+<img src="https://user-images.githubusercontent.com/46806049/189968763-3c3d830f-319e-4064-9a74-91685d249438.jpg" alt="Record_page" width="300px">
+
+### Profile Page
+<img src="https://user-images.githubusercontent.com/46806049/189968761-6be0d645-1d8d-4e47-bd94-1a703748d4e1.jpg" alt="Profile_page" width="300px">
+
+### Settings Page
+<img src="https://user-images.githubusercontent.com/46806049/189968771-9ad34158-6874-4aab-b472-c22b17491b69.jpg" alt="Settings_page" width="300px">
