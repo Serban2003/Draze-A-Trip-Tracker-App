@@ -6,6 +6,11 @@
     android:layout_height="wrap_content"
     android:fillViewport="true">
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
     <ViewSwitcher
         android:id="@+id/profileSwitcher"
         android:layout_width="match_parent"
@@ -16,7 +21,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatarIcon"
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -372,4 +376,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ViewSwitcher>
+    </RelativeLayout>
 </ScrollView>
