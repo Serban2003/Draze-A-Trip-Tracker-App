@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -170,6 +173,20 @@ public class SaveTrackedActivity extends CustomSecondaryActivity {
             dialog.show();
             return;
         }
+        if(!verifyDuration(locationServiceBinder.getTime())){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Couldn't save the tracked activity! Session too short!")
+                    .setTitle("Error")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            backToMainActivity();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return;
+        }
 
         for (Location location : locations) {
             LocationPointDetails locationPointDetails = new LocationPointDetails();
@@ -180,39 +197,51 @@ public class SaveTrackedActivity extends CustomSecondaryActivity {
             trackDetails.locationPoints.add(locationPointDetails);
         }
 
-//        Executor executor = Executors.newSingleThreadExecutor();
-//        executor.execute(() -> {
-            ActivitiesViewModel activitiesViewModel = new ViewModelProvider(this).get(ActivitiesViewModel.class);
-            activitiesViewModel.insert(trackDetails);
-       // });
-//        UserDao.user.addActivity(trackDetails);
-//        UserDao.user.setTotalActivities(UserDao.user.getTotalActivities() + 1);
-//        DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
-//        userReference.child(UserDao.user.getKeyId()).child("activities").child("actId" + trackDetails.getId()).setValue(trackDetails);
-//        userReference.child(UserDao.user.getKeyId()).child("totalActivities").setValue(UserDao.user.getTotalActivities());
-//        //Clean up and go back to the main activity
+        ActivitiesViewModel activitiesViewModel = new ViewModelProvider(this).get(ActivitiesViewModel.class);
+        activitiesViewModel.insert(trackDetails);
+
         backToMainActivity();
     }
 
-    //Button to discard the current tracked session
-    public void onDiscardTrackedActivity(View v) {
+    public boolean verifyDuration(long timeInMilliseconds){
+        long timeSwapBuff = 0L;
+        long updateTime = timeSwapBuff + timeInMilliseconds;
+        int secs = (int) (updateTime / 1000);
+        int mins = secs / 60;
+        secs %= 60;
+        int hrs = mins / 60;
+        mins %= 60;
 
-        //If the user is sure they want to discard this activity, the user is safely taken back to the
-        //main menu, stopping the service and losing the tracked session
-        DialogInterface.OnClickListener dialogClickListener = (dialogInterface, which) -> {
-            if (which == DialogInterface.BUTTON_POSITIVE) {
-                Log.d(TAG, "onSaveTrackedActivity: Stopped LocationService");
-                backToMainActivity();
-            }
-        };
+        if (hrs == 0 && mins == 0) return secs > 30;
+        return false;
+    }
 
-        //Show dialog to ask the user if they are sure they want to discard the current session
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder
-                .setMessage("Are you sure you want to discard this activity?")
-                .setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("Cancel", dialogClickListener)
-                .show();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.session_details_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId() == R.id.deleteButton) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure you want to discard this track?")
+                    .setTitle("Delete")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Log.d(TAG, "onSaveTrackedActivity: Stopped LocationService");
+                            backToMainActivity();
+                        }
+                    })
+                    .setNegativeButton("Cancel", null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //When back is pressed, the data input by the user should be saved

@@ -135,7 +135,7 @@ public class RouteDetailsActivity extends CustomSecondaryActivity implements OnM
                             activitiesViewModel.deleteActivity(track);
                         }
                     })
-                    .setNegativeButton("No", null);
+                    .setNegativeButton("Cancel", null);
             AlertDialog dialog = builder.create();
             dialog.show();
             return true;
