@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -37,11 +36,11 @@ public class SettingsActivity extends CustomSecondaryActivity {
             adapter1.notifyDataSetChanged();
             switch (item) {
                 case "Change Username": {
-                    startActivity(new Intent(SettingsActivity.this, EditUsernameActivity.class));
+                    startActivity(new Intent(SettingsActivity.this, ChangeUsernameActivity.class));
                     break;
                 }
                 case "Change Email": {
-                    startActivity(new Intent(SettingsActivity.this, EditEmailActivity.class));
+                    startActivity(new Intent(SettingsActivity.this, ChangeEmailActivity.class));
                     break;
                 }
                 case "Verify Email": {

@@ -67,13 +67,15 @@ public class DatabaseActivities {
     }
 
     public static void updateUserToDatabase(User user) {
-        DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
-        userReference.child(user.getKeyId()).child("fullName").setValue(UserDao.user.getFullName());
-        userReference.child(user.getKeyId()).child("gender").setValue(UserDao.user.getGender());
-        userReference.child(user.getKeyId()).child("phoneNumber").setValue(UserDao.user.getPhoneNumber());
-        userReference.child(user.getKeyId()).child("location").setValue(UserDao.user.getLocation());
-        userReference.child(user.getKeyId()).child("avatarUri").setValue(UserDao.user.getAvatarUri());
-        userReference.child(user.getKeyId()).child("verified").setValue(UserDao.user.isVerified());
+        DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(user.getKeyId());
+
+        userReference.child("username").setValue(UserDao.user.getUsername());
+        userReference.child("fullName").setValue(UserDao.user.getFullName());
+        userReference.child("gender").setValue(UserDao.user.getGender());
+        userReference.child("phoneNumber").setValue(UserDao.user.getPhoneNumber());
+        userReference.child("location").setValue(UserDao.user.getLocation());
+        userReference.child("avatarUri").setValue(UserDao.user.getAvatarUri());
+        userReference.child("verified").setValue(UserDao.user.isVerified());
     }
 
     public static void updateUILogin(){

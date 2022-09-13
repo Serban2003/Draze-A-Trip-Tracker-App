@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class EditUsernameActivity extends CustomSecondaryActivity {
+public class ChangeUsernameActivity extends CustomSecondaryActivity {
 
     TextInputLayout usernameInput, passwordInput;
     Button saveButton, cancelButton;
@@ -44,6 +44,7 @@ public class EditUsernameActivity extends CustomSecondaryActivity {
             public void onChanged(User user) {
                 UserDao.user.setUsername(user.getUsername());
                 UserDao.user.setPassword(user.getPassword());
+                UserDao.user.setSaltValue(user.getSaltValue());
             }
         });
 
@@ -75,10 +76,7 @@ public class EditUsernameActivity extends CustomSecondaryActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (passwordInput.getEditText().getText().toString().equals(user.getPassword()))
-                    passwordInput.setError(null);
-                else passwordInput.setError(getString(R.string.incorrect_password));
-
+                passwordInput.setError(null);
             }
 
             @Override
@@ -117,6 +115,11 @@ public class EditUsernameActivity extends CustomSecondaryActivity {
             passwordInput.setError(getString(R.string.no_password));
             allGood = false;
         } else if (password.length() < 6) {
+            passwordInput.setError(getString(R.string.incorrect_password));
+            allGood = false;
+        }
+
+        if (!PasswordEncryption.verifyUserPassword(password, UserDao.user.getPassword(), UserDao.user.getSaltValue())){
             passwordInput.setError(getString(R.string.incorrect_password));
             allGood = false;
         }

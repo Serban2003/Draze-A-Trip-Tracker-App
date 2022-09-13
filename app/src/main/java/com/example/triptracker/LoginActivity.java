@@ -197,6 +197,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 user.setUsername(Objects.requireNonNull(task2.getResult().child("username").getValue()).toString());
                                                 user.setEmail(Objects.requireNonNull(task2.getResult().child("email").getValue()).toString());
                                                 user.setPassword(Objects.requireNonNull(task2.getResult().child("password").getValue()).toString());
+                                                user.setSaltValue(Objects.requireNonNull(task2.getResult().child("saltValue").getValue()).toString());
                                                 user.setFullName(Objects.requireNonNull(task2.getResult().child("fullName").getValue()).toString());
                                                 user.setGender(Objects.requireNonNull(task2.getResult().child("gender").getValue()).toString());
                                                 user.setPhoneNumber(Objects.requireNonNull(task2.getResult().child("phoneNumber").getValue()).toString());

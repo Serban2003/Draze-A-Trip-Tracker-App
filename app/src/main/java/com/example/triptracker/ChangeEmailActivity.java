@@ -3,16 +3,13 @@ package com.example.triptracker;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import static com.example.triptracker.DatabaseActivities.PATH_TO_DATABASE;
@@ -32,21 +29,19 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class EditEmailActivity extends CustomSecondaryActivity {
+public class ChangeEmailActivity extends CustomSecondaryActivity {
 
-    private static final String TAG = "EditEmailActivity";
+    private static final String TAG = "ChangeEmailActivity";
 
     TextInputLayout emailAddressInput, passwordInput;
     Button saveButton, cancelButton;
@@ -80,6 +75,7 @@ public class EditEmailActivity extends CustomSecondaryActivity {
             public void onChanged(User user) {
                 UserDao.user.setEmail(user.getEmail());
                 UserDao.user.setPassword(user.getPassword());
+                UserDao.user.setSaltValue(user.getSaltValue());
             }
         });
 
@@ -111,10 +107,7 @@ public class EditEmailActivity extends CustomSecondaryActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (passwordInput.getEditText().getText().toString().equals(user.getPassword()))
-                    passwordInput.setError(null);
-                else passwordInput.setError(getString(R.string.incorrect_password));
-
+                passwordInput.setError(null);
             }
 
             @Override
@@ -161,7 +154,7 @@ public class EditEmailActivity extends CustomSecondaryActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(EditEmailActivity.this, "Email address updated.", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(ChangeEmailActivity.this, "Email address updated.", Toast.LENGTH_LONG).show();
 
 
                                             Executor executor = Executors.newSingleThreadExecutor();
@@ -173,10 +166,10 @@ public class EditEmailActivity extends CustomSecondaryActivity {
 
 
                                                 handler.post(() -> {
-                                                    sendEmailVerification(firebaseUser, EditEmailActivity.this);
+                                                    sendEmailVerification(firebaseUser, ChangeEmailActivity.this);
                                                     dialog.dismiss();
                                                     FirebaseAuth.getInstance().signOut();
-                                                    Intent intent = new Intent(EditEmailActivity.this, LoginActivity.class);
+                                                    Intent intent = new Intent(ChangeEmailActivity.this, LoginActivity.class);
                                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                     startActivity(intent);
                                                 });
@@ -206,6 +199,12 @@ public class EditEmailActivity extends CustomSecondaryActivity {
             passwordInput.setError(getString(R.string.incorrect_password));
             allGood = false;
         }
+
+        if (!PasswordEncryption.verifyUserPassword(password, UserDao.user.getPassword(), UserDao.user.getSaltValue())){
+            passwordInput.setError(getString(R.string.incorrect_password));
+            allGood = false;
+        }
+
         return allGood;
     }
 

@@ -83,10 +83,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (passwordInput.getEditText().getText().toString().equals(user.getPassword()))
-                    passwordInput.setError(null);
-                else passwordInput.setError(getString(R.string.incorrect_password));
-
+                passwordInput.setError(null);
             }
 
             @Override
@@ -125,7 +122,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialog.show();
-                                updatePassword(password, newPassword);
+                                updatePassword(newPassword);
                             }
                         });
                 AlertDialog dialog = builder.create();
@@ -134,7 +131,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         });
     }
 
-    public void updatePassword(String password, String newPassword) {
+    public void updatePassword(String newPassword) {
 
         AuthCredential credential = EmailAuthProvider.getCredential(UserDao.user.getEmail(), UserDao.user.getPassword());
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -156,7 +153,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                             Handler handler = new Handler(Looper.getMainLooper());
                                             executor.execute(() -> {
                                                 DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER);
-                                                userReference.child(firebaseUser.getUid()).child("password").setValue(newPassword);
+
+                                                String newSaltValue = PasswordEncryption.getSaltValue(30);
+
+                                                userReference.child(firebaseUser.getUid()).child("password").setValue(PasswordEncryption.generateSecurePassword(newPassword, newSaltValue));
+                                                userReference.child(firebaseUser.getUid()).child("saltValue").setValue(newSaltValue);
 
                                                 handler.post(() -> {
                                                     dialog.dismiss();
@@ -185,11 +186,16 @@ public class ChangePasswordActivity extends AppCompatActivity {
             allGood = false;
         }
 
-        if (Objects.equals(password, "")) {
+        if (Objects.equals(newPassword, "")) {
             newPasswordInput.setError(getString(R.string.no_new_password));
             allGood = false;
-        } else if (password.length() < 6) {
+        } else if (newPassword.length() < 6) {
             newPasswordInput.setError(getString(R.string.invalid_password));
+            allGood = false;
+        }
+
+        if (!PasswordEncryption.verifyUserPassword(password, UserDao.user.getPassword(), UserDao.user.getSaltValue())) {
+            passwordInput.setError(getString(R.string.incorrect_password));
             allGood = false;
         }
 

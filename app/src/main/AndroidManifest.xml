@@ -65,7 +65,7 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".EditEmailActivity"
+            android:name=".ChangeEmailActivity"
             android:exported="false"
             android:theme="@style/Theme.TripTracker.NoActionBar" />
         <activity
@@ -73,7 +73,7 @@
             android:exported="false"
             android:theme="@style/Theme.TripTracker.NoActionBar" />
         <activity
-            android:name=".EditUsernameActivity"
+            android:name=".ChangeUsernameActivity"
             android:exported="false"
             android:theme="@style/Theme.TripTracker.NoActionBar" />
         <activity

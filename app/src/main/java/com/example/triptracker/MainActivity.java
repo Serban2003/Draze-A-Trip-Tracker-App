@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                 UserDao.user.setUsername(user.getUsername());
                 UserDao.user.setEmail(user.getEmail());
                 UserDao.user.setPassword(user.getPassword());
+                UserDao.user.setSaltValue(user.getSaltValue());
                 UserDao.user.setFullName(user.getFullName());
                 UserDao.user.setGender(user.getGender());
                 UserDao.user.setPhoneNumber(user.getPhoneNumber());

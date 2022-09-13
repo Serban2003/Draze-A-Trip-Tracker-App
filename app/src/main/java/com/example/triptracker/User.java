@@ -37,6 +37,9 @@ public class User {
     @ColumnInfo(name = "password")
     private String password;
 
+    @ColumnInfo(name = "saltValue")
+    private String saltValue;
+
     @ColumnInfo(name = "fullName")
     private String fullName;
 
@@ -99,6 +102,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSaltValue() {
+        return saltValue;
+    }
+
+    public void setSaltValue(String saltValue) {
+        this.saltValue = saltValue;
     }
 
     public String getFullName() {

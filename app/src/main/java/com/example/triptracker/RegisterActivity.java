@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -183,13 +184,19 @@ public class RegisterActivity extends AppCompatActivity {
                         user.setKeyId(firebaseUser.getUid());
                         user.setUsername(username);
                         user.setEmail(email);
-                        user.setPassword(password);
+
+                        String saltValue = PasswordEncryption.getSaltValue(30);
+                        user.setSaltValue(saltValue);
+                        user.setPassword(PasswordEncryption.generateSecurePassword(password, saltValue));
 
                         Executor executor = Executors.newSingleThreadExecutor();
                         Handler handler = new Handler(Looper.getMainLooper());
                         executor.execute(() -> {
-                            FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).setValue(user);
-                            FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid()).child("emailChanged").setValue(new Date().toString());
+                            DatabaseReference userReference = FirebaseDatabase.getInstance(PATH_TO_DATABASE).getReference().child(USER).child(firebaseUser.getUid());
+                            userReference.setValue(user);
+                            userReference.child("emailChanged").setValue(new Date().toString());
+
+                            user.setPassword(password);
                             userViewModel.insertUser(user);
                             handler.post(() -> {
                                 dialog.dismiss();
@@ -197,7 +204,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 Intent newIntent = new Intent(RegisterActivity.this, MainActivity.class);
                                 newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(newIntent);
-                                //UI Thread work here
                             });
                         });
                     } else {
