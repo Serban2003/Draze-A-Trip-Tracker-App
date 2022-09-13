@@ -1,5 +1,8 @@
 package com.example.triptracker;
 
+import static com.example.triptracker.TrackedSession.distanceToString;
+import static com.example.triptracker.TrackedSession.timeToString;
+
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,13 +19,15 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ProfileActivitiesFragment extends Fragment {
 
     TextView activitiesNumberTextView, totalDurationTextView, totalKMTextView, averageSpeedTextView;
     ActivitiesViewModel activitiesViewModel;
 
-    Double totalDuration, totalKM, averageSpeed;
+    Long totalDuration;
+    Float totalKM, averageSpeed;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,19 +49,20 @@ public class ProfileActivitiesFragment extends Fragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(List<TrackDetails> activities) {
-                totalDuration = totalKM = averageSpeed = 0D;
+                totalDuration = 0L;
+                totalKM = averageSpeed = 0F;
                 for (TrackDetails activity : activities) {
-                    totalDuration += Double.parseDouble(activity.getDuration().replaceAll("[\\s+a-zA-Z :]", ""));
-                    totalKM += Double.parseDouble(activity.getDistance().replaceAll("[\\s+a-zA-Z :]", ""));
-                    averageSpeed += Double.parseDouble(activity.getAverageSpeed().replaceAll("[\\s+a-zA-Z :]",""));
+                    totalDuration += Long.parseLong(activity.getDuration());
+                    totalKM += Float.parseFloat(activity.getDistance());
+                    averageSpeed += Float.parseFloat(activity.getAverageSpeed());
                 }
                 Integer size = activities.size();
                 averageSpeed  = averageSpeed / size;
 
                 activitiesNumberTextView.setText(size.toString());
-                totalDurationTextView.setText(totalDuration.toString());
-                totalKMTextView.setText(totalKM.toString());
-                averageSpeedTextView.setText(averageSpeed.toString());
+                totalDurationTextView.setText(timeToString(totalDuration));
+                totalKMTextView.setText(distanceToString(totalKM, true));
+                averageSpeedTextView.setText(String.format(Locale.UK, "%.2f", averageSpeed));
             }
         });
 

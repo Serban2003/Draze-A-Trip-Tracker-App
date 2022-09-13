@@ -51,7 +51,7 @@ public final class LocationProvider extends Service {
         super.onCreate();
         // PARTIAL_WAKELOCK
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"INSERT_YOUR_APP_NAME:wakelock");
+        wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"Draze:wakelock");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.S)
@@ -123,6 +123,8 @@ public final class LocationProvider extends Service {
         }
 
         //Get the duration as a string ready for printing
+        long getTime(){return trackedSession.getTime();}
+
         String getTimeString() {
             return trackedSession.getTimeString();
         }

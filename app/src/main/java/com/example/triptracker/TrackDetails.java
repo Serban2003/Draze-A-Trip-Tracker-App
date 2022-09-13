@@ -133,6 +133,7 @@ public class TrackDetails {
         this.description = Objects.requireNonNull(dataSnapshot.child("description").getValue()).toString();
         this.timeCreated = Objects.requireNonNull(dataSnapshot.child("timeCreated").getValue()).toString();
         this.duration = Objects.requireNonNull(dataSnapshot.child("duration").getValue()).toString();
+        this.averageSpeed = Objects.requireNonNull(dataSnapshot.child("averageSpeed").getValue()).toString();
         this.distance = Objects.requireNonNull(dataSnapshot.child("distance").getValue()).toString();
         this.elevation = Objects.requireNonNull(dataSnapshot.child("elevation").getValue()).toString();
         this.color = Integer.parseInt(Objects.requireNonNull(dataSnapshot.child("color").getValue()).toString());

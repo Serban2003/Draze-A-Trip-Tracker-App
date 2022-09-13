@@ -116,7 +116,11 @@ public class TrackedSession {
         return description;
     }
 
-    String getTimeString() {
+    long getTime() {
+        return getCurrentTimeMillis();
+    }
+
+    String getTimeString(){
         long timeInMilliseconds = getCurrentTimeMillis();
         return timeToString(timeInMilliseconds);
     }
@@ -140,7 +144,6 @@ public class TrackedSession {
             }
         }
         return String.format(Locale.UK, "%dh %02dm", hrs, mins);
-
     }
 
     public float getDistance() {

@@ -1,5 +1,6 @@
 package com.example.triptracker;
 
+import static com.example.triptracker.TrackedSession.*;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 import android.annotation.SuppressLint;
@@ -57,8 +58,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             Log.d(TAG, currentTrack.getId().toString());
 
             holder.titleTextView.setText(currentTrack.getTitle());
-            holder.distanceTextView.setText(currentTrack.getDistance());
-            holder.durationTextView.setText(currentTrack.getDuration());
+            holder.distanceTextView.setText(distanceToString(Float.parseFloat(currentTrack.getDistance()), true));
+            holder.durationTextView.setText(timeToString(Long.parseLong(currentTrack.getDuration())));
 
             String pattern = "E, dd MMM yyyy";
             @SuppressLint("SimpleDateFormat")
@@ -77,7 +78,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 description = description.substring(0, 35) + "...";
             }
             holder.descriptionTextView.setText(description);
-            holder.elevationTextView.setText(currentTrack.getElevation());
+            holder.elevationTextView.setText(distanceToString(Float.parseFloat(currentTrack.getElevation()), true));
 
             GoogleMap map = holder.mapCurrent;
 

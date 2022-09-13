@@ -1,5 +1,8 @@
 package com.example.triptracker;
 
+import static com.example.triptracker.TrackedSession.distanceToString;
+import static com.example.triptracker.TrackedSession.timeToString;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class RouteDetailsActivity extends CustomSecondaryActivity implements OnMapReadyCallback {
@@ -34,7 +38,6 @@ public class RouteDetailsActivity extends CustomSecondaryActivity implements OnM
     GoogleMap map;
     ActivitiesViewModel activitiesViewModel;
     TrackDetails track;
-    Observer<TrackDetails> observer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +69,10 @@ public class RouteDetailsActivity extends CustomSecondaryActivity implements OnM
                     }
 
                     sessionDescriptionTextView.setText(trackDetails.getDescription());
-                    sessionDurationTextView.setText(trackDetails.getDuration());
-                    sessionDistanceTextView.setText(trackDetails.getDistance());
-                    sessionAverageSpeedTextView.setText(trackDetails.getAverageSpeed());
-                    sessionElevationTextView.setText(trackDetails.getElevation());
+                    sessionDurationTextView.setText(timeToString(Long.parseLong(trackDetails.getDuration())));
+                    sessionDistanceTextView.setText(distanceToString(Float.parseFloat(trackDetails.getDistance()), true));
+                    sessionAverageSpeedTextView.setText(String.format(Locale.UK, "%.2f", Float.parseFloat(trackDetails.getAverageSpeed())));
+                    sessionElevationTextView.setText(distanceToString(Float.parseFloat(trackDetails.getElevation()), true));
                     plotTrackPoints(trackDetails.getLocationPoints());
                 }
             }
