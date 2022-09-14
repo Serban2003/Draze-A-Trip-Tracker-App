@@ -22,11 +22,13 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.Task;
 
@@ -96,14 +98,20 @@ public class EndTrackingActivity extends FragmentActivity implements OnMapReadyC
         Log.d(TAG, "plotTrackPoints: plotting points");
         ArrayList<Location> locations = locationServiceBinder.getLocations();
 
+        LatLngBounds bound;
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
         PolylineOptions polylineOptions = new PolylineOptions();
 
         for (Location location : locations) {
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
             polylineOptions.add(latLng);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            builder.include(latLng);
         }
         map.addPolyline(polylineOptions);
+        bound = builder.build();
+        final CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bound, 500, 500, 100);
+        map.moveCamera(cu);
     }
 
     @Override

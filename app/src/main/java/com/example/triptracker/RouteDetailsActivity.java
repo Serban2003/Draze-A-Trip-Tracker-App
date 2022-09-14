@@ -18,11 +18,13 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
@@ -90,19 +92,22 @@ public class RouteDetailsActivity extends CustomSecondaryActivity implements OnM
     //Get the points from the database and plot them onto the map
     public void plotTrackPoints(ArrayList<LocationPointDetails> locationsPointDetails) {
         //Get track points
-
+        LatLngBounds bound;
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
         PolylineOptions polylineOptions = new PolylineOptions();
 
         //Add track points to polyline
         for (LocationPointDetails locationPointDetails : locationsPointDetails) {
             LatLng latLng = new LatLng(locationPointDetails.getLatitude(), locationPointDetails.getLongitude());
             polylineOptions.add(latLng);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            builder.include(latLng);
         }
         polylineOptions.color(R.color.main_color);
         //Add polyline to map
         map.addPolyline(polylineOptions);
-
+        bound = builder.build();
+        final CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bound, 500, 500, 100);
+        map.moveCamera(cu);
     }
 
     @Override
